@@ -10,10 +10,2605 @@
         </author>
         <description>喵喵喵</description>
         <language>zh-CN</language>
-        <pubDate>Sun, 24 Jan 2021 23:31:30 +0800</pubDate>
-        <lastBuildDate>Sun, 24 Jan 2021 23:31:30 +0800</lastBuildDate>
+        <pubDate>Wed, 24 Mar 2021 23:31:30 +0800</pubDate>
+        <lastBuildDate>Wed, 24 Mar 2021 23:31:30 +0800</lastBuildDate>
         <category term="喵喵" />
         <category term="汪汪" />
+        <item>
+            <guid isPermalink="true">http://example.com/23%20%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3%EF%BC%88%E5%85%A823%E7%A7%8D%EF%BC%89/</guid>
+            <title>23种设计模式</title>
+            <link>http://example.com/23%20%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3%EF%BC%88%E5%85%A823%E7%A7%8D%EF%BC%89/</link>
+            <pubDate>Wed, 24 Mar 2021 23:31:30 +0800</pubDate>
+            <description><![CDATA[ &lt;h1 id=&#34;设计模式的分类&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#设计模式的分类&#34;&gt;#&lt;/a&gt; 设计模式的分类&lt;/h1&gt;
+&lt;h1 id=&#34;总体来说设计模式分为三大类&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#总体来说设计模式分为三大类&#34;&gt;#&lt;/a&gt; 总体来说设计模式分为三大类：&lt;/h1&gt;
+&lt;p&gt;创建型模式，共五种：工厂方法模式、抽象工厂模式、单例模式、建造者模式、原型模式。&lt;/p&gt;
+&lt;p&gt;结构型模式，共七种：适配器模式、装饰器模式、代理模式、外观模式、桥接模式、组合模式、享元模式。&lt;/p&gt;
+&lt;p&gt;行为型模式，共十一种：策略模式、模板方法模式、观察者模式、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;a-创建模式5种&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#a-创建模式5种&#34;&gt;#&lt;/a&gt; A、创建模式（5 种）&lt;/h1&gt;
+&lt;p&gt;工厂方法模式、抽象工厂模式、单例模式、建造者模式、原型模式。&lt;/p&gt;
+&lt;h1 id=&#34;1-工厂模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#1-工厂模式&#34;&gt;#&lt;/a&gt; 1 工厂模式&lt;/h1&gt;
+&lt;p&gt;1.1 简单工厂模式&lt;br /&gt;
+定义：定义了一个创建对象的类，由这个类来封装实例化对象的行为。&lt;/p&gt;
+&lt;p&gt;举例：（我们举一个 pizza 工厂的例子）&lt;/p&gt;
+&lt;p&gt;pizza 工厂一共生产三种类型的 pizza：chesse,pepper,greak。通过工厂类（SimplePizzaFactory）实例化这三种类型的对象。类图如下：&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;工厂类的代码：&lt;/p&gt;
+&lt;p&gt;public class SimplePizzaFactory {&lt;br /&gt;
+public Pizza CreatePizza(String ordertype) {&lt;br /&gt;
+Pizza pizza = null;&lt;br /&gt;
+if (ordertype.equals(&amp;quot;cheese&amp;quot;)) {&lt;br /&gt;
+pizza = new CheesePizza();&lt;br /&gt;
+} else if (ordertype.equals(&amp;quot;greek&amp;quot;)) {&lt;br /&gt;
+pizza = new GreekPizza();&lt;br /&gt;
+} else if (ordertype.equals(&amp;quot;pepper&amp;quot;)) {&lt;br /&gt;
+pizza = new PepperPizza();&lt;br /&gt;
+}&lt;br /&gt;
+return pizza;&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 简单工厂存在的问题与解决方法： 简单工厂模式有一个问题就是，类的创建依赖工厂类，也就是说，如果想要拓展程序，必须对工厂类进行修改，这违背了开闭原则，所以，从设计角度考虑，有一定的问题，如何解决？我们可以定义一个创建对象的抽象方法并创建多个不同的工厂类实现该抽象方法，这样一旦需要增加新的功能，直接增加新的工厂类就可以了，不需要修改之前的代码。这种方法也就是我们接下来要说的工厂方法模式。&lt;/p&gt;
+&lt;p&gt;1.2 工厂方法模式&lt;br /&gt;
+定义：定义了一个创建对象的抽象方法，由子类决定要实例化的类。工厂方法模式将对象的实例化推迟到子类。&lt;/p&gt;
+&lt;p&gt;举例：（我们依然举 pizza 工厂的例子，不过这个例子中，pizza 产地有两个：伦敦和纽约）。添加了一个新的产地，如果用简单工厂模式的的话，我们要去修改工厂代码，并且会增加一堆的 if else 语句。而工厂方法模式克服了简单工厂要修改代码的缺点，它会直接创建两个工厂，纽约工厂和伦敦工厂。类图如下：&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;OrderPizza 中有个抽象的方法：&lt;/p&gt;
+&lt;p&gt;abstract Pizza createPizza();&lt;br /&gt;
+ 两个工厂类继承 OrderPizza 并实现抽象方法：&lt;/p&gt;
+&lt;p&gt;public class LDOrderPizza extends OrderPizza {&lt;br /&gt;
+Pizza createPizza(String ordertype) {&lt;br /&gt;
+Pizza pizza = null;&lt;br /&gt;
+if (ordertype.equals(&amp;quot;cheese&amp;quot;)) {&lt;br /&gt;
+pizza = new LDCheesePizza();&lt;br /&gt;
+} else if (ordertype.equals(&amp;quot;pepper&amp;quot;)) {&lt;br /&gt;
+pizza = new LDPepperPizza();&lt;br /&gt;
+}&lt;br /&gt;
+return pizza;&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+public class NYOrderPizza extends OrderPizza {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Pizza createPizza(String ordertype) &amp;#123;
+	Pizza pizza = null;
+
+	if (ordertype.equals(&amp;quot;cheese&amp;quot;)) &amp;#123;
+		pizza = new NYCheesePizza();
+	&amp;#125; else if (ordertype.equals(&amp;quot;pepper&amp;quot;)) &amp;#123;
+		pizza = new NYPepperPizza();
+	&amp;#125;
+	return pizza;
+
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+、通过不同的工厂会得到不同的实例化的对象，PizzaStroe 的代码如下：&lt;/p&gt;
+&lt;p&gt;public class PizzaStroe {&lt;br /&gt;
+public static void main(String[] args) {&lt;br /&gt;
+OrderPizza mOrderPizza;&lt;br /&gt;
+mOrderPizza = new NYOrderPizza();&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 解决了简单工厂模式的问题：增加一个新的 pizza 产地（北京），只要增加一个 BJOrderPizza 类：&lt;/p&gt;
+&lt;p&gt;public class BJOrderPizza extends OrderPizza {&lt;br /&gt;
+Pizza createPizza(String ordertype) {&lt;br /&gt;
+Pizza pizza = null;&lt;br /&gt;
+if (ordertype.equals(&amp;quot;cheese&amp;quot;)) {&lt;br /&gt;
+pizza = new LDCheesePizza();&lt;br /&gt;
+} else if (ordertype.equals(&amp;quot;pepper&amp;quot;)) {&lt;br /&gt;
+pizza = new LDPepperPizza();&lt;br /&gt;
+}&lt;br /&gt;
+return pizza;&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 其实这个模式的好处就是，如果你现在想增加一个功能，只需做一个实现类就 OK 了，无需去改动现成的代码。这样做，拓展性较好！&lt;/p&gt;
+&lt;p&gt;工厂方法存在的问题与解决方法：客户端需要创建类的具体的实例。简单来说就是用户要订纽约工厂的披萨，他必须去纽约工厂，想订伦敦工厂的披萨，必须去伦敦工厂。 当伦敦工厂和纽约工厂发生变化了，用户也要跟着变化，这无疑就增加了用户的操作复杂性。为了解决这一问题，我们可以把工厂类抽象为接口，用户只需要去找默认的工厂提出自己的需求（传入参数），便能得到自己想要产品，而不用根据产品去寻找不同的工厂，方便用户操作。这也就是我们接下来要说的抽象工厂模式。&lt;/p&gt;
+&lt;p&gt;1.3 抽象工厂模式&lt;br /&gt;
+ 定义：定义了一个接口用于创建相关或有依赖关系的对象族，而无需明确指定具体类。&lt;/p&gt;
+&lt;p&gt;举例：（我们依然举 pizza 工厂的例子，pizza 工厂有两个：纽约工厂和伦敦工厂）。类图如下：&lt;/p&gt;
+&lt;p&gt;工厂的接口：&lt;/p&gt;
+&lt;p&gt;public interface AbsFactory {&lt;br /&gt;
+Pizza CreatePizza(String ordertype) ;&lt;br /&gt;
+}&lt;br /&gt;
+ 工厂的实现：&lt;/p&gt;
+&lt;p&gt;public class LDFactory implements AbsFactory {&lt;br /&gt;
+@Override&lt;br /&gt;
+public Pizza CreatePizza(String ordertype) {&lt;br /&gt;
+Pizza pizza = null;&lt;br /&gt;
+if (&amp;quot;cheese&amp;quot;.equals(ordertype)) {&lt;br /&gt;
+pizza = new LDCheesePizza();&lt;br /&gt;
+} else if (&amp;quot;pepper&amp;quot;.equals(ordertype)) {&lt;br /&gt;
+pizza = new LDPepperPizza();&lt;br /&gt;
+}&lt;br /&gt;
+return pizza;&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ PizzaStroe 的代码如下：&lt;/p&gt;
+&lt;p&gt;public class PizzaStroe {&lt;br /&gt;
+public static void main(String[] args) {&lt;br /&gt;
+OrderPizza mOrderPizza;&lt;br /&gt;
+mOrderPizza = new OrderPizza(&amp;quot;London&amp;quot;);&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 解决了工厂方法模式的问题：在抽象工厂中 PizzaStroe 中只需要传入参数就可以实例化对象。&lt;/p&gt;
+&lt;p&gt;1.4 工厂模式适用的场合&lt;br /&gt;
+大量的产品需要创建，并且这些产品具有共同的接口 。&lt;/p&gt;
+&lt;p&gt;1.5  三种工厂模式的使用选择&lt;br /&gt;
+简单工厂 ： 用来生产同一等级结构中的任意产品。（不支持拓展增加产品）&lt;/p&gt;
+&lt;p&gt;工厂方法 ：用来生产同一等级结构中的固定产品。（支持拓展增加产品）&lt;/p&gt;
+&lt;p&gt;抽象工厂 ：用来生产不同产品族的全部产品。（支持拓展增加产品；支持增加产品族）&lt;/p&gt;
+&lt;p&gt;简单工厂的适用场合：只有伦敦工厂（只有这一个等级），并且这个工厂只生产三种类型的 pizza：chesse,pepper,greak（固定产品）。&lt;/p&gt;
+&lt;p&gt;工厂方法的适用场合：现在不光有伦敦工厂，还增设了纽约工厂（仍然是同一等级结构，但是支持了产品的拓展），这两个工厂依然只生产三种类型的 pizza：chesse,pepper,greak（固定产品）。&lt;/p&gt;
+&lt;p&gt;抽象工厂的适用场合：不光增设了纽约工厂（仍然是同一等级结构，但是支持了产品的拓展），这两个工厂还增加了一种新的类型的 pizza：chinese pizza（增加产品族）。&lt;/p&gt;
+&lt;p&gt;所以说抽象工厂就像工厂，而工厂方法则像是工厂的一种产品生产线。因此，我们可以用抽象工厂模式创建工厂，而用工厂方法模式创建生产线。比如，我们可以使用抽象工厂模式创建伦敦工厂和纽约工厂，使用工厂方法实现 cheese pizza 和 greak pizza 的生产。类图如下：&lt;/p&gt;
+&lt;p&gt;总结一下三种模式：&lt;/p&gt;
+&lt;p&gt;简单工厂模式就是建立一个实例化对象的类，在该类中对多个对象实例化。工厂方法模式是定义了一个创建对象的抽象方法，由子类决定要实例化的类。这样做的好处是再有新的类型的对象需要实例化只要增加子类即可。抽象工厂模式定义了一个接口用于创建对象族，而无需明确指定具体类。抽象工厂也是把对象的实例化交给了子类，即支持拓展。同时提供给客户端接口，避免了用户直接操作子类工厂。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;2-单例模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#2-单例模式&#34;&gt;#&lt;/a&gt; 2 单例模式&lt;/h1&gt;
+&lt;p&gt;定义：确保一个类最多只有一个实例，并提供一个全局访问点&lt;/p&gt;
+&lt;p&gt;单例模式可以分为两种：预加载和懒加载&lt;/p&gt;
+&lt;p&gt;2.1 预加载&lt;br /&gt;
+顾名思义，就是预先加载。再进一步解释就是还没有使用该单例对象，但是，该单例对象就已经被加载到内存了。&lt;/p&gt;
+&lt;p&gt;public class PreloadSingleton {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   public static PreloadSingleton instance = new PreloadSingleton();
+
+   //其他的类无法实例化单例类的对象
+   private PreloadSingleton() &amp;#123;
+   &amp;#125;;
+   
+   public static PreloadSingleton getInstance() &amp;#123;
+          return instance;
+   &amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 很明显，没有使用该单例对象，该对象就被加载到了内存，会造成内存的浪费。&lt;/p&gt;
+&lt;p&gt;2.2 懒加载&lt;br /&gt;
+为了避免内存的浪费，我们可以采用懒加载，即用到该单例对象的时候再创建。&lt;/p&gt;
+&lt;p&gt;public class Singleton {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   private static Singleton instance=null;
+   
+   private Singleton()&amp;#123;
+   &amp;#125;;
+   
+   public static Singleton getInstance()
+   &amp;#123;
+          if(instance==null)
+          &amp;#123;
+                 instance=new Singleton();
+          &amp;#125;
+          return instance;
+          
+   &amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 2.3 单例模式和线程安全&lt;br /&gt;
+（1）预加载只有一条语句 return instance, 这显然可以保证线程安全。但是，我们知道预加载会造成内存的浪费。&lt;/p&gt;
+&lt;p&gt;（2）懒加载不浪费内存，但是无法保证线程的安全。首先，if 判断以及其内存执行代码是非原子性的。其次，new Singleton () 无法保证执行的顺序性。&lt;/p&gt;
+&lt;p&gt;不满足原子性或者顺序性，线程肯定是不安全的，这是基本的常识，不再赘述。我主要讲一下为什么 new Singleton () 无法保证顺序性。我们知道创建一个对象分三步:&lt;/p&gt;
+&lt;p&gt;memory=allocate ();//1: 初始化内存空间&lt;/p&gt;
+&lt;p&gt;ctorInstance (memory);//2: 初始化对象&lt;/p&gt;
+&lt;p&gt;instance=memory ();//3: 设置 instance 指向刚分配的内存地址&lt;br /&gt;
+ jvm 为了提高程序执行性能，会对没有依赖关系的代码进行重排序，上面 2 和 3 行代码可能被重新排序。我们用两个线程来说明线程是不安全的。线程 A 和线程 B 都创建对象。其中，A2 和 A3 的重排序，将导致线程 B 在 B1 处判断出 instance 不为空，线程 B 接下来将访问 instance 引用的对象。此时，线程 B 将会访问到一个还未初始化的对象（线程不安全）。&lt;/p&gt;
+&lt;p&gt;2.4 保证懒加载的线程安全&lt;br /&gt;
+我们首先想到的就是使用 synchronized 关键字。synchronized 加载 getInstace () 函数上确实保证了线程的安全。但是，如果要经常的调用 getInstance () 方法，不管有没有初始化实例，都会唤醒和阻塞线程。为了避免线程的上下文切换消耗大量时间，如果对象已经实例化了，我们没有必要再使用 synchronized 加锁，直接返回对象。&lt;/p&gt;
+&lt;p&gt;public class Singleton {&lt;br /&gt;
+private static Singleton instance = null;&lt;br /&gt;
+private Singleton() {&lt;br /&gt;
+};&lt;br /&gt;
+public static synchronized Singleton getInstance() {&lt;br /&gt;
+if (instance == null) {&lt;br /&gt;
+instance = new Singleton();&lt;br /&gt;
+}&lt;br /&gt;
+return instance;&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 我们把 sychronized 加在 if (instance==null) 判断语句里面，保证 instance 未实例化的时候才加锁&lt;/p&gt;
+&lt;p&gt;public class Singleton {&lt;br /&gt;
+private static Singleton instance = null;&lt;br /&gt;
+private Singleton() {&lt;br /&gt;
+};&lt;br /&gt;
+public static synchronized Singleton getInstance() {&lt;br /&gt;
+if (instance == null) {&lt;br /&gt;
+synchronized (Singleton.class) {&lt;br /&gt;
+if (instance == null) {&lt;br /&gt;
+instance = new Singleton();&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+return instance;&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 我们经过 2.3 的讨论知道 new 一个对象的代码是无法保证顺序性的，因此，我们需要使用另一个关键字 volatile 保证对象实例化过程的顺序性。&lt;/p&gt;
+&lt;p&gt;public class Singleton {&lt;br /&gt;
+private static volatile Singleton instance = null;&lt;br /&gt;
+private Singleton() {&lt;br /&gt;
+};&lt;br /&gt;
+public static synchronized Singleton getInstance() {&lt;br /&gt;
+if (instance == null) {&lt;br /&gt;
+synchronized (instance) {&lt;br /&gt;
+if (instance == null) {&lt;br /&gt;
+instance = new Singleton();&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+return instance;&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 到此，我们就保证了懒加载的线程安全。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;3-生成器模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#3-生成器模式&#34;&gt;#&lt;/a&gt; 3 生成器模式&lt;/h1&gt;
+&lt;p&gt;定义：封装一个复杂对象构造过程，并允许按步骤构造。&lt;/p&gt;
+&lt;p&gt;定义解释： 我们可以将生成器模式理解为，假设我们有一个对象需要建立，这个对象是由多个组件（Component）组合而成，每个组件的建立都比较复杂，但运用组件来建立所需的对象非常简单，所以我们就可以将构建复杂组件的步骤与运用组件构建对象分离，使用 builder 模式可以建立。&lt;/p&gt;
+&lt;p&gt;3.1 模式的结构和代码示例&lt;br /&gt;
+生成器模式结构中包括四种角色：&lt;/p&gt;
+&lt;p&gt;（1）产品 (Product)：具体生产器要构造的复杂对象；&lt;/p&gt;
+&lt;p&gt;（2）抽象生成器 (Bulider)：抽象生成器是一个接口，该接口除了为创建一个 Product 对象的各个组件定义了若干个方法之外，还要定义返回 Product 对象的方法（定义构造步骤）；&lt;/p&gt;
+&lt;p&gt;（3）具体生产器 (ConcreteBuilder)：实现 Builder 接口的类，具体生成器将实现 Builder 接口所定义的方法（生产各个组件）；&lt;/p&gt;
+&lt;p&gt;（4）指挥者 (Director)：指挥者是一个类，该类需要含有 Builder 接口声明的变量。指挥者的职责是负责向用户提供具体生成器，即指挥者将请求具体生成器类来构造用户所需要的 Product 对象，如果所请求的具体生成器成功地构造出 Product 对象，指挥者就可以让该具体生产器返回所构造的 Product 对象。（按照步骤组装部件，并返回 Product）&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;举例（我们如果构建生成一台电脑，那么我们可能需要这么几个步骤（1）需要一个主机（2）需要一个显示器（3）需要一个键盘（4）需要一个鼠标）&lt;/p&gt;
+&lt;p&gt;虽然我们具体在构建一台主机的时候，每个对象的实际步骤是不一样的，比如，有的对象构建了 i7cpu 的主机，有的对象构建了 i5cpu 的主机，有的对象构建了普通键盘，有的对象构建了机械键盘等。但不管怎样，你总是需要经过一个步骤就是构建一台主机，一台键盘。对于这个例子，我们就可以使用生成器模式来生成一台电脑，他需要通过多个步骤来生成。类图如下：&lt;/p&gt;
+&lt;p&gt;ComputerBuilder 类定义构造步骤：&lt;/p&gt;
+&lt;p&gt;public abstract class ComputerBuilder {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;protected Computer computer;
+
+public Computer getComputer() &amp;#123;
+    return computer;
+&amp;#125;
+
+public void buildComputer() &amp;#123;
+    computer = new Computer();
+    System.out.println(&amp;quot;生成了一台电脑！！！&amp;quot;);
+&amp;#125;
+public abstract void buildMaster();
+public abstract void buildScreen();
+public abstract void buildKeyboard();
+public abstract void buildMouse();
+public abstract void buildAudio();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ HPComputerBuilder 定义各个组件：&lt;/p&gt;
+&lt;p&gt;public class HPComputerBuilder extends ComputerBuilder {&lt;br /&gt;
+@Override&lt;br /&gt;
+public void buildMaster() {&lt;br /&gt;
+// TODO Auto-generated method stub&lt;br /&gt;
+computer.setMaster(&amp;quot;i7,16g,512SSD,1060&amp;quot;);&lt;br /&gt;
+System.out.println (&amp;quot;(i7,16g,512SSD,1060) 的惠普主机&amp;quot;);&lt;br /&gt;
+}&lt;br /&gt;
+@Override&lt;br /&gt;
+public void buildScreen() {&lt;br /&gt;
+// TODO Auto-generated method stub&lt;br /&gt;
+computer.setScreen(&amp;quot;1080p&amp;quot;);&lt;br /&gt;
+System.out.println (&amp;quot;(1080p) 的惠普显示屏&amp;quot;);&lt;br /&gt;
+}&lt;br /&gt;
+@Override&lt;br /&gt;
+public void buildKeyboard() {&lt;br /&gt;
+// TODO Auto-generated method stub&lt;br /&gt;
+computer.setKeyboard (&amp;quot;cherry 青轴机械键盘&amp;quot;);&lt;br /&gt;
+System.out.println (&amp;quot;(cherry 青轴机械键盘) 的键盘&amp;quot;);&lt;br /&gt;
+}&lt;br /&gt;
+@Override&lt;br /&gt;
+public void buildMouse() {&lt;br /&gt;
+// TODO Auto-generated method stub&lt;br /&gt;
+computer.setMouse (&amp;quot;MI 鼠标&amp;quot;);&lt;br /&gt;
+System.out.println (&amp;quot;(MI 鼠标) 的鼠标&amp;quot;);&lt;br /&gt;
+}&lt;br /&gt;
+@Override&lt;br /&gt;
+public void buildAudio() {&lt;br /&gt;
+// TODO Auto-generated method stub&lt;br /&gt;
+computer.setAudio (&amp;quot;飞利浦 音响&amp;quot;);&lt;br /&gt;
+System.out.println (&amp;quot;(飞利浦 音响) 的音响&amp;quot;);&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ Director 类对组件进行组装并生成产品&lt;/p&gt;
+&lt;p&gt;public class Director {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private ComputerBuilder computerBuilder;
+public void setComputerBuilder(ComputerBuilder computerBuilder) &amp;#123;
+    this.computerBuilder = computerBuilder;
+&amp;#125;
+
+public Computer getComputer() &amp;#123;
+    return computerBuilder.getComputer();
+&amp;#125;
+
+public void constructComputer() &amp;#123;
+    computerBuilder.buildComputer();
+    computerBuilder.buildMaster();
+    computerBuilder.buildScreen();
+    computerBuilder.buildKeyboard();
+    computerBuilder.buildMouse();
+    computerBuilder.buildAudio();
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 3.2 生成器模式的优缺点&lt;br /&gt;
+优点&lt;br /&gt;
+将一个对象分解为各个组件&lt;/p&gt;
+&lt;p&gt;将对象组件的构造封装起来&lt;/p&gt;
+&lt;p&gt;可以控制整个对象的生成过程&lt;/p&gt;
+&lt;p&gt;缺点&lt;br /&gt;
+对不同类型的对象需要实现不同的具体构造器的类，这可能回答大大增加类的数量&lt;/p&gt;
+&lt;p&gt;3.3 生成器模式与工厂模式的不同&lt;br /&gt;
+生成器模式构建对象的时候，对象通常构建的过程中需要多个步骤，就像我们例子中的先有主机，再有显示屏，再有鼠标等等，生成器模式的作用就是将这些复杂的构建过程封装起来。工厂模式构建对象的时候通常就只有一个步骤，调用一个工厂方法就可以生成一个对象。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;4-原型模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#4-原型模式&#34;&gt;#&lt;/a&gt; 4 原型模式&lt;/h1&gt;
+&lt;p&gt;定义：通过复制现有实例来创建新的实例，无需知道相应类的信息。&lt;/p&gt;
+&lt;p&gt;简单地理解，其实就是当需要创建一个指定的对象时，我们刚好有一个这样的对象，但是又不能直接使用，我会 clone 一个一毛一样的新对象来使用；基本上这就是原型模式。关键字：Clone。&lt;/p&gt;
+&lt;p&gt;4.1 深拷贝和浅拷贝&lt;br /&gt;
+浅复制：将一个对象复制后，基本数据类型的变量都会重新创建，而引用类型，指向的还是原对象所指向的。&lt;/p&gt;
+&lt;p&gt;深复制：将一个对象复制后，不论是基本数据类型还有引用类型，都是重新创建的。简单来说，就是深复制进行了完全彻底的复制，而浅复制不彻底。clone 明显是深复制，clone 出来的对象是是不能去影响原型对象的&lt;/p&gt;
+&lt;p&gt;4.2 原型模式的结构和代码示例&lt;/p&gt;
+&lt;p&gt;Client：使用者&lt;/p&gt;
+&lt;p&gt;Prototype：接口（抽象类），声明具备 clone 能力，例如 java 中得 Cloneable 接口&lt;/p&gt;
+&lt;p&gt;ConcretePrototype：具体的原型类&lt;/p&gt;
+&lt;p&gt;可以看出设计模式还是比较简单的，重点在于 Prototype 接口和 Prototype 接口的实现类 ConcretePrototype。原型模式的具体实现：一个原型类，只需要实现 Cloneable 接口，覆写 clone 方法，此处 clone 方法可以改成任意的名称，因为 Cloneable 接口是个空接口，你可以任意定义实现类的方法名，如 cloneA 或者 cloneB，因为此处的重点是 super.clone () 这句话，super.clone () 调用的是 Object 的 clone () 方法。&lt;/p&gt;
+&lt;p&gt;public class Prototype implements Cloneable {&lt;br /&gt;
+public Object clone() throws CloneNotSupportedException {&lt;br /&gt;
+Prototype proto = (Prototype) super.clone();&lt;br /&gt;
+return proto;&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 举例（银行发送大量邮件，使用 clone 和不使用 clone 的时间对比）：我们模拟创建一个对象需要耗费比较长的时间，因此，在构造函数中我们让当前线程 sleep 一会&lt;/p&gt;
+&lt;p&gt;public Mail(EventTemplate et) {&lt;br /&gt;
+this.tail = et.geteventContent();&lt;br /&gt;
+this.subject = et.geteventSubject();&lt;br /&gt;
+try {&lt;br /&gt;
+Thread.sleep(1000);&lt;br /&gt;
+} catch (InterruptedException e) {&lt;br /&gt;
+// TODO Auto-generated catch block&lt;br /&gt;
+e.printStackTrace();&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 不使用 clone, 发送十个邮件&lt;/p&gt;
+&lt;p&gt;public static void main(String[] args) {&lt;br /&gt;
+int i = 0;&lt;br /&gt;
+int MAX_COUNT = 10;&lt;br /&gt;
+EventTemplate et = new EventTemplate (&amp;quot;9 月份信用卡账单&amp;quot;, &amp;quot;国庆抽奖活动...&amp;quot;);&lt;br /&gt;
+long start = System.currentTimeMillis();&lt;br /&gt;
+while (i &amp;lt; MAX_COUNT) {&lt;br /&gt;
+// 以下是每封邮件不同的地方&lt;br /&gt;
+ Mail mail = new Mail (et);&lt;br /&gt;
+mail.setContent (getRandString (5) + &amp;quot;, 先生（女士）: 你的信用卡账单...&amp;quot; + mail.getTail ());&lt;br /&gt;
+mail.setReceiver(getRandString(5) + &amp;quot;@&amp;quot; + getRandString(8) + &amp;quot;.com&amp;quot;);&lt;br /&gt;
+// 然后发送邮件&lt;br /&gt;
+ sendMail (mail);&lt;br /&gt;
+i++;&lt;br /&gt;
+}&lt;br /&gt;
+long end = System.currentTimeMillis();&lt;br /&gt;
+System.out.println (&amp;quot;用时:&amp;quot; + (end - start));&lt;br /&gt;
+}&lt;/p&gt;
+&lt;p&gt;用时：10001&lt;/p&gt;
+&lt;p&gt;使用 clone, 发送十个邮件&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public static void main(String[] args) &amp;#123;
+          int i = 0;
+          int MAX_COUNT = 10;
+          EventTemplate et = new EventTemplate(&amp;quot;9月份信用卡账单&amp;quot;, &amp;quot;国庆抽奖活动...&amp;quot;);
+          long start=System.currentTimeMillis();
+          Mail mail = new Mail(et);         
+          while (i &amp;lt; MAX_COUNT) &amp;#123;
+                 Mail cloneMail = mail.clone();
+                 mail.setContent(getRandString(5) + &amp;quot;,先生（女士）:你的信用卡账单...&amp;quot;
+                              + mail.getTail());
+                 mail.setReceiver(getRandString(5) + &amp;quot;@&amp;quot; + getRandString(8) + &amp;quot;.com&amp;quot;);
+                 sendMail(cloneMail);
+                 i++;
+          &amp;#125;
+          long end=System.currentTimeMillis();
+          System.out.println(&amp;quot;用时:&amp;quot;+(end-start));
+   &amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;用时：1001&lt;/p&gt;
+&lt;p&gt;4.3 总结&lt;br /&gt;
+原型模式的本质就是 clone，可以解决构建复杂对象的资源消耗问题，能再某些场景中提升构建对象的效率；还有一个重要的用途就是保护性拷贝，可以通过返回一个拷贝对象的形式，实现只读的限制。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;b-结构模式7种&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#b-结构模式7种&#34;&gt;#&lt;/a&gt; B、结构模式（7 种）&lt;/h1&gt;
+&lt;p&gt;适配器模式、装饰器模式、代理模式、外观模式、桥接模式、组合模式、享元模式。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;5-适配器模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#5-适配器模式&#34;&gt;#&lt;/a&gt; 5 适配器模式&lt;/h1&gt;
+&lt;p&gt;定义： 适配器模式将某个类的接口转换成客户端期望的另一个接口表示，目的是消除由于接口不匹配所造成的类的兼容性问题。&lt;/p&gt;
+&lt;p&gt;主要分为三类：类的适配器模式、对象的适配器模式、接口的适配器模式。&lt;/p&gt;
+&lt;p&gt;5.1 类适配器模式&lt;br /&gt;
+通过多重继承目标接口和被适配者类方式来实现适配&lt;/p&gt;
+&lt;p&gt;举例 (将 USB 接口转为 VGA 接口)，类图如下：&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;USBImpl 的代码：&lt;/p&gt;
+&lt;p&gt;public class USBImpl implements USB{&lt;br /&gt;
+@Override&lt;br /&gt;
+public void showPPT() {&lt;br /&gt;
+// TODO Auto-generated method stub&lt;br /&gt;
+System.out.println (&amp;quot;PPT 内容演示&amp;quot;);&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ AdatperUSB2VGA 首先继承 USBImpl 获取 USB 的功能，其次，实现 VGA 接口，表示该类的类型为 VGA。&lt;/p&gt;
+&lt;p&gt;public class AdapterUSB2VGA extends USBImpl implements VGA {&lt;br /&gt;
+@Override&lt;br /&gt;
+public void projection() {&lt;br /&gt;
+super.showPPT();&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ Projector 将 USB 映射为 VGA，只有 VGA 接口才可以连接上投影仪进行投影&lt;/p&gt;
+&lt;p&gt;public class Projector&amp;lt;T&amp;gt; {&lt;br /&gt;
+public void projection(T t) {&lt;br /&gt;
+if (t instanceof VGA) {&lt;br /&gt;
+System.out.println (&amp;quot;开始投影&amp;quot;);&lt;br /&gt;
+VGA v = new VGAImpl();&lt;br /&gt;
+v = (VGA) t;&lt;br /&gt;
+v.projection();&lt;br /&gt;
+} else {&lt;br /&gt;
+System.out.println (&amp;quot;接口不匹配，无法投影&amp;quot;);&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ test 代码&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   @Test
+   public void test2()&amp;#123;
+          //通过适配器创建一个VGA对象，这个适配器实际是使用的是USB的showPPT（）方法
+          VGA a=new AdapterUSB2VGA();
+          //进行投影
+          Projector p1=new Projector();
+          p1.projection(a);
+   &amp;#125; 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;5.2 对象适配器模式&lt;br /&gt;
+对象适配器和类适配器使用了不同的方法实现适配，对象适配器使用组合，类适配器使用继承。&lt;/p&gt;
+&lt;p&gt;举例 (将 USB 接口转为 VGA 接口)，类图如下：&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;public class AdapterUSB2VGA implements VGA {&lt;br /&gt;
+USB u = new USBImpl();&lt;br /&gt;
+@Override&lt;br /&gt;
+public void projection() {&lt;br /&gt;
+u.showPPT();&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 实现 VGA 接口，表示适配器类是 VGA 类型的，适配器方法中直接使用 USB 对象。&lt;/p&gt;
+&lt;p&gt;5.3 接口适配器模式&lt;br /&gt;
+当不需要全部实现接口提供的方法时，可先设计一个抽象类实现接口，并为该接口中每个方法提供一个默认实现（空方法），那么该抽象类的子类可有选择地覆盖父类的某些方法来实现需求，它适用于一个接口不想使用其所有的方法的情况。&lt;/p&gt;
+&lt;p&gt;举例 (将 USB 接口转为 VGA 接口，VGA 中的 b () 和 c () 不会被实现)，类图如下：&lt;/p&gt;
+&lt;p&gt;AdapterUSB2VGA 抽象类&lt;/p&gt;
+&lt;p&gt;public abstract class AdapterUSB2VGA implements VGA {&lt;br /&gt;
+USB u = new USBImpl();&lt;br /&gt;
+@Override&lt;br /&gt;
+public void projection() {&lt;br /&gt;
+u.showPPT();&lt;br /&gt;
+}&lt;br /&gt;
+@Override&lt;br /&gt;
+public void b() {&lt;br /&gt;
+};&lt;br /&gt;
+@Override&lt;br /&gt;
+public void c() {&lt;br /&gt;
+};&lt;br /&gt;
+}&lt;br /&gt;
+ AdapterUSB2VGA 实现，不用去实现 b () 和 c () 方法。&lt;/p&gt;
+&lt;p&gt;public class AdapterUSB2VGAImpl extends AdapterUSB2VGA {&lt;br /&gt;
+public void projection() {&lt;br /&gt;
+super.projection();&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 5.4 总结&lt;br /&gt;
+总结一下三种适配器模式的应用场景：&lt;/p&gt;
+&lt;p&gt;类适配器模式：当希望将一个类转换成满足另一个新接口的类时，可以使用类的适配器模式，创建一个新类，继承原有的类，实现新的接口即可。&lt;/p&gt;
+&lt;p&gt;对象适配器模式：当希望将一个对象转换成满足另一个新接口的对象时，可以创建一个 Wrapper 类，持有原类的一个实例，在 Wrapper 类的方法中，调用实例的方法就行。&lt;/p&gt;
+&lt;p&gt;接口适配器模式：当不希望实现一个接口中所有的方法时，可以创建一个抽象类 Wrapper，实现所有方法，我们写别的类的时候，继承抽象类即可。&lt;/p&gt;
+&lt;p&gt;命名规则：&lt;/p&gt;
+&lt;p&gt;我个人理解，三种命名方式，是根据 src 是以怎样的形式给到 Adapter（在 Adapter 里的形式）来命名的。&lt;/p&gt;
+&lt;p&gt;类适配器，以类给到，在 Adapter 里，就是将 src 当做类，继承，&lt;/p&gt;
+&lt;p&gt;对象适配器，以对象给到，在 Adapter 里，将 src 作为一个对象，持有。&lt;/p&gt;
+&lt;p&gt;接口适配器，以接口给到，在 Adapter 里，将 src 作为一个接口，实现。&lt;/p&gt;
+&lt;p&gt;使用选择：&lt;/p&gt;
+&lt;p&gt;根据合成复用原则，组合大于继承。因此，类的适配器模式应该少用。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;6-装饰者模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#6-装饰者模式&#34;&gt;#&lt;/a&gt; 6 装饰者模式&lt;/h1&gt;
+&lt;p&gt;定义：动态的将新功能附加到对象上。在对象功能扩展方面，它比继承更有弹性。&lt;/p&gt;
+&lt;p&gt;6.1 装饰者模式结构图与代码示例&lt;br /&gt;
+ 1.Component（被装饰对象的基类）&lt;/p&gt;
+&lt;p&gt;定义一个对象接口，可以给这些对象动态地添加职责。&lt;/p&gt;
+&lt;p&gt;2.ConcreteComponent（具体被装饰对象）&lt;/p&gt;
+&lt;p&gt;定义一个对象，可以给这个对象添加一些职责。&lt;/p&gt;
+&lt;p&gt;3.Decorator（装饰者抽象类）&lt;/p&gt;
+&lt;p&gt;维持一个指向 Component 实例的引用，并定义一个与 Component 接口一致的接口。&lt;/p&gt;
+&lt;p&gt;4.ConcreteDecorator（具体装饰者）&lt;/p&gt;
+&lt;p&gt;具体的装饰对象，给内部持有的具体被装饰对象，增加具体的职责。&lt;/p&gt;
+&lt;p&gt;被装饰对象和修饰者继承自同一个超类&lt;/p&gt;
+&lt;p&gt;举例 (咖啡馆订单项目：1）、咖啡种类：Espresso、ShortBlack、LongBlack、Decaf2）、调料（装饰者）：Milk、Soy、Chocolate)，类图如下：&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;被装饰的对象和装饰者都继承自同一个超类&lt;/p&gt;
+&lt;p&gt;public abstract class Drink {&lt;br /&gt;
+public String description=&amp;quot;&amp;quot;;&lt;br /&gt;
+private float price=0f;;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   public void setDescription(String description)
+   &amp;#123;
+          this.description=description;
+   &amp;#125;
+   
+   public String getDescription()
+   &amp;#123;
+          return description+&amp;quot;-&amp;quot;+this.getPrice();
+   &amp;#125;
+   public float getPrice()
+   &amp;#123;
+          return price;
+   &amp;#125;
+   public void setPrice(float price)
+   &amp;#123;
+          this.price=price;
+   &amp;#125;
+   public abstract float cost();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 被装饰的对象，不用去改造。原来怎么样写，现在还是怎么写。&lt;/p&gt;
+&lt;p&gt;public  class Coffee extends Drink {&lt;br /&gt;
+@Override&lt;br /&gt;
+public float cost() {&lt;br /&gt;
+// TODO Auto-generated method stub&lt;br /&gt;
+return super.getPrice();&lt;br /&gt;
+}&lt;/p&gt;
+&lt;p&gt;}&lt;br /&gt;
+ coffee 类的实现&lt;/p&gt;
+&lt;p&gt;public class Decaf extends Coffee {&lt;br /&gt;
+public Decaf()&lt;br /&gt;
+{&lt;br /&gt;
+super.setDescription(&amp;quot;Decaf&amp;quot;);&lt;br /&gt;
+super.setPrice(3.0f);&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 装饰者&lt;/p&gt;
+&lt;p&gt;装饰者不仅要考虑自身，还要考虑被它修饰的对象，它是在被修饰的对象上继续添加修饰。例如，咖啡里面加牛奶，再加巧克力。加糖后价格为 coffee+milk。再加牛奶价格为 coffee+milk+chocolate。&lt;/p&gt;
+&lt;p&gt;public class Decorator extends Drink {&lt;br /&gt;
+private Drink Obj;&lt;br /&gt;
+public Decorator(Drink Obj) {&lt;br /&gt;
+this.Obj = Obj;&lt;br /&gt;
+};&lt;br /&gt;
+@Override&lt;br /&gt;
+public float cost() {&lt;br /&gt;
+// TODO Auto-generated method stub&lt;br /&gt;
+return super.getPrice() + Obj.cost();&lt;br /&gt;
+}&lt;br /&gt;
+@Override&lt;br /&gt;
+public String getDescription() {&lt;br /&gt;
+return super.description + &amp;quot;-&amp;quot; + super.getPrice() + &amp;quot;&amp;amp;&amp;amp;&amp;quot; + Obj.getDescription();&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 装饰者实例化（加牛奶）。这里面要对被修饰的对象进行实例化。&lt;/p&gt;
+&lt;p&gt;public class Milk extends Decorator {&lt;br /&gt;
+public Milk(Drink Obj) {&lt;br /&gt;
+super(Obj);&lt;br /&gt;
+// TODO Auto-generated constructor stub&lt;br /&gt;
+super.setDescription(&amp;quot;Milk&amp;quot;);&lt;br /&gt;
+super.setPrice(2.0f);&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ coffee 店：初始化一个被修饰对象，修饰者实例需要对被修改者实例化，才能对具体的被修饰者进行修饰。&lt;/p&gt;
+&lt;p&gt;public class CoffeeBar {&lt;br /&gt;
+public static void main(String[] args) {&lt;br /&gt;
+Drink order;&lt;br /&gt;
+order = new Decaf();&lt;br /&gt;
+System.out.println(&amp;quot;order1 price:&amp;quot; + order.cost());&lt;br /&gt;
+System.out.println(&amp;quot;order1 desc:&amp;quot; + order.getDescription());&lt;br /&gt;
+System.out.println(&amp;quot;****************&amp;quot;);&lt;br /&gt;
+order = new LongBlack();&lt;br /&gt;
+order = new Milk(order);&lt;br /&gt;
+order = new Chocolate(order);&lt;br /&gt;
+order = new Chocolate(order);&lt;br /&gt;
+System.out.println(&amp;quot;order2 price:&amp;quot; + order.cost());&lt;br /&gt;
+System.out.println(&amp;quot;order2 desc:&amp;quot; + order.getDescription());&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 6.2 总结&lt;/p&gt;
+&lt;p&gt;装饰者和被装饰者之间必须是一样的类型，也就是要有共同的超类。在这里应用继承并不是实现方法的复制，而是实现类型的匹配。因为装饰者和被装饰者是同一个类型，因此装饰者可以取代被装饰者，这样就使被装饰者拥有了装饰者独有的行为。根据装饰者模式的理念，我们可以在任何时候，实现新的装饰者增加新的行为。如果是用继承，每当需要增加新的行为时，就要修改原程序了。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;7-代理模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#7-代理模式&#34;&gt;#&lt;/a&gt; 7 代理模式&lt;/h1&gt;
+&lt;p&gt;定义：代理模式给某一个对象提供一个代理对象，并由代理对象控制对原对象的引用。通俗的来讲代理模式就是我们生活中常见的中介。&lt;/p&gt;
+&lt;p&gt;举个例子来说明：假如说我现在想买一辆二手车，虽然我可以自己去找车源，做质量检测等一系列的车辆过户流程，但是这确实太浪费我得时间和精力了。我只是想买一辆车而已为什么我还要额外做这么多事呢？于是我就通过中介公司来买车，他们来给我找车源，帮我办理车辆过户流程，我只是负责选择自己喜欢的车，然后付钱就可以了。用图表示如下：&lt;/p&gt;
+&lt;h1 id=&#34;71-为什么要用代理模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#71-为什么要用代理模式&#34;&gt;#&lt;/a&gt; 7.1 为什么要用代理模式？&lt;/h1&gt;
+&lt;p&gt;中介隔离作用：在某些情况下，一个客户类不想或者不能直接引用一个委托对象，而代理类对象可以在客户类和委托对象之间起到中介的作用，其特征是代理类和委托类实现相同的接口。&lt;/p&gt;
+&lt;p&gt;开闭原则，增加功能：代理类除了是客户类和委托类的中介之外，我们还可以通过给代理类增加额外的功能来扩展委托类的功能，这样做我们只需要修改代理类而不需要再修改委托类，符合代码设计的开闭原则。代理类主要负责为委托类预处理消息、过滤消息、把消息转发给委托类，以及事后对返回结果的处理等。代理类本身并不真正实现服务，而是同过调用委托类的相关方法，来提供特定的服务。真正的业务功能还是由委托类来实现，但是可以在业务功能执行的前后加入一些公共的服务。例如我们想给项目加入缓存、日志这些功能，我们就可以使用代理类来完成，而没必要打开已经封装好的委托类。&lt;/p&gt;
+&lt;p&gt;代理模式分为三类：1. 静态代理 2. 动态代理 3. CGLIB 代理&lt;/p&gt;
+&lt;p&gt;7.2 静态代理&lt;/p&gt;
+&lt;p&gt;举例 (买房），类图如下：&lt;/p&gt;
+&lt;p&gt;第一步：创建服务类接口&lt;/p&gt;
+&lt;p&gt;public interface BuyHouse {&lt;br /&gt;
+void buyHosue();&lt;br /&gt;
+}&lt;br /&gt;
+ 第二步：实现服务接口&lt;/p&gt;
+&lt;p&gt;public class BuyHouseImpl implements BuyHouse {&lt;br /&gt;
+@Override&lt;br /&gt;
+public void buyHosue() {&lt;br /&gt;
+System.out.println (&amp;quot;我要买房&amp;quot;);&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 第三步：创建代理类&lt;/p&gt;
+&lt;p&gt;public class BuyHouseProxy implements BuyHouse {&lt;br /&gt;
+private BuyHouse buyHouse;&lt;br /&gt;
+public BuyHouseProxy(final BuyHouse buyHouse) {&lt;br /&gt;
+this.buyHouse = buyHouse;&lt;br /&gt;
+}&lt;br /&gt;
+@Override&lt;br /&gt;
+public void buyHosue() {&lt;br /&gt;
+System.out.println (&amp;quot;买房前准备&amp;quot;);&lt;br /&gt;
+buyHouse.buyHosue();&lt;br /&gt;
+System.out.println (&amp;quot;买房后装修&amp;quot;);&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 总结：&lt;/p&gt;
+&lt;p&gt;优点：可以做到在符合开闭原则的情况下对目标对象进行功能扩展。&lt;/p&gt;
+&lt;p&gt;缺点： 代理对象与目标对象要实现相同的接口，我们得为每一个服务都得创建代理类，工作量太大，不易管理。同时接口一旦发生改变，代理类也得相应修改。&lt;/p&gt;
+&lt;p&gt;7.3 动态代理&lt;br /&gt;
+动态代理有以下特点:&lt;/p&gt;
+&lt;p&gt;1. 代理对象，不需要实现接口&lt;/p&gt;
+&lt;p&gt;2. 代理对象的生成，是利用 JDK 的 API, 动态的在内存中构建代理对象 (需要我们指定创建代理对象 / 目标对象实现的接口的类型)&lt;/p&gt;
+&lt;p&gt;代理类不用再实现接口了。但是，要求被代理对象必须有接口。&lt;/p&gt;
+&lt;p&gt;动态代理实现：&lt;/p&gt;
+&lt;p&gt;Java.lang.reflect.Proxy 类可以直接生成一个代理对象&lt;/p&gt;
+&lt;p&gt;Proxy.newProxyInstance (ClassLoader loader, Class&amp;lt;?&amp;gt;[] interfaces, InvocationHandler h) 生成一个代理对象&lt;/p&gt;
+&lt;p&gt;参数 1:ClassLoader loader 代理对象的类加载器 一般使用被代理对象的类加载器&lt;/p&gt;
+&lt;p&gt;参数 2:Class&amp;lt;?&amp;gt;[] interfaces 代理对象的要实现的接口 一般使用的被代理对象实现的接口&lt;/p&gt;
+&lt;p&gt;参数 3:InvocationHandler h (接口) 执行处理类&lt;/p&gt;
+&lt;p&gt;InvocationHandler 中的 invoke (Object proxy, Method method, Object [] args) 方法：调用代理类的任何方法，此方法都会执行&lt;/p&gt;
+&lt;p&gt;参数 3.1: 代理对象 (慎用)&lt;/p&gt;
+&lt;p&gt;参数 3.2: 当前执行的方法&lt;/p&gt;
+&lt;p&gt;参数 3.3: 当前执行的方法运行时传递过来的参数&lt;/p&gt;
+&lt;p&gt;第一步：编写动态处理器&lt;/p&gt;
+&lt;p&gt;public class DynamicProxyHandler implements InvocationHandler {&lt;br /&gt;
+private Object object;&lt;br /&gt;
+public DynamicProxyHandler(final Object object) {&lt;br /&gt;
+this.object = object;&lt;br /&gt;
+}&lt;br /&gt;
+@Override&lt;br /&gt;
+public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {&lt;br /&gt;
+System.out.println (&amp;quot;买房前准备&amp;quot;);&lt;br /&gt;
+Object result = method.invoke(object, args);&lt;br /&gt;
+System.out.println (&amp;quot;买房后装修&amp;quot;);&lt;br /&gt;
+return result;&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 第二步：编写测试类&lt;/p&gt;
+&lt;p&gt;public class DynamicProxyTest {&lt;br /&gt;
+public static void main(String[] args) {&lt;br /&gt;
+BuyHouse buyHouse = new BuyHouseImpl();&lt;br /&gt;
+BuyHouse proxyBuyHouse = (BuyHouse) Proxy.newProxyInstance(BuyHouse.class.getClassLoader(), new&lt;br /&gt;
+Class&lt;span BuyHouse.class=&#34;&#34;&gt;&lt;/span&gt;, new DynamicProxyHandler(buyHouse));&lt;br /&gt;
+proxyBuyHouse.buyHosue();&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 动态代理总结：虽然相对于静态代理，动态代理大大减少了我们的开发任务，同时减少了对业务接口的依赖，降低了耦合度。但是还是有一点点小小的遗憾之处，那就是它始终无法摆脱仅支持 interface 代理的桎梏（我们要使用被代理的对象的接口），因为它的设计注定了这个遗憾。&lt;/p&gt;
+&lt;p&gt;7.4 CGLIB 代理&lt;/p&gt;
+&lt;p&gt;CGLIB 原理：动态生成一个要代理类的子类，子类重写要代理的类的所有不是 final 的方法。在子类中采用方法拦截的技术拦截所有父类方法的调用，顺势织入横切逻辑。它比使用 java 反射的 JDK 动态代理要快。&lt;/p&gt;
+&lt;p&gt;CGLIB 底层：使用字节码处理框架 ASM，来转换字节码并生成新的类。不鼓励直接使用 ASM，因为它要求你必须对 JVM 内部结构包括 class 文件的格式和指令集都很熟悉。&lt;/p&gt;
+&lt;p&gt;CGLIB 缺点：对于 final 方法，无法进行代理。&lt;/p&gt;
+&lt;p&gt;CGLIB 的实现步骤：&lt;/p&gt;
+&lt;p&gt;第一步：建立拦截器&lt;/p&gt;
+&lt;p&gt;public Object intercept(Object object, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    System.out.println(&amp;quot;买房前准备&amp;quot;);
+
+    Object result = methodProxy.invoke(object, args);
+
+    System.out.println(&amp;quot;买房后装修&amp;quot;);
+
+    return result;
+
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;参数：Object 为由 CGLib 动态生成的代理类实例，Method 为上文中实体类所调用的被代理的方法引用，Object [] 为参数值列表，MethodProxy 为生成的代理类对方法的代理引用。&lt;/p&gt;
+&lt;p&gt;返回：从代理实例的方法调用返回的值。&lt;/p&gt;
+&lt;p&gt;其中，proxy.invokeSuper (obj,arg) 调用代理类实例上的 proxy 方法的父类方法（即实体类 TargetObject 中对应的方法）&lt;/p&gt;
+&lt;p&gt;第二步： 生成动态代理类&lt;/p&gt;
+&lt;p&gt;public class CglibProxy implements MethodInterceptor {&lt;br /&gt;
+private Object target;&lt;br /&gt;
+public Object getInstance(final Object target) {&lt;br /&gt;
+this.target = target;&lt;br /&gt;
+Enhancer enhancer = new Enhancer();&lt;br /&gt;
+enhancer.setSuperclass(this.target.getClass());&lt;br /&gt;
+enhancer.setCallback(this);&lt;br /&gt;
+return enhancer.create();&lt;br /&gt;
+}&lt;br /&gt;
+public Object intercept(Object object, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {&lt;br /&gt;
+System.out.println (&amp;quot;买房前准备&amp;quot;);&lt;br /&gt;
+Object result = methodProxy.invoke(object, args);&lt;br /&gt;
+System.out.println (&amp;quot;买房后装修&amp;quot;);&lt;br /&gt;
+return result;&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 这里 Enhancer 类是 CGLib 中的一个字节码增强器，它可以方便的对你想要处理的类进行扩展，以后会经常看到它。&lt;/p&gt;
+&lt;p&gt;首先将被代理类 TargetObject 设置成父类，然后设置拦截器 TargetInterceptor，最后执行 enhancer.create () 动态生成一个代理类，并从 Object 强制转型成父类型 TargetObject。&lt;/p&gt;
+&lt;p&gt;第三步：测试&lt;/p&gt;
+&lt;p&gt;public class CglibProxyTest {&lt;br /&gt;
+public static void main(String[] args){&lt;br /&gt;
+BuyHouse buyHouse = new BuyHouseImpl();&lt;br /&gt;
+CglibProxy cglibProxy = new CglibProxy();&lt;br /&gt;
+BuyHouseImpl buyHouseCglibProxy = (BuyHouseImpl) cglibProxy.getInstance(buyHouse);&lt;br /&gt;
+buyHouseCglibProxy.buyHosue();&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ CGLIB 代理总结： CGLIB 创建的动态代理对象比 JDK 创建的动态代理对象的性能更高，但是 CGLIB 创建代理对象时所花费的时间却比 JDK 多得多。所以对于单例的对象，因为无需频繁创建对象，用 CGLIB 合适，反之使用 JDK 方式要更为合适一些。同时由于 CGLib 由于是采用动态创建子类的方法，对于 final 修饰的方法无法进行代理。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;8-外观模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#8-外观模式&#34;&gt;#&lt;/a&gt; 8 外观模式&lt;/h1&gt;
+&lt;p&gt;定义： 隐藏了系统的复杂性，并向客户端提供了一个可以访问系统的接口。&lt;/p&gt;
+&lt;p&gt;8.1 模式结构和代码示例&lt;/p&gt;
+&lt;p&gt;简单来说，该模式就是把一些复杂的流程封装成一个接口供给外部用户更简单的使用。这个模式中，设计到 3 个角色。&lt;/p&gt;
+&lt;p&gt;1）. 门面角色：外观模式的核心。它被客户角色调用，它熟悉子系统的功能。内部根据客户角色的需求预定了几种功能的组合。（客户调用，同时自身调用子系统功能）&lt;/p&gt;
+&lt;p&gt;2）. 子系统角色：实现了子系统的功能。它对客户角色和 Facade 时未知的。它内部可以有系统内的相互交互，也可以由供外界调用的接口。（实现具体功能）&lt;/p&gt;
+&lt;p&gt;3）. 客户角色：通过调用 Facede 来完成要实现的功能（调用门面角色）。&lt;/p&gt;
+&lt;p&gt;举例（每个 Computer 都有 CPU、Memory、Disk。在 Computer 开启和关闭的时候，相应的部件也会开启和关闭），类图如下：&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;首先是子系统类：&lt;/p&gt;
+&lt;p&gt;public class CPU {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public void start() &amp;#123;
+	System.out.println(&amp;quot;cpu is start...&amp;quot;);
+&amp;#125;
+
+public void shutDown() &amp;#123;
+	System.out.println(&amp;quot;CPU is shutDown...&amp;quot;);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;/p&gt;
+&lt;p&gt;public class Disk {&lt;br /&gt;
+public void start() {&lt;br /&gt;
+System.out.println(&amp;quot;Disk is start...&amp;quot;);&lt;br /&gt;
+}&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public void shutDown() &amp;#123;
+	System.out.println(&amp;quot;Disk is shutDown...&amp;quot;);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;/p&gt;
+&lt;p&gt;public class Memory {&lt;br /&gt;
+public void start() {&lt;br /&gt;
+System.out.println(&amp;quot;Memory is start...&amp;quot;);&lt;br /&gt;
+}&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public void shutDown() &amp;#123;
+	System.out.println(&amp;quot;Memory is shutDown...&amp;quot;);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 然后是，门面类 Facade&lt;/p&gt;
+&lt;p&gt;public class Computer {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private CPU cpu;
+private Memory memory;
+private Disk disk;
+
+public Computer() &amp;#123;
+	cpu = new CPU();
+	memory = new Memory();
+	disk = new Disk();
+&amp;#125;
+
+public void start() &amp;#123;
+	System.out.println(&amp;quot;Computer start begin&amp;quot;);
+	cpu.start();
+	disk.start();
+	memory.start();
+	System.out.println(&amp;quot;Computer start end&amp;quot;);
+&amp;#125;
+
+public void shutDown() &amp;#123;
+	System.out.println(&amp;quot;Computer shutDown begin&amp;quot;);
+	cpu.shutDown();
+	disk.shutDown();
+	memory.shutDown();
+	System.out.println(&amp;quot;Computer shutDown end...&amp;quot;);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 最后为，客户角色&lt;/p&gt;
+&lt;p&gt;public class Client {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public static void main(String[] args) &amp;#123;
+	Computer computer = new Computer();
+	computer.start();
+	System.out.println(&amp;quot;=================&amp;quot;);
+	computer.shutDown();
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 8.2 优点&lt;br /&gt;
+　　- 松散耦合&lt;/p&gt;
+&lt;p&gt;使得客户端和子系统之间解耦，让子系统内部的模块功能更容易扩展和维护；&lt;/p&gt;
+&lt;p&gt;- 简单易用&lt;/p&gt;
+&lt;p&gt;客户端根本不需要知道子系统内部的实现，或者根本不需要知道子系统内部的构成，它只需要跟 Facade 类交互即可。&lt;/p&gt;
+&lt;p&gt;- 更好的划分访问层次&lt;/p&gt;
+&lt;p&gt;有些方法是对系统外的，有些方法是系统内部相互交互的使用的。子系统把那些暴露给外部的功能集中到门面中，这样就可以实现客户端的使用，很好的隐藏了子系统内部的细节。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;9-桥接模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#9-桥接模式&#34;&gt;#&lt;/a&gt; 9 桥接模式&lt;/h1&gt;
+&lt;p&gt;定义： 将抽象部分与它的实现部分分离，使它们都可以独立地变化。&lt;/p&gt;
+&lt;p&gt;9.1 案例&lt;br /&gt;
+看下图手机与手机软件的类图&lt;/p&gt;
+&lt;p&gt;增加一款新的手机软件，需要在所有手机品牌类下添加对应的手机软件类，当手机软件种类较多时，将导致类的个数急剧膨胀，难以维护&lt;/p&gt;
+&lt;p&gt;手机和手机中的软件是什么关系？&lt;/p&gt;
+&lt;p&gt;手机中的软件从本质上来说并不是一种手机，手机软件运行在手机中，是一种包含与被包含关系，而不是一种父与子或者说一般与特殊的关系，通过继承手机类实现手机软件类的设计是违反一般规律的。&lt;/p&gt;
+&lt;p&gt;如果 Oppo 手机实现了 wifi 功能，继承它的 Oppo 应用商城也会继承 wifi 功能，并且 Oppo 手机类的任何变动，都会影响其子类&lt;/p&gt;
+&lt;p&gt;换一种解决思路&lt;/p&gt;
+&lt;p&gt;从类图上看起来更像是手机软件类图，涉及到手机本身相关的功能，比如说：wifi 功能，放到哪个类中实现呢？放到 OppoAppStore 中实现显然是不合适的&lt;/p&gt;
+&lt;p&gt;引起整个结构变化的元素有两个，一个是手机品牌，一个是手机软件，所以我们将这两个点抽出来，分别进行封装&lt;/p&gt;
+&lt;p&gt;9.2 桥接模式结构和代码示例&lt;/p&gt;
+&lt;p&gt;类图：&lt;/p&gt;
+&lt;p&gt;实现：&lt;/p&gt;
+&lt;p&gt;public interface Software {&lt;br /&gt;
+public void run();&lt;/p&gt;
+&lt;p&gt;}&lt;br /&gt;
+public class AppStore implements Software {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Override
+public void run() &amp;#123;
+    System.out.println(&amp;quot;run app store&amp;quot;);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+public class Camera implements Software {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Override
+public void run() &amp;#123;
+    System.out.println(&amp;quot;run camera&amp;quot;);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 抽象：&lt;/p&gt;
+&lt;p&gt;public abstract class Phone {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;protected Software software;
+
+public void setSoftware(Software software) &amp;#123;
+	this.software = software;
+&amp;#125;
+
+public abstract void run();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+public class Oppo extends Phone {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Override
+public void run() &amp;#123;
+    software.run();
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+public class Vivo extends Phone {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Override
+public void run() &amp;#123;
+    software.run();
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 对比最初的设计，将抽象部分（手机）与它的实现部分（手机软件类）分离，将实现部分抽象成单独的类，使它们都可以独立地变化。整个类图看起来像一座桥，所以称为桥接模式&lt;/p&gt;
+&lt;p&gt;继承是一种强耦合关系，子类的实现与它的父类有非常紧密的依赖关系，父类的任何变化 都会导致子类发生变化，因此继承或者说强耦合关系严重影响了类的灵活性，并最终限制了可复用性&lt;/p&gt;
+&lt;p&gt;从桥接模式的设计上我们可以看出聚合是一种比继承要弱的关联关系，手机类和软件类都可独立的进行变化，不会互相影响&lt;/p&gt;
+&lt;p&gt;9.3 适用场景&lt;br /&gt;
+桥接模式通常适用于以下场景。&lt;/p&gt;
+&lt;p&gt;当一个类存在两个独立变化的维度，且这两个维度都需要进行扩展时。&lt;/p&gt;
+&lt;p&gt;当一个系统不希望使用继承或因为多层次继承导致系统类的个数急剧增加时。&lt;/p&gt;
+&lt;p&gt;当一个系统需要在构件的抽象化角色和具体化角色之间增加更多的灵活性时。&lt;/p&gt;
+&lt;p&gt;9.4 优缺点&lt;br /&gt;
+优点：&lt;/p&gt;
+&lt;p&gt;(1) 在很多情况下，桥接模式可以取代多层继承方案，多层继承方案违背了 “单一职责原则”，复用性较差，且类的个数非常多，桥接模式是比多层继承方案更好的解决方法，它极大减少了子类的个数。&lt;/p&gt;
+&lt;p&gt;(2) 桥接模式提高了系统的可扩展性，在两个变化维度中任意扩展一个维度，都不需要修改原有系统，符合 “开闭原则”。&lt;/p&gt;
+&lt;p&gt;缺点：&lt;/p&gt;
+&lt;p&gt;桥接模式的使用会增加系统的理解与设计难度，由于关联关系建立在抽象层，要求开发者一开始就针对抽象层进行设计与编程。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;10-组合模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#10-组合模式&#34;&gt;#&lt;/a&gt; 10 组合模式&lt;/h1&gt;
+&lt;p&gt;定义：有时又叫作部分 - 整体模式，它是一种将对象组合成树状的层次结构的模式，用来表示 “部分 - 整体” 的关系，使用户对单个对象和组合对象具有一致的访问性。&lt;/p&gt;
+&lt;p&gt;意图：将对象组合成树形结构以表示 &amp;quot;部分 - 整体&amp;quot; 的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性。&lt;/p&gt;
+&lt;p&gt;主要解决：它在我们树型结构的问题中，模糊了简单元素和复杂元素的概念，客户程序可以向处理简单元素一样来处理复杂元素，从而使得客户程序与复杂元素的内部结构解耦。&lt;/p&gt;
+&lt;p&gt;何时使用： 1、您想表示对象的部分 - 整体层次结构（树形结构）。 2、您希望用户忽略组合对象与单个对象的不同，用户将统一地使用组合结构中的所有对象。&lt;/p&gt;
+&lt;p&gt;如何解决：树枝和叶子实现统一接口，树枝内部组合该接口。&lt;/p&gt;
+&lt;p&gt;关键代码：树枝内部组合该接口，并且含有内部属性 List，里面放 Component。&lt;/p&gt;
+&lt;p&gt;组合模式的主要优点有：&lt;/p&gt;
+&lt;p&gt;组合模式使得客户端代码可以一致地处理单个对象和组合对象，无须关心自己处理的是单个对象，还是组合对象，这简化了客户端代码；&lt;/p&gt;
+&lt;p&gt;更容易在组合体内加入新的对象，客户端不会因为加入了新的对象而更改源代码，满足 “开闭原则”；&lt;/p&gt;
+&lt;p&gt;其主要缺点是：&lt;/p&gt;
+&lt;p&gt;设计较复杂，客户端需要花更多时间理清类之间的层次关系；&lt;/p&gt;
+&lt;p&gt;不容易限制容器中的构件；&lt;/p&gt;
+&lt;p&gt;不容易用继承的方法来增加构件的新功能；&lt;/p&gt;
+&lt;p&gt;10.1 模式结构和代码示例&lt;/p&gt;
+&lt;p&gt;抽象构件（Component）角色：它的主要作用是为树叶构件和树枝构件声明公共接口，并实现它们的默认行为。在透明式的组合模式中抽象构件还声明访问和管理子类的接口；在安全式的组合模式中不声明访问和管理子类的接口，管理工作由树枝构件完成。&lt;/p&gt;
+&lt;p&gt;树叶构件（Leaf）角色：是组合中的叶节点对象，它没有子节点，用于实现抽象构件角色中 声明的公共接口。&lt;/p&gt;
+&lt;p&gt;树枝构件（Composite）角色：是组合中的分支节点对象，它有子节点。它实现了抽象构件角色中声明的接口，它的主要作用是存储和管理子部件，通常包含 Add ()、Remove ()、GetChild () 等方法&lt;/p&gt;
+&lt;p&gt;举例（访问一颗树），类图如下：&lt;/p&gt;
+&lt;p&gt;1 组件&lt;/p&gt;
+&lt;p&gt;public interface Component {&lt;br /&gt;
+public void add(Component c);&lt;br /&gt;
+public void remove(Component c);&lt;br /&gt;
+public Component getChild(int i);&lt;br /&gt;
+public void operation();&lt;/p&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 2 叶子&lt;/p&gt;
+&lt;p&gt;public class Leaf implements Component{&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private String name;
+
+
+public Leaf(String name) &amp;#123;
+	this.name = name;
+&amp;#125;
+
+@Override
+public void add(Component c) &amp;#123;&amp;#125;
+
+@Override
+public void remove(Component c) &amp;#123;&amp;#125;
+
+@Override
+public Component getChild(int i) &amp;#123;
+	// TODO Auto-generated method stub
+	return null;
+&amp;#125;
+
+@Override
+public void operation() &amp;#123;
+	// TODO Auto-generated method stub
+	 System.out.println(&amp;quot;树叶&amp;quot;+name+&amp;quot;：被访问！&amp;quot;); 
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 3 树枝&lt;/p&gt;
+&lt;p&gt;public class Composite implements Component {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private ArrayList&amp;lt;Component&amp;gt; children = new ArrayList&amp;lt;Component&amp;gt;();
+
+public void add(Component c) &amp;#123;
+	children.add(c);
+&amp;#125;
+
+public void remove(Component c) &amp;#123;
+	children.remove(c);
+&amp;#125;
+
+public Component getChild(int i) &amp;#123;
+	return children.get(i);
+&amp;#125;
+
+public void operation() &amp;#123;
+	for (Object obj : children) &amp;#123;
+		((Component) obj).operation();
+	&amp;#125;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;/p&gt;
+&lt;h1 id=&#34;11-享元模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#11-享元模式&#34;&gt;#&lt;/a&gt; 11 享元模式&lt;/h1&gt;
+&lt;p&gt;定义：通过共享的方式高效的支持大量细粒度的对象。&lt;/p&gt;
+&lt;p&gt;主要解决：在有大量对象时，有可能会造成内存溢出，我们把其中共同的部分抽象出来，如果有相同的业务请求，直接返回在内存中已有的对象，避免重新创建。&lt;/p&gt;
+&lt;p&gt;何时使用： 1、系统中有大量对象。 2、这些对象消耗大量内存。 3、这些对象的状态大部分可以外部化。 4、这些对象可以按照内蕴状态分为很多组，当把外蕴对象从对象中剔除出来时，每一组对象都可以用一个对象来代替。 5、系统不依赖于这些对象身份，这些对象是不可分辨的。&lt;/p&gt;
+&lt;p&gt;如何解决：用唯一标识码判断，如果在内存中有，则返回这个唯一标识码所标识的对象。&lt;/p&gt;
+&lt;p&gt;关键代码：用 HashMap 存储这些对象。&lt;/p&gt;
+&lt;p&gt;应用实例： 1、JAVA 中的 String，如果有则返回，如果没有则创建一个字符串保存在字符串缓存池里面。&lt;/p&gt;
+&lt;p&gt;优点：大大减少对象的创建，降低系统的内存，使效率提高。&lt;/p&gt;
+&lt;p&gt;缺点：提高了系统的复杂度，需要分离出外部状态和内部状态，而且外部状态具有固有化的性质，不应该随着内部状态的变化而变化，否则会造成系统的混乱。&lt;/p&gt;
+&lt;p&gt;简单来说，我们抽取出一个对象的外部状态（不能共享）和内部状态（可以共享）。然后根据外部状态的决定是否创建内部状态对象。内部状态对象是通过哈希表保存的，当外部状态相同的时候，不再重复的创建内部状态对象，从而减少要创建对象的数量。&lt;/p&gt;
+&lt;p&gt;11.1 享元模式的结构图和代码示例&lt;/p&gt;
+&lt;p&gt;1、Flyweight (享元抽象类)：一般是接口或者抽象类，定义了享元类的公共方法。这些方法可以分享内部状态的数据，也可以调用这些方法修改外部状态。&lt;/p&gt;
+&lt;p&gt;2、ConcreteFlyweight (具体享元类)：具体享元类实现了抽象享元类的方法，为享元对象开辟了内存空间来保存享元对象的内部数据，同时可以通过和单例模式结合只创建一个享元对象。&lt;/p&gt;
+&lt;p&gt;3、FlyweightFactory (享元工厂类)：享元工厂类创建并且管理享元类，享元工厂类针对享元类来进行编程，通过提供一个享元池来进行享元对象的管理。一般享元池设计成键值对，或者其他的存储结构来存储。当客户端进行享元对象的请求时，如果享元池中有对应的享元对象则直接返回对应的对象，否则工厂类创建对应的享元对象并保存到享元池。&lt;/p&gt;
+&lt;p&gt;举例（JAVA 中的 String，如果有则返回，如果没有则创建一个字符串保存在字符串缓存池里面）。类图如下：&lt;/p&gt;
+&lt;p&gt;（1）创建享元对象接口&lt;/p&gt;
+&lt;p&gt;public interface IFlyweight {&lt;br /&gt;
+void print();&lt;br /&gt;
+}&lt;br /&gt;
+（2）创建具体享元对象&lt;/p&gt;
+&lt;p&gt;public class Flyweight implements IFlyweight {&lt;br /&gt;
+private String id;&lt;br /&gt;
+public Flyweight(String id){&lt;br /&gt;
+&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3RoaXMuaWQ=&#34;&gt;this.id&lt;/span&gt; = id;&lt;br /&gt;
+}&lt;br /&gt;
+@Override&lt;br /&gt;
+public void print() {&lt;br /&gt;
+System.out.println(&amp;quot;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL0ZseXdlaWdodC5pZA==&#34;&gt;Flyweight.id&lt;/span&gt; = &amp;quot; + getId() + &amp;quot; ...&amp;quot;);&lt;br /&gt;
+}&lt;br /&gt;
+public String getId() {&lt;br /&gt;
+return id;&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+（3）创建工厂，这里要特别注意，为了避免享元对象被重复创建，我们使用 HashMap 中的 key 值保证其唯一。&lt;/p&gt;
+&lt;p&gt;public class FlyweightFactory {&lt;br /&gt;
+private Map&amp;lt;String, IFlyweight&amp;gt; flyweightMap = new HashMap();&lt;br /&gt;
+public IFlyweight getFlyweight(String str){&lt;br /&gt;
+IFlyweight flyweight = flyweightMap.get(str);&lt;br /&gt;
+if(flyweight == null){&lt;br /&gt;
+flyweight = new Flyweight(str);&lt;br /&gt;
+flyweightMap.put(str, flyweight);&lt;br /&gt;
+}&lt;br /&gt;
+return  flyweight;&lt;br /&gt;
+}&lt;br /&gt;
+public int getFlyweightMapSize(){&lt;br /&gt;
+return flyweightMap.size();&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+（4）测试，我们创建三个字符串，但是只会产生两个享元对象&lt;/p&gt;
+&lt;p&gt;public class MainTest {&lt;br /&gt;
+public static void main(String[] args) {&lt;br /&gt;
+FlyweightFactory flyweightFactory = new FlyweightFactory();&lt;br /&gt;
+IFlyweight flyweight1 = flyweightFactory.getFlyweight(&amp;quot;A&amp;quot;);&lt;br /&gt;
+IFlyweight flyweight2 = flyweightFactory.getFlyweight(&amp;quot;B&amp;quot;);&lt;br /&gt;
+IFlyweight flyweight3 = flyweightFactory.getFlyweight(&amp;quot;A&amp;quot;);&lt;br /&gt;
+flyweight1.print();&lt;br /&gt;
+flyweight2.print();&lt;br /&gt;
+flyweight3.print();&lt;br /&gt;
+System.out.println(flyweightFactory.getFlyweightMapSize());&lt;br /&gt;
+}&lt;/p&gt;
+&lt;p&gt;}&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;c-关系模式11种&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#c-关系模式11种&#34;&gt;#&lt;/a&gt; C、关系模式（11 种）&lt;/h1&gt;
+&lt;p&gt;先来张图，看看这 11 中模式的关系：&lt;/p&gt;
+&lt;p&gt;第一类：通过父类与子类的关系进行实现。&lt;/p&gt;
+&lt;p&gt;第二类：两个类之间。&lt;/p&gt;
+&lt;p&gt;第三类：类的状态。&lt;/p&gt;
+&lt;p&gt;第四类：通过中间类&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;12-策略模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#12-策略模式&#34;&gt;#&lt;/a&gt; 12 策略模式&lt;/h1&gt;
+&lt;p&gt;定义： 策略模式定义了一系列算法，并将每个算法封装起来，使他们可以相互替换，且算法的变化不会影响到使用算法的客户。&lt;/p&gt;
+&lt;p&gt;意图：定义一系列的算法，把它们一个个封装起来，并且使它们可相互替换。&lt;/p&gt;
+&lt;p&gt;主要解决：在有多种算法相似的情况下，使用 if...else 所带来的复杂和难以维护。&lt;/p&gt;
+&lt;p&gt;何时使用：一个系统有许多许多类，而区分它们的只是他们直接的行为。&lt;/p&gt;
+&lt;p&gt;如何解决：将这些算法封装成一个一个的类，任意地替换。&lt;/p&gt;
+&lt;p&gt;关键代码：实现同一个接口。&lt;/p&gt;
+&lt;p&gt;优点： 1、算法可以自由切换。 2、避免使用多重条件判断。 3、扩展性良好。&lt;/p&gt;
+&lt;p&gt;缺点： 1、策略类会增多。 2、所有策略类都需要对外暴露。&lt;/p&gt;
+&lt;p&gt;12.1 策略模式结构和示例代码&lt;/p&gt;
+&lt;p&gt;抽象策略角色：这个是一个抽象的角色，通常情况下使用接口或者抽象类去实现。对比来说，就是我们的 Comparator 接口。&lt;/p&gt;
+&lt;p&gt;具体策略角色：包装了具体的算法和行为。对比来说，就是实现了 Comparator 接口的实现一组实现类。&lt;/p&gt;
+&lt;p&gt;环境角色：内部会持有一个抽象角色的引用，给客户端调用。&lt;/p&gt;
+&lt;p&gt;举例如下（ 实现一个加减的功能），类图如下：&lt;/p&gt;
+&lt;p&gt;1、定义抽象策略角色&lt;/p&gt;
+&lt;p&gt;public interface Strategy {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public int calc(int num1,int num2);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 2、定义具体策略角色&lt;/p&gt;
+&lt;p&gt;public class AddStrategy implements Strategy {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Override
+public int calc(int num1, int num2) &amp;#123;
+	// TODO Auto-generated method stub
+	return num1 + num2;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+public class SubstractStrategy implements Strategy {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Override
+public int calc(int num1, int num2) &amp;#123;
+	// TODO Auto-generated method stub
+	return num1 - num2;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 3、环境角色&lt;/p&gt;
+&lt;p&gt;public class Environment {&lt;br /&gt;
+private Strategy strategy;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public Environment(Strategy strategy) &amp;#123;
+	this.strategy = strategy;
+&amp;#125;
+
+public int calculate(int a, int b) &amp;#123;
+	return strategy.calc(a, b);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 4、测试&lt;/p&gt;
+&lt;p&gt;public class MainTest {&lt;br /&gt;
+public static void main(String[] args) {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;	Environment environment=new Environment(new AddStrategy());
+	int result=environment.calculate(20, 5);
+	System.out.println(result);
+	
+	Environment environment1=new Environment(new SubstractStrategy());
+	int result1=environment1.calculate(20, 5);
+	System.out.println(result1);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ &lt;br /&gt;
+13 模板模式&lt;br /&gt;
+定义：定义一个操作中算法的骨架，而将一些步骤延迟到子类中，模板方法使得子类可以不改变算法的结构即可重定义该算法的某些特定步骤。&lt;/p&gt;
+&lt;p&gt;通俗点的理解就是 ：完成一件事情，有固定的数个步骤，但是每个步骤根据对象的不同，而实现细节不同；就可以在父类中定义一个完成该事情的总方法，按照完成事件需要的步骤去调用其每个步骤的实现方法。每个步骤的具体实现，由子类完成。&lt;/p&gt;
+&lt;p&gt;13.1 模式结构和代码示例&lt;/p&gt;
+&lt;p&gt;抽象父类（AbstractClass）：实现了模板方法，定义了算法的骨架。&lt;/p&gt;
+&lt;p&gt;具体类（ConcreteClass)：实现抽象类中的抽象方法，即不同的对象的具体实现细节。&lt;/p&gt;
+&lt;p&gt;举例（ 我们做菜可以分为三个步骤 （1）备料 （2）具体做菜 （3）盛菜端给客人享用，这三部就是算法的骨架 ；然而做不同菜需要的料，做的方法，以及如何盛装给客人享用都是不同的这个就是不同的实现细节。）。类图如下：&lt;/p&gt;
+&lt;p&gt;a. 先来写一个抽象的做菜父类：&lt;/p&gt;
+&lt;p&gt;public abstract class Dish {&lt;br /&gt;
+/**&lt;br /&gt;
+* 具体的整个过程&lt;br /&gt;
+&lt;em&gt; /&lt;br /&gt;
+protected void dodish(){&lt;br /&gt;
+this.preparation();&lt;br /&gt;
+this.doing();&lt;br /&gt;
+this.carriedDishes();&lt;br /&gt;
+}&lt;br /&gt;
+/&lt;/em&gt;*&lt;br /&gt;
+* 备料&lt;br /&gt;
+&lt;em&gt; /&lt;br /&gt;
+public abstract void preparation();&lt;br /&gt;
+/&lt;/em&gt;*&lt;br /&gt;
+* 做菜&lt;br /&gt;
+&lt;em&gt; /&lt;br /&gt;
+public abstract void doing();&lt;br /&gt;
+/&lt;/em&gt;*&lt;br /&gt;
+* 上菜&lt;br /&gt;
+ */&lt;br /&gt;
+public abstract void carriedDishes ();&lt;br /&gt;
+}&lt;br /&gt;
+ b. 下来做两个番茄炒蛋（EggsWithTomato）和红烧肉（Bouilli）实现父类中的抽象方法&lt;/p&gt;
+&lt;p&gt;public class EggsWithTomato extends Dish {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Override
+public void preparation() &amp;#123;
+	System.out.println(&amp;quot;洗并切西红柿，打鸡蛋。&amp;quot;);
+&amp;#125;
+
+@Override
+public void doing() &amp;#123;
+	System.out.println(&amp;quot;鸡蛋倒入锅里，然后倒入西红柿一起炒。&amp;quot;);
+&amp;#125;
+
+@Override
+public void carriedDishes() &amp;#123;
+	System.out.println(&amp;quot;将炒好的西红寺鸡蛋装入碟子里，端给客人吃。&amp;quot;);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+public class Bouilli extends Dish{&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Override
+public void preparation() &amp;#123;
+    System.out.println(&amp;quot;切猪肉和土豆。&amp;quot;);
+&amp;#125;
+
+@Override
+public void doing() &amp;#123;
+    System.out.println(&amp;quot;将切好的猪肉倒入锅中炒一会然后倒入土豆连炒带炖。&amp;quot;);
+&amp;#125;
+
+@Override
+public void carriedDishes() &amp;#123;
+    System.out.println(&amp;quot;将做好的红烧肉盛进碗里端给客人吃。&amp;quot;);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ c. 在测试类中我们来做菜：&lt;/p&gt;
+&lt;p&gt;public class MainTest {&lt;br /&gt;
+public static void main(String[] args) {&lt;br /&gt;
+Dish eggsWithTomato = new EggsWithTomato();&lt;br /&gt;
+eggsWithTomato.dodish();&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;	System.out.println(&amp;quot;-----------------------------&amp;quot;);
+
+	Dish bouilli = new Bouilli();
+	bouilli.dodish();
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 13.2  模板模式的优点和缺点&lt;br /&gt;
+优点：&lt;/p&gt;
+&lt;p&gt;（1）具体细节步骤实现定义在子类中，子类定义详细处理算法是不会改变算法整体结构。&lt;/p&gt;
+&lt;p&gt;（2）代码复用的基本技术，在数据库设计中尤为重要。&lt;/p&gt;
+&lt;p&gt;（3）存在一种反向的控制结构，通过一个父类调用其子类的操作，通过子类对父类进行扩展增加新的行为，符合 “开闭原则”。&lt;/p&gt;
+&lt;p&gt;缺点：&lt;br /&gt;
+    每个不同的实现都需要定义一个子类，会导致类的个数增加，系统更加庞大。&lt;/p&gt;
+&lt;p&gt;14 观察者模式&lt;br /&gt;
+定义： 定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。&lt;/p&gt;
+&lt;p&gt;主要解决：一个对象状态改变给其他对象通知的问题，而且要考虑到易用和低耦合，保证高度的协作。&lt;/p&gt;
+&lt;p&gt;何时使用：一个对象（目标对象）的状态发生改变，所有的依赖对象（观察者对象）都将得到通知，进行广播通知。&lt;/p&gt;
+&lt;p&gt;如何解决：使用面向对象技术，可以将这种依赖关系弱化。&lt;/p&gt;
+&lt;p&gt;关键代码：在抽象类里有一个 ArrayList 存放观察者们。&lt;/p&gt;
+&lt;p&gt;优点： 1、观察者和被观察者是抽象耦合的。 2、建立一套触发机制。&lt;/p&gt;
+&lt;p&gt;缺点： 1、如果一个被观察者对象有很多的直接和间接的观察者的话，将所有的观察者都通知到会花费很多时间。 2、如果在观察者和观察目标之间有循环依赖的话，观察目标会触发它们之间进行循环调用，可能导致系统崩溃。 3、观察者模式没有相应的机制让观察者知道所观察的目标对象是怎么发生变化的，而仅仅只是知道观察目标发生了变化。&lt;/p&gt;
+&lt;p&gt;14.1 模式结构图和代码示例&lt;/p&gt;
+&lt;p&gt;抽象被观察者角色：也就是一个抽象主题，它把所有对观察者对象的引用保存在一个集合中，每个主题都可以有任意数量的观察者。抽象主题提供一个接口，可以增加和删除观察者角色。一般用一个抽象类和接口来实现。&lt;/p&gt;
+&lt;p&gt;抽象观察者角色：为所有的具体观察者定义一个接口，在得到主题通知时更新自己。&lt;/p&gt;
+&lt;p&gt;具体被观察者角色：也就是一个具体的主题，在集体主题的内部状态改变时，所有登记过的观察者发出通知。&lt;/p&gt;
+&lt;p&gt;具体观察者角色：实现抽象观察者角色所需要的更新接口，一边使本身的状态与制图的状态相协调。&lt;/p&gt;
+&lt;p&gt;举例（有一个微信公众号服务，不定时发布一些消息，关注公众号就可以收到推送消息，取消关注就收不到推送消息。）类图如下：&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;1、定义一个抽象被观察者接口&lt;/p&gt;
+&lt;p&gt;public interface Subject {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  public void registerObserver(Observer o);
+  public void removeObserver(Observer o);
+  public void notifyObserver();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 2、定义一个抽象观察者接口&lt;/p&gt;
+&lt;p&gt;public interface Observer {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public void update(String message);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 3、定义被观察者，实现了 Observerable 接口，对 Observerable 接口的三个方法进行了具体实现，同时有一个 List 集合，用以保存注册的观察者，等需要通知观察者时，遍历该集合即可。&lt;/p&gt;
+&lt;p&gt;public class WechatServer implements Subject {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private List&amp;lt;Observer&amp;gt; list;
+private String message;
+
+public WechatServer() &amp;#123;
+	list = new ArrayList&amp;lt;Observer&amp;gt;();
+&amp;#125;
+
+@Override
+public void registerObserver(Observer o) &amp;#123;
+	// TODO Auto-generated method stub
+	list.add(o);
+&amp;#125;
+
+@Override
+public void removeObserver(Observer o) &amp;#123;
+	// TODO Auto-generated method stub
+	if (!list.isEmpty()) &amp;#123;
+		list.remove(o);
+	&amp;#125;
+&amp;#125;
+
+@Override
+public void notifyObserver() &amp;#123;
+	// TODO Auto-generated method stub
+	for (Observer o : list) &amp;#123;
+		o.update(message);
+	&amp;#125;
+&amp;#125;
+
+public void setInfomation(String s) &amp;#123;
+	this.message = s;
+	System.out.println(&amp;quot;微信服务更新消息： &amp;quot; + s);
+	// 消息更新，通知所有观察者
+	notifyObserver();
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 4、定义具体观察者，微信公众号的具体观察者为用户 User&lt;/p&gt;
+&lt;p&gt;public class User implements Observer {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private String name;
+private String message;
+
+public User(String name) &amp;#123;
+	this.name = name;
+&amp;#125;
+
+@Override
+public void update(String message) &amp;#123;
+	this.message = message;
+	read();
+&amp;#125;
+
+public void read() &amp;#123;
+	System.out.println(name + &amp;quot; 收到推送消息： &amp;quot; + message);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 5、编写一个测试类&lt;/p&gt;
+&lt;p&gt;public class MainTest {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; public static void main(String[] args) &amp;#123;
+	 
+        WechatServer server = new WechatServer();
+        
+        Observer userZhang = new User(&amp;quot;ZhangSan&amp;quot;);
+        Observer userLi = new User(&amp;quot;LiSi&amp;quot;);
+        Observer userWang = new User(&amp;quot;WangWu&amp;quot;);
+        
+        server.registerObserver(userZhang);
+        server.registerObserver(userLi);
+        server.registerObserver(userWang);
+        server.setInfomation(&amp;quot;PHP是世界上最好用的语言！&amp;quot;);
+        
+        System.out.println(&amp;quot;----------------------------------------------&amp;quot;);
+        server.removeObserver(userZhang);
+        server.setInfomation(&amp;quot;JAVA是世界上最好用的语言！&amp;quot;);
+        
+    &amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;/p&gt;
+&lt;h1 id=&#34;15-迭代器模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#15-迭代器模式&#34;&gt;#&lt;/a&gt; 15 迭代器模式&lt;/h1&gt;
+&lt;p&gt;定义：提供一种方法顺序访问一个聚合对象中各个元素，而又无须暴露该对象的内部表示。&lt;/p&gt;
+&lt;p&gt;简单来说，不同种类的对象可能需要不同的遍历方式，我们对每一种类型的对象配一个迭代器，最后多个迭代器合成一个。&lt;/p&gt;
+&lt;p&gt;主要解决：不同的方式来遍历整个整合对象。&lt;/p&gt;
+&lt;p&gt;何时使用：遍历一个聚合对象。&lt;/p&gt;
+&lt;p&gt;如何解决：把在元素之间游走的责任交给迭代器，而不是聚合对象。&lt;/p&gt;
+&lt;p&gt;关键代码：定义接口：hasNext, next。&lt;/p&gt;
+&lt;p&gt;应用实例：JAVA 中的 iterator。&lt;/p&gt;
+&lt;p&gt;优点： 1、它支持以不同的方式遍历一个聚合对象。 2、迭代器简化了聚合类。 3、在同一个聚合上可以有多个遍历。 4、在迭代器模式中，增加新的聚合类和迭代器类都很方便，无须修改原有代码。&lt;/p&gt;
+&lt;p&gt;缺点：由于迭代器模式将存储数据和遍历数据的职责分离，增加新的聚合类需要对应增加新的迭代器类，类的个数成对增加，这在一定程度上增加了系统的复杂性。&lt;/p&gt;
+&lt;p&gt;15.1 模式结构和代码示例&lt;/p&gt;
+&lt;p&gt;(1) 迭代器角色（Iterator）: 定义遍历元素所需要的方法，一般来说会有这么三个方法：取得下一个元素的方法 next ()，判断是否遍历结束的方法 hasNext ()），移出当前对象的方法 remove (),&lt;/p&gt;
+&lt;p&gt;(2) 具体迭代器角色（Concrete Iterator）：实现迭代器接口中定义的方法，完成集合的迭代。&lt;/p&gt;
+&lt;p&gt;(3) 容器角色 (Aggregate):  一般是一个接口，提供一个 iterator () 方法，例如 java 中的 Collection 接口，List 接口，Set 接口等&lt;/p&gt;
+&lt;p&gt;(4) 具体容器角色（ConcreteAggregate）：就是抽象容器的具体实现类，比如 List 接口的有序列表实现 ArrayList，List 接口的链表实现 LinkList，Set 接口的哈希列表的实现 HashSet 等。&lt;/p&gt;
+&lt;p&gt;举例（咖啡厅和中餐厅合并，他们两个餐厅的菜单一个是数组保存的，一个是 ArrayList 保存的。遍历方式不一样，使用迭代器聚合访问，只需要一种方式）&lt;/p&gt;
+&lt;p&gt;1 迭代器接口&lt;/p&gt;
+&lt;p&gt;public interface Iterator {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public boolean hasNext();
+public Object next();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 2 咖啡店菜单和咖啡店菜单遍历器&lt;/p&gt;
+&lt;p&gt;public class CakeHouseMenu {&lt;br /&gt;
+private ArrayList&amp;lt;MenuItem&amp;gt; menuItems;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public CakeHouseMenu() &amp;#123;
+	menuItems = new ArrayList&amp;lt;MenuItem&amp;gt;();
+	
+	addItem(&amp;quot;KFC Cake Breakfast&amp;quot;,&amp;quot;boiled eggs&amp;amp;toast&amp;amp;cabbage&amp;quot;,true,3.99f);
+	addItem(&amp;quot;MDL Cake Breakfast&amp;quot;,&amp;quot;fried eggs&amp;amp;toast&amp;quot;,false,3.59f);
+	addItem(&amp;quot;Stawberry Cake&amp;quot;,&amp;quot;fresh stawberry&amp;quot;,true,3.29f);
+	addItem(&amp;quot;Regular Cake Breakfast&amp;quot;,&amp;quot;toast&amp;amp;sausage&amp;quot;,true,2.59f);
+&amp;#125;
+
+private void addItem(String name, String description, boolean vegetable,
+		float price) &amp;#123;
+	MenuItem menuItem = new MenuItem(name, description, vegetable, price);
+	menuItems.add(menuItem);
+&amp;#125;
+
+
+
+public Iterator getIterator()
+&amp;#123;
+	return new CakeHouseIterator() ;
+&amp;#125;
+
+class CakeHouseIterator implements  Iterator
+ &amp;#123;		
+	private int position=0;
+	public CakeHouseIterator()
+	&amp;#123;
+		  position=0;
+	&amp;#125;
+	
+	 	@Override
+		public boolean hasNext() &amp;#123;
+		// TODO Auto-generated method stub
+		if(position&amp;lt;menuItems.size())
+		&amp;#123;
+			return true;
+		&amp;#125;
+		
+		return false;
+	&amp;#125;
+
+	@Override
+	public Object next() &amp;#123;
+		// TODO Auto-generated method stub
+		MenuItem menuItem =menuItems.get(position);
+		position++;
+		return menuItem;
+	&amp;#125;&amp;#125;;
+//鍏朵粬鍔熻兘浠ｇ爜
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 3 中餐厅菜单和中餐厅菜单遍历器&lt;/p&gt;
+&lt;p&gt;public class DinerMenu {&lt;br /&gt;
+private final static int Max_Items = 5;&lt;br /&gt;
+private int numberOfItems = 0;&lt;br /&gt;
+private MenuItem[] menuItems;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public DinerMenu() &amp;#123;
+	menuItems = new MenuItem[Max_Items];
+	addItem(&amp;quot;vegetable Blt&amp;quot;, &amp;quot;bacon&amp;amp;lettuce&amp;amp;tomato&amp;amp;cabbage&amp;quot;, true, 3.58f);
+	addItem(&amp;quot;Blt&amp;quot;, &amp;quot;bacon&amp;amp;lettuce&amp;amp;tomato&amp;quot;, false, 3.00f);
+	addItem(&amp;quot;bean soup&amp;quot;, &amp;quot;bean&amp;amp;potato salad&amp;quot;, true, 3.28f);
+	addItem(&amp;quot;hotdog&amp;quot;, &amp;quot;onions&amp;amp;cheese&amp;amp;bread&amp;quot;, false, 3.05f);
+
+&amp;#125;
+
+private void addItem(String name, String description, boolean vegetable,
+		float price) &amp;#123;
+	MenuItem menuItem = new MenuItem(name, description, vegetable, price);
+	if (numberOfItems &amp;gt;= Max_Items) &amp;#123;
+		System.err.println(&amp;quot;sorry,menu is full!can not add another item&amp;quot;);
+	&amp;#125; else &amp;#123;
+		menuItems[numberOfItems] = menuItem;
+		numberOfItems++;
+	&amp;#125;
+
+&amp;#125;
+
+public Iterator getIterator() &amp;#123;
+	return new DinerIterator();
+&amp;#125;
+
+class DinerIterator implements Iterator &amp;#123;
+	private int position;
+
+	public DinerIterator() &amp;#123;
+		position = 0;
+	&amp;#125;
+
+	@Override
+	public boolean hasNext() &amp;#123;
+		// TODO Auto-generated method stub
+		if (position &amp;lt; numberOfItems) &amp;#123;
+			return true;
+		&amp;#125;
+		
+		return false;
+	&amp;#125;
+
+	@Override
+	public Object next() &amp;#123;
+		// TODO Auto-generated method stub
+		MenuItem menuItem = menuItems[position];
+		position++;
+		return menuItem;
+	&amp;#125;
+&amp;#125;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 4 女服务员&lt;/p&gt;
+&lt;p&gt;public class Waitress {&lt;br /&gt;
+private ArrayList&amp;lt;Iterator&amp;gt; iterators = new ArrayList&amp;lt;Iterator&amp;gt;();&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public Waitress() &amp;#123;
+
+&amp;#125;
+
+public void addIterator(Iterator iterator) &amp;#123;
+	iterators.add(iterator);
+
+&amp;#125;
+
+public void printMenu() &amp;#123;
+	Iterator iterator;
+	MenuItem menuItem;
+	for (int i = 0, len = iterators.size(); i &amp;lt; len; i++) &amp;#123;
+		iterator = iterators.get(i);
+
+		while (iterator.hasNext()) &amp;#123;
+			menuItem = (MenuItem) iterator.next();
+			System.out
+					.println(menuItem.getName() + &amp;quot;***&amp;quot; + menuItem.getPrice() + &amp;quot;***&amp;quot; + menuItem.getDescription());
+
+		&amp;#125;
+
+	&amp;#125;
+
+&amp;#125;
+
+public void printBreakfastMenu() &amp;#123;
+
+&amp;#125;
+
+public void printLunchMenu() &amp;#123;
+
+&amp;#125;
+
+public void printVegetableMenu() &amp;#123;
+
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;/p&gt;
+&lt;h1 id=&#34;6-责任链模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#6-责任链模式&#34;&gt;#&lt;/a&gt; 6 责任链模式&lt;/h1&gt;
+&lt;p&gt;定义：如果有多个对象有机会处理请求，责任链可使请求的发送者和接受者解耦，请求沿着责任链传递，直到有一个对象处理了它为止。&lt;/p&gt;
+&lt;p&gt;主要解决：职责链上的处理者负责处理请求，客户只需要将请求发送到职责链上即可，无须关心请求的处理细节和请求的传递，所以职责链将请求的发送者和请求的处理者解耦了。&lt;/p&gt;
+&lt;p&gt;何时使用：在处理消息的时候以过滤很多道。&lt;/p&gt;
+&lt;p&gt;如何解决：拦截的类都实现统一接口。&lt;/p&gt;
+&lt;p&gt;关键代码：Handler 里面聚合它自己，在 HandlerRequest 里判断是否合适，如果没达到条件则向下传递，向谁传递之前 set 进去。&lt;/p&gt;
+&lt;p&gt;16.1 模式的结构和代码示例&lt;/p&gt;
+&lt;p&gt;抽象处理者（Handler）角色：定义一个处理请求的接口，包含抽象处理方法和一个后继连接。&lt;/p&gt;
+&lt;p&gt;具体处理者（Concrete Handler）角色：实现抽象处理者的处理方法，判断能否处理本次请求，如果可以处理请求则处理，否则将该请求转给它的后继者。&lt;/p&gt;
+&lt;p&gt;客户类（Client）角色：创建处理链，并向链头的具体处理者对象提交请求，它不关心处理细节和请求的传递过程。&lt;/p&gt;
+&lt;p&gt;举例（购买请求决策，价格不同要由不同的级别决定：组长、部长、副部、总裁）。类图如下：&lt;/p&gt;
+&lt;p&gt;1 决策者抽象类，包含对请求处理的函数，同时还包含指定下一个决策者的函数&lt;/p&gt;
+&lt;p&gt;public abstract class Approver {&lt;br /&gt;
+Approver successor;&lt;br /&gt;
+String Name;&lt;br /&gt;
+public Approver(String Name)&lt;br /&gt;
+{&lt;br /&gt;
+this.Name=Name;&lt;br /&gt;
+}&lt;br /&gt;
+public abstract void ProcessRequest( PurchaseRequest request);&lt;br /&gt;
+public void SetSuccessor(Approver successor) {&lt;br /&gt;
+// TODO Auto-generated method stub&lt;br /&gt;
+this.successor=successor;&lt;br /&gt;
+}&lt;br /&gt;
+}&lt;br /&gt;
+ 2 客户端以及请求&lt;/p&gt;
+&lt;p&gt;public class PurchaseRequest {&lt;br /&gt;
+private int Type = 0;&lt;br /&gt;
+private int Number = 0;&lt;br /&gt;
+private float Price = 0;&lt;br /&gt;
+private int ID = 0;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public PurchaseRequest(int Type, int Number, float Price) &amp;#123;
+	this.Type = Type;
+	this.Number = Number;
+	this.Price = Price;
+&amp;#125;
+
+public int GetType() &amp;#123;
+	return Type;
+&amp;#125;
+
+public float GetSum() &amp;#123;
+	return Number * Price;
+&amp;#125;
+
+public int GetID() &amp;#123;
+	return (int) (Math.random() * 1000);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+public class Client {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public Client() &amp;#123;
+
+&amp;#125;
+
+public PurchaseRequest sendRequst(int Type, int Number, float Price) &amp;#123;
+	return new PurchaseRequest(Type, Number, Price);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 3 组长、部长。。。继承决策者抽象类&lt;/p&gt;
+&lt;p&gt;public class GroupApprover extends Approver {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public GroupApprover(String Name) &amp;#123;
+	super(Name + &amp;quot; GroupLeader&amp;quot;);
+	// TODO Auto-generated constructor stub
+
+&amp;#125;
+
+@Override
+public void ProcessRequest(PurchaseRequest request) &amp;#123;
+	// TODO Auto-generated method stub
+
+	if (request.GetSum() &amp;lt; 5000) &amp;#123;
+		System.out.println(&amp;quot;**This request &amp;quot; + request.GetID() + &amp;quot; will be handled by &amp;quot; + this.Name + &amp;quot; **&amp;quot;);
+	&amp;#125; else &amp;#123;
+		successor.ProcessRequest(request);
+	&amp;#125;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+public class DepartmentApprover extends Approver {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public DepartmentApprover(String Name) &amp;#123;
+	super(Name + &amp;quot; DepartmentLeader&amp;quot;);
+
+&amp;#125;
+
+@Override
+public void ProcessRequest(PurchaseRequest request) &amp;#123;
+	// TODO Auto-generated method stub
+
+	if ((5000 &amp;lt;= request.GetSum()) &amp;amp;&amp;amp; (request.GetSum() &amp;lt; 10000)) &amp;#123;
+		System.out.println(&amp;quot;**This request &amp;quot; + request.GetID()
+				+ &amp;quot; will be handled by &amp;quot; + this.Name + &amp;quot; **&amp;quot;);
+	&amp;#125; else &amp;#123;
+		successor.ProcessRequest(request);
+	&amp;#125;
+
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 4 测试&lt;/p&gt;
+&lt;p&gt;public class MainTest {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public static void main(String[] args) &amp;#123;
+
+	Client mClient = new Client();
+	Approver GroupLeader = new GroupApprover(&amp;quot;Tom&amp;quot;);
+	Approver DepartmentLeader = new DepartmentApprover(&amp;quot;Jerry&amp;quot;);
+	Approver VicePresident = new VicePresidentApprover(&amp;quot;Kate&amp;quot;);
+	Approver President = new PresidentApprover(&amp;quot;Bush&amp;quot;);
+
+	GroupLeader.SetSuccessor(VicePresident);
+	DepartmentLeader.SetSuccessor(President);
+	VicePresident.SetSuccessor(DepartmentLeader);
+	President.SetSuccessor(GroupLeader);
+
+	GroupLeader.ProcessRequest(mClient.sendRequst(1, 10000, 40));
+
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;/p&gt;
+&lt;h1 id=&#34;17-命令模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#17-命令模式&#34;&gt;#&lt;/a&gt; 17 命令模式&lt;/h1&gt;
+&lt;p&gt;定义：将一个请求封装为一个对象，使发出请求的责任和执行请求的责任分割开。这样两者之间通过命令对象进行沟通，这样方便将命令对象进行储存、传递、调用、增加与管理。&lt;/p&gt;
+&lt;p&gt;意图：将一个请求封装成一个对象，从而使您可以用不同的请求对客户进行参数化。&lt;/p&gt;
+&lt;p&gt;主要解决：在软件系统中，行为请求者与行为实现者通常是一种紧耦合的关系，但某些场合，比如需要对行为进行记录、撤销或重做、事务等处理时，这种无法抵御变化的紧耦合的设计就不太合适。&lt;/p&gt;
+&lt;p&gt;何时使用：在某些场合，比如要对行为进行 &amp;quot;记录、撤销 / 重做、事务&amp;quot; 等处理，这种无法抵御变化的紧耦合是不合适的。在这种情况下，如何将 &amp;quot;行为请求者&amp;quot; 与 &amp;quot;行为实现者&amp;quot; 解耦？将一组行为抽象为对象，可以实现二者之间的松耦合。&lt;/p&gt;
+&lt;p&gt;如何解决：通过调用者调用接受者执行命令，顺序：调用者→接受者→命令。&lt;/p&gt;
+&lt;p&gt;17.1 模式结构和代码示例&lt;/p&gt;
+&lt;p&gt;抽象命令类（Command）角色：声明执行命令的接口，拥有执行命令的抽象方法 execute ()。&lt;br /&gt;
+具体命令角色（Concrete    Command）角色：是抽象命令类的具体实现类，它拥有接收者对象，并通过调用接收者的功能来完成命令要执行的操作。&lt;br /&gt;
+实现者 / 接收者（Receiver）角色：执行命令功能的相关操作，是具体命令对象业务的真正实现者。&lt;br /&gt;
+调用者 / 请求者（Invoker）角色：是请求的发送者，它通常拥有很多的命令对象，并通过访问命令对象来执行相关请求，它不直接访问接收者。&lt;br /&gt;
+代码举例（开灯和关灯），类图如下：&lt;/p&gt;
+&lt;p&gt;1 命令抽象类&lt;/p&gt;
+&lt;p&gt;public interface Command {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public void excute();
+public void undo();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 2 具体命令对象&lt;/p&gt;
+&lt;p&gt;public class TurnOffLight implements Command {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private Light light;
+
+public TurnOffLight(Light light) &amp;#123;
+	this.light = light;
+&amp;#125;
+
+@Override
+public void excute() &amp;#123;
+	// TODO Auto-generated method stub
+	light.Off();
+&amp;#125;
+
+@Override
+public void undo() &amp;#123;
+	// TODO Auto-generated method stub
+	light.On();
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 3 实现者&lt;/p&gt;
+&lt;p&gt;public class Light {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;String loc = &amp;quot;&amp;quot;;
+
+public Light(String loc) &amp;#123;
+	this.loc = loc;
+&amp;#125;
+
+public void On() &amp;#123;
+
+	System.out.println(loc + &amp;quot; On&amp;quot;);
+&amp;#125;
+
+public void Off() &amp;#123;
+
+	System.out.println(loc + &amp;quot; Off&amp;quot;);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 4 请求者&lt;/p&gt;
+&lt;p&gt;public class Contral{&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public void CommandExcute(Command command) &amp;#123;
+	// TODO Auto-generated method stub
+	command.excute();
+&amp;#125;
+
+public void CommandUndo(Command command) &amp;#123;
+	// TODO Auto-generated method stub
+	command.undo();
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ &lt;br /&gt;
+18 状态模式&lt;br /&gt;
+定义： 在状态模式中，我们创建表示各种状态的对象和一个行为随着状态对象改变而改变的 context 对象。&lt;/p&gt;
+&lt;p&gt;简单理解，一个拥有状态的 context 对象，在不同的状态下，其行为会发生改变。&lt;/p&gt;
+&lt;p&gt;意图：允许对象在内部状态发生改变时改变它的行为，对象看起来好像修改了它的类。&lt;/p&gt;
+&lt;p&gt;主要解决：对象的行为依赖于它的状态（属性），并且可以根据它的状态改变而改变它的相关行为。&lt;/p&gt;
+&lt;p&gt;何时使用：代码中包含大量与对象状态有关的条件语句。&lt;/p&gt;
+&lt;p&gt;如何解决：将各种具体的状态类抽象出来。&lt;/p&gt;
+&lt;p&gt;关键代码：通常命令模式的接口中只有一个方法。而状态模式的接口中有一个或者多个方法。而且，状态模式的实现类的方法，一般返回值，或者是改变实例变量的值。也就是说，状态模式一般和对象的状态有关。实现类的方法有不同的功能，覆盖接口中的方法。状态模式和命令模式一样，也可以用于消除 if...else 等条件选择语句。&lt;/p&gt;
+&lt;p&gt;优点： 1、封装了转换规则。 2、枚举可能的状态，在枚举状态之前需要确定状态种类。 3、将所有与某个状态有关的行为放到一个类中，并且可以方便地增加新的状态，只需要改变对象状态即可改变对象的行为。 4、允许状态转换逻辑与状态对象合成一体，而不是某一个巨大的条件语句块。 5、可以让多个环境对象共享一个状态对象，从而减少系统中对象的个数。&lt;/p&gt;
+&lt;p&gt;缺点： 1、状态模式的使用必然会增加系统类和对象的个数。 2、状态模式的结构与实现都较为复杂，如果使用不当将导致程序结构和代码的混乱。 3、状态模式对 &amp;quot;开闭原则&amp;quot; 的支持并不太好，对于可以切换状态的状态模式，增加新的状态类需要修改那些负责状态转换的源代码，否则无法切换到新增状态，而且修改某个状态类的行为也需修改对应类的源代码。&lt;/p&gt;
+&lt;p&gt;18.1 模式结构和代码示例&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;State 抽象状态角色&lt;/p&gt;
+&lt;p&gt;接口或抽象类，负责对象状态定义，并且封装环境角色以实现状态切换。&lt;/p&gt;
+&lt;p&gt;ConcreteState 具体状态角色&lt;/p&gt;
+&lt;p&gt;具体状态主要有两个职责：一是处理本状态下的事情，二是从本状态如何过渡到其他状态。&lt;/p&gt;
+&lt;p&gt;Context 环境角色&lt;/p&gt;
+&lt;p&gt;定义客户端需要的接口，并且负责具体状态的切换。&lt;/p&gt;
+&lt;p&gt;举例（人物在地点 A 向地点 B 移动，在地点 B 向地点 A 移动）。类图如下：&lt;/p&gt;
+&lt;p&gt;1 state 接口&lt;/p&gt;
+&lt;p&gt;public interface State {&lt;br /&gt;
+public void stop();&lt;br /&gt;
+public void move();&lt;/p&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 2 状态实例&lt;/p&gt;
+&lt;p&gt;public class PlaceA implements State {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private Player context;
+
+public PlaceA(Player context) &amp;#123;
+	this.context = context;
+&amp;#125;
+
+@Override
+public void move() &amp;#123;
+	System.out.println(&amp;quot;处于地点A,开始向B移动&amp;quot;);
+	System.out.println(&amp;quot;--------&amp;quot;);
+	context.setDirection(&amp;quot;AB&amp;quot;);
+	context.setState(context.onMove);
+
+&amp;#125;
+
+@Override
+public void stop() &amp;#123;
+	// TODO Auto-generated method stub
+	System.out.println(&amp;quot;正处在地点A，不用停止移动&amp;quot;);
+	System.out.println(&amp;quot;--------&amp;quot;);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 3 context (player) 拥有状态的对象&lt;/p&gt;
+&lt;p&gt;public class Player {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;State placeA;
+State placeB;
+State onMove;
+private State state;
+private String direction;
+
+public Player() &amp;#123;
+	direction = &amp;quot;AB&amp;quot;;
+	placeA = new PlaceA(this);
+	placeB = new PlaceB(this);
+	onMove = new OnMove(this);
+	this.state = placeA;
+&amp;#125;
+
+public void move() &amp;#123;
+	System.out.println(&amp;quot;指令:开始移动&amp;quot;);
+	state.move();
+&amp;#125;
+
+public void stop() &amp;#123;
+	System.out.println(&amp;quot;指令:停止移动&amp;quot;);
+	state.stop();
+&amp;#125;
+
+public State getState() &amp;#123;
+	return state;
+&amp;#125;
+
+public void setState(State state) &amp;#123;
+	this.state = state;
+&amp;#125;
+
+public void setDirection(String direction) &amp;#123;
+	this.direction = direction;
+&amp;#125;
+
+public String getDirection() &amp;#123;
+	return direction;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;/p&gt;
+&lt;h1 id=&#34;19-备忘录模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#19-备忘录模式&#34;&gt;#&lt;/a&gt; 19 备忘录模式&lt;/h1&gt;
+&lt;p&gt;定义： 在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，以便以后当需要时能将该对象恢复到原先保存的状态。该模式又叫快照模式。&lt;/p&gt;
+&lt;p&gt;备忘录模式是一种对象行为型模式，其主要优点如下。&lt;/p&gt;
+&lt;p&gt;提供了一种可以恢复状态的机制。当用户需要时能够比较方便地将数据恢复到某个历史的状态。&lt;/p&gt;
+&lt;p&gt;实现了内部状态的封装。除了创建它的发起人之外，其他对象都不能够访问这些状态信息。&lt;/p&gt;
+&lt;p&gt;简化了发起人类。发起人不需要管理和保存其内部状态的各个备份，所有状态信息都保存在备忘录中，并由管理者进行管理，这符合单一职责原则。&lt;/p&gt;
+&lt;p&gt;其主要缺点是：资源消耗大。如果要保存的内部状态信息过多或者特别频繁，将会占用比较大的内存资源。&lt;/p&gt;
+&lt;p&gt;19.1 模式结构图和代码示例&lt;/p&gt;
+&lt;p&gt;发起人（Originator）角色：记录当前时刻的内部状态信息，提供创建备忘录和恢复备忘录数据的功能，实现其他业务功能，它可以访问备忘录里的所有信息。&lt;/p&gt;
+&lt;p&gt;备忘录（Memento）角色：负责存储发起人的内部状态，在需要的时候提供这些内部状态给发起人。&lt;/p&gt;
+&lt;p&gt;管理者（Caretaker）角色：对备忘录进行管理，提供保存与获取备忘录的功能，但其不能对备忘录的内容进行访问与修改。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;举例（发起者通过备忘录存储信息和获取信息），类图如下：&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;1 备忘录接口&lt;/p&gt;
+&lt;p&gt;public interface MementoIF {&lt;/p&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 2 备忘录&lt;/p&gt;
+&lt;p&gt;public class Memento implements MementoIF{&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private String state;
+
+public Memento(String state) &amp;#123;
+	this.state = state;
+&amp;#125;
+
+public String getState()&amp;#123;
+	return state;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 3 发起者&lt;/p&gt;
+&lt;p&gt;public class Originator {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private String state;
+
+public String getState() &amp;#123;
+	return state;
+&amp;#125;
+
+public void setState(String state) &amp;#123;
+	this.state = state;
+&amp;#125;
+
+public Memento saveToMemento() &amp;#123;
+	return new Memento(state);
+&amp;#125;
+
+public String getStateFromMemento(MementoIF memento) &amp;#123;
+	return ((Memento) memento).getState();
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 4 管理者&lt;/p&gt;
+&lt;p&gt;public class CareTaker {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private List&amp;lt;MementoIF&amp;gt; mementoList = new ArrayList&amp;lt;MementoIF&amp;gt;();
+
+public void add(MementoIF memento) &amp;#123;
+	mementoList.add(memento);
+&amp;#125;
+
+public MementoIF get(int index) &amp;#123;
+	return mementoList.get(index);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;/p&gt;
+&lt;h1 id=&#34;20-访问者模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#20-访问者模式&#34;&gt;#&lt;/a&gt; 20 访问者模式&lt;/h1&gt;
+&lt;p&gt;定义：将作用于某种数据结构中的各元素的操作分离出来封装成独立的类，使其在不改变数据结构的前提下可以添加作用于这些元素的新的操作，为数据结构中的每个元素提供多种访问方式。它将对数据的操作与数据结构进行分离。&lt;/p&gt;
+&lt;p&gt;访问者（Visitor）模式是一种对象行为型模式，其主要优点如下。&lt;/p&gt;
+&lt;p&gt;扩展性好。能够在不修改对象结构中的元素的情况下，为对象结构中的元素添加新的功能。&lt;/p&gt;
+&lt;p&gt;复用性好。可以通过访问者来定义整个对象结构通用的功能，从而提高系统的复用程度。&lt;/p&gt;
+&lt;p&gt;灵活性好。访问者模式将数据结构与作用于结构上的操作解耦，使得操作集合可相对自由地演化而不影响系统的数据结构。&lt;/p&gt;
+&lt;p&gt;符合单一职责原则。访问者模式把相关的行为封装在一起，构成一个访问者，使每一个访问者的功能都比较单一。&lt;/p&gt;
+&lt;p&gt;访问者（Visitor）模式的主要缺点如下。&lt;/p&gt;
+&lt;p&gt;增加新的元素类很困难。在访问者模式中，每增加一个新的元素类，都要在每一个具体访问者类中增加相应的具体操作，这违背了 “开闭原则”。&lt;/p&gt;
+&lt;p&gt;破坏封装。访问者模式中具体元素对访问者公布细节，这破坏了对象的封装性。&lt;/p&gt;
+&lt;p&gt;违反了依赖倒置原则。访问者模式依赖了具体类，而没有依赖抽象类。&lt;/p&gt;
+&lt;p&gt;20.1 模式结构和代码示例&lt;/p&gt;
+&lt;p&gt;访问者模式包含以下主要角色。&lt;/p&gt;
+&lt;p&gt;抽象访问者（Visitor）角色：定义一个访问具体元素的接口，为每个具体元素类对应一个访问操作 visit () ，该操作中的参数类型标识了被访问的具体元素。&lt;/p&gt;
+&lt;p&gt;具体访问者（ConcreteVisitor）角色：实现抽象访问者角色中声明的各个访问操作，确定访问者访问一个元素时该做什么。&lt;/p&gt;
+&lt;p&gt;抽象元素（Element）角色：声明一个包含接受操作 accept () 的接口，被接受的访问者对象作为 accept () 方法的参数。&lt;/p&gt;
+&lt;p&gt;具体元素（ConcreteElement）角色：实现抽象元素角色提供的 accept () 操作，其方法体通常都是 visitor.visit (this) ，另外具体元素中可能还包含本身业务逻辑的相关操作。&lt;/p&gt;
+&lt;p&gt;对象结构（Object Structure）角色：是一个包含元素角色的容器，提供让访问者对象遍历容器中的所有元素的方法，通常由 List、Set、Map 等聚合类实现。&lt;/p&gt;
+&lt;p&gt;1 抽象访问者&lt;/p&gt;
+&lt;p&gt;public interface Visitor {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;abstract public void Visit(Element element);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 2 具体访问者&lt;/p&gt;
+&lt;p&gt;public class CompensationVisitor implements Visitor {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Override
+public void Visit(Element element) &amp;#123;
+	// TODO Auto-generated method stub
+	Employee employee = ((Employee) element);
+
+	System.out.println(
+			employee.getName() + &amp;quot;&#39;s Compensation is &amp;quot; + (employee.getDegree() * employee.getVacationDays() * 10));
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 3 抽象元素&lt;/p&gt;
+&lt;p&gt;public interface Element {&lt;br /&gt;
+abstract public void Accept(Visitor visitor);&lt;/p&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 4 具体元素&lt;/p&gt;
+&lt;p&gt;public class CompensationVisitor implements Visitor {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Override
+public void Visit(Element element) &amp;#123;
+	// TODO Auto-generated method stub
+	Employee employee = ((Employee) element);
+
+	System.out.println(
+			employee.getName() + &amp;quot;&#39;s Compensation is &amp;quot; + (employee.getDegree() * employee.getVacationDays() * 10));
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 5 对象结构&lt;/p&gt;
+&lt;p&gt;public class ObjectStructure {&lt;br /&gt;
+private HashMap&amp;lt;String, Employee&amp;gt; employees;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public ObjectStructure() &amp;#123;
+	employees = new HashMap();
+&amp;#125;
+
+public void Attach(Employee employee) &amp;#123;
+	employees.put(employee.getName(), employee);
+&amp;#125;
+
+public void Detach(Employee employee) &amp;#123;
+	employees.remove(employee);
+&amp;#125;
+
+public Employee getEmployee(String name) &amp;#123;
+	return employees.get(name);
+&amp;#125;
+
+public void Accept(Visitor visitor) &amp;#123;
+	for (Employee e : employees.values()) &amp;#123;
+		e.Accept(visitor);
+	&amp;#125;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;/p&gt;
+&lt;h1 id=&#34;21-中介者模式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#21-中介者模式&#34;&gt;#&lt;/a&gt; 21 中介者模式&lt;/h1&gt;
+&lt;p&gt;定义：定义一个中介对象来封装一系列对象之间的交互，使原有对象之间的耦合松散，且可以独立地改变它们之间的交互。中介者模式又叫调停模式，它是迪米特法则的典型应用。&lt;/p&gt;
+&lt;p&gt;中介者模式是一种对象行为型模式，其主要优点如下。&lt;/p&gt;
+&lt;p&gt;降低了对象之间的耦合性，使得对象易于独立地被复用。&lt;/p&gt;
+&lt;p&gt;将对象间的一对多关联转变为一对一的关联，提高系统的灵活性，使得系统易于维护和扩展。&lt;/p&gt;
+&lt;p&gt;其主要缺点是：当同事类太多时，中介者的职责将很大，它会变得复杂而庞大，以至于系统难以维护。&lt;/p&gt;
+&lt;p&gt;21.1 模式结构和代码示例&lt;/p&gt;
+&lt;p&gt;抽象中介者（Mediator）角色：它是中介者的接口，提供了同事对象注册与转发同事对象信息的抽象方法。&lt;/p&gt;
+&lt;p&gt;具体中介者（ConcreteMediator）角色：实现中介者接口，定义一个 List 来管理同事对象，协调各个同事角色之间的交互关系，因此它依赖于同事角色。&lt;/p&gt;
+&lt;p&gt;抽象同事类（Colleague）角色：定义同事类的接口，保存中介者对象，提供同事对象交互的抽象方法，实现所有相互影响的同事类的公共功能。&lt;/p&gt;
+&lt;p&gt;具体同事类（Concrete Colleague）角色：是抽象同事类的实现者，当需要与其他同事对象交互时，由中介者对象负责后续的交互。&lt;/p&gt;
+&lt;p&gt;举例（通过中介卖方），类图如下：&lt;/p&gt;
+&lt;p&gt;1 抽象中介者&lt;/p&gt;
+&lt;p&gt;public interface Mediator {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;void register(Colleague colleague); // 客户注册
+
+void relay(String from, String to,String ad); // 转发
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 2 具体中介者&lt;/p&gt;
+&lt;p&gt;public class ConcreteMediator implements Mediator {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;private List&amp;lt;Colleague&amp;gt; colleagues = new ArrayList&amp;lt;Colleague&amp;gt;();
+
+@Override
+public void register(Colleague colleague) &amp;#123;
+	// TODO Auto-generated method stub
+	if (!colleagues.contains(colleague)) &amp;#123;
+		colleagues.add(colleague);
+		colleague.setMedium(this);
+	&amp;#125;
+&amp;#125;
+
+@Override
+public void relay(String from, String to, String ad) &amp;#123;
+	// TODO Auto-generated method stub
+	for (Colleague cl : colleagues) &amp;#123;
+
+		String name = cl.getName();
+		if (name.equals(to)) &amp;#123;
+			cl.receive(from, ad);
+		&amp;#125;
+
+	&amp;#125;
+
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 3 抽象同事类&lt;/p&gt;
+&lt;p&gt;public abstract class Colleague {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;protected Mediator mediator;
+protected String name;
+
+public Colleague(String name) &amp;#123;
+	this.name = name;
+&amp;#125;
+
+public void setMedium(Mediator mediator) &amp;#123;
+
+	this.mediator = mediator;
+
+&amp;#125;
+
+public String getName() &amp;#123;
+	return name;
+&amp;#125;
+
+public abstract void Send(String to, String ad);
+
+public abstract void receive(String from, String ad);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br /&gt;
+ 4 具体同事类&lt;/p&gt;
+&lt;p&gt;public class Buyer extends Colleague {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public Buyer(String name) &amp;#123;
+
+	super(name);
+
+&amp;#125;
+
+@Override
+public void Send(String to, String ad) &amp;#123;
+	// TODO Auto-generated method stub
+	mediator.relay(name, to, ad);
+&amp;#125;
+
+@Override
+public void receive(String from, String ad) &amp;#123;
+	// TODO Auto-generated method stub
+	System.out.println(name + &amp;quot;接收到来自&amp;quot; + from + &amp;quot;的消息:&amp;quot; + ad);
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://example.com/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</guid>
+            <title>操作系统知识点整理</title>
+            <link>http://example.com/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</link>
+            <pubDate>Thu, 25 Feb 2021 23:31:30 +0800</pubDate>
+            <description><![CDATA[ &lt;h1 id=&#34;第一章-操作系统概述&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第一章-操作系统概述&#34;&gt;#&lt;/a&gt; 第一章 操作系统概述&lt;/h1&gt;
+&lt;p&gt;1）一个完整的计算机系统是由硬件系统和软件系统两大部分组成&lt;/p&gt;
+&lt;p&gt;2）计算机软件是指程序和与程序相关的文档的集合&lt;/p&gt;
+&lt;p&gt;3）按功能可把软件分为 “系统软件” 和 “应用软件” 两部分&lt;/p&gt;
+&lt;p&gt;系统软件：操作系统语言处理程序，数据库管理系统&lt;/p&gt;
+&lt;p&gt;应用软件：各种管理软件，用于工程计算的软件包，辅助设计软件&lt;/p&gt;
+&lt;p&gt;4）通常把未配置任何软件的计算机称为 “裸机”&lt;/p&gt;
+&lt;p&gt;5）操作系统可以被看作是计算机系统的核心，统管整个系统资源，制定各种资源的分配策略，调度系统中运行的用户程序，协调它们对资源的需求，从而使整个系统在高效、有序的环境里工作。&lt;/p&gt;
+&lt;p&gt;6）发展的动力：&lt;/p&gt;
+&lt;p&gt;(1) 提高计算机资源的利用率的需要&lt;/p&gt;
+&lt;p&gt;(2) 方便用户使用计算机的需要&lt;/p&gt;
+&lt;p&gt;(3) 硬件技术不断发展的需要&lt;/p&gt;
+&lt;p&gt;(4) 计算机体系结构发展的需要&lt;/p&gt;
+&lt;p&gt;7）操作系统是在 “裸机” 上加载的第一层软件，是对计算机硬件系统功能的首次扩充&lt;/p&gt;
+&lt;p&gt;8）操作系统的定义：&lt;/p&gt;
+&lt;p&gt;操作系统是控制和管理计算机硬件和软件资源，合理地组织计算机工作流程，以及方便用户使用计算机的一个大型程序&lt;/p&gt;
+&lt;p&gt;9）操作系统的功能：&lt;/p&gt;
+&lt;p&gt;Ø 处理机管理：进程控制，进程同步，进程通信、调度、实施 CPU 分配&lt;/p&gt;
+&lt;p&gt;Ø 存储器管理：内存分配，内存保护，地址映射，内存扩充&lt;/p&gt;
+&lt;p&gt;Ø 设备管理：缓冲管理，设备分配，设备管理&lt;/p&gt;
+&lt;p&gt;Ø 文件管理：存储空间管理，目录管理，读写管理和保护&lt;/p&gt;
+&lt;p&gt;Ø 与用户有关的接口：用户接口，程序接口，人机交互&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;10）操作系统另一种定义：操作系统是一组能有效地组织和管理计算机硬件和软件资源，合理地对各类作业进行调度，以及方便用户使用的程序的集合&lt;/p&gt;
+&lt;p&gt;操作系统的种类：&lt;/p&gt;
+&lt;p&gt;1) 单道批处理系统&lt;/p&gt;
+&lt;p&gt;特点：单路性、独占性、自动性、封闭性、顺序性&lt;/p&gt;
+&lt;p&gt;缺点：系统的资源得不到充分的利用&lt;/p&gt;
+&lt;p&gt;2) 多道批处理系统&lt;/p&gt;
+&lt;p&gt;特点：多路性、共享性、自动型、封闭性、无序性、调度性&lt;/p&gt;
+&lt;p&gt;好处：&lt;/p&gt;
+&lt;p&gt;ü 提高 CPU 的利用率&lt;/p&gt;
+&lt;p&gt;ü 提高内存和 I/O 设备的利用率&lt;/p&gt;
+&lt;p&gt;ü 增加系统吞吐量&lt;/p&gt;
+&lt;p&gt;缺点：平均周转时间长，无交互能力&lt;/p&gt;
+&lt;p&gt;3) 分时系统&lt;/p&gt;
+&lt;p&gt;分时系统是指在一台主机上连接了多个配有显示器和键盘的终端，由此所组成的系统，该系统允许多个用户同时通过自己的终端，以交互方式使用计算机，共享主机中的资源。&lt;/p&gt;
+&lt;p&gt;采用了 “时间片轮转” 的处理机调度策略&lt;/p&gt;
+&lt;p&gt;4) 实时系统&lt;/p&gt;
+&lt;p&gt;实时系统是指系统能及时响应外部事件的请求，在规定的时间内完成对该事件的处理，并控制所有实时任务协调一致地运行&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;第二章-处理机管理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第二章-处理机管理&#34;&gt;#&lt;/a&gt; 第二章 处理机管理&lt;/h1&gt;
+&lt;p&gt;1) 进程是指在系统中能独立运行并作为资源分配的基本单位，它是由一组机器指令，数据和堆栈等组成的，是一个能独立运行的活动实体，多个进程可以并发执行和交换信息&lt;/p&gt;
+&lt;p&gt;2) 程序是一个在时间上严格有序的指令集合&lt;/p&gt;
+&lt;p&gt;3) 在单道程序设计下，系统具有的特点&lt;/p&gt;
+&lt;p&gt;a. 资源的独占性&lt;/p&gt;
+&lt;p&gt;b. 执行的顺序性&lt;/p&gt;
+&lt;p&gt;c. 结果的再现性&lt;/p&gt;
+&lt;p&gt;在多道程序设计环境下，系统具有：&lt;/p&gt;
+&lt;p&gt;a. 执行的并发性&lt;/p&gt;
+&lt;p&gt;b. 相互的制约性&lt;/p&gt;
+&lt;p&gt;c. 状态的多变性（不可再现性）&lt;/p&gt;
+&lt;p&gt;5) 并发、并行、串行&lt;/p&gt;
+&lt;p&gt;a. 从宏观上看是并行，同时在内存的多个程序都在执行着，互不影响&lt;/p&gt;
+&lt;p&gt;b. 从微观上看是串行，由于 CPU 在任何时刻只能执行一个程序，因此这些程序轮流占用 CPU，交替执行着&lt;/p&gt;
+&lt;p&gt;c. 我们把 “逻辑上相互独立的程序，在执行时间上相互重叠，一个程序的执行还没有结束，另一个程序的执行已经开始” 的这种特性称为程序执行的并发性&lt;/p&gt;
+&lt;p&gt;6) 对进程的描述&lt;/p&gt;
+&lt;p&gt;a. 进程是程序的一次执行过程&lt;/p&gt;
+&lt;p&gt;b. 进程的运行活动是建立在某个数据集合上的&lt;/p&gt;
+&lt;p&gt;c. 进程是在获得资源的基础上从事自己的运行活动&lt;/p&gt;
+&lt;p&gt;7) 进程的特征&lt;/p&gt;
+&lt;p&gt;结构特征、动态性、并发性、独立性、异步性&lt;/p&gt;
+&lt;p&gt;进程是一个动态的概念&lt;/p&gt;
+&lt;p&gt;不同进程可以执行同一个程序&lt;/p&gt;
+&lt;p&gt;每一个进程都有自己的生命周期&lt;/p&gt;
+&lt;p&gt;进程之间具有并发性，进程间会相互制约&lt;/p&gt;
+&lt;p&gt;8) 程序和进程的区别&lt;/p&gt;
+&lt;p&gt;a. 程序是指令的有序集合，是静态的，进程是程序在处理机上的一次执行过程，是动态的。程序的存在时永久的，而进程是有生命周期的，它因创建而产生，因调度而运行，因撤销而消亡&lt;/p&gt;
+&lt;p&gt;b. 进程是程序的一次执行过程，程序是进程赖以存在的基础&lt;/p&gt;
+&lt;p&gt;c. 进程具有并发性，而程序并发执行会失去可再现性&lt;/p&gt;
+&lt;p&gt;d. 进程是系统分配和调度的独立单位，进程由程序、数据集合和进程控制块组成&lt;/p&gt;
+&lt;p&gt;9) 系统进程的使用级别高于用户进程&lt;/p&gt;
+&lt;p&gt;10) 进程的状态&lt;/p&gt;
+&lt;p&gt;创建、就绪、运行、阻塞&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;a. 一个进程从运行状态变为就绪状态，一定会引起另一个进程从就绪变为运行&lt;/p&gt;
+&lt;p&gt;b. 一个进程从运行状态变为阻塞状态，一定会引起另一个进程从运行状态变为就绪状态；这种因果变迁绝对不可能发生，因为一个 CPU 不可能真正同时运行两个进程&lt;/p&gt;
+&lt;p&gt;c. 一个进程从阻塞状态变为就绪状态，不一定会引起另一个进程从就绪状态变为运行状态&lt;/p&gt;
+&lt;p&gt;11) 进程的三个组成部分：程序、数据集合、进程控制块（PCB）&lt;/p&gt;
+&lt;p&gt;12) 进程控制块是进程存在的唯一标示&lt;/p&gt;
+&lt;p&gt;a. 作用：通过 PCB，是原来不能独立运行的程序，成为一个可以独立运行的基本单位，一个能够并发执行的进程&lt;/p&gt;
+&lt;p&gt;b. 其中的信息：进程标识符、处理机状态、进程调度信息、进程控制信息&lt;/p&gt;
+&lt;p&gt;13) 操作系统中把做出 “决定把 CPU 分配给谁用” 的程序称为 “进程调度程序”&lt;/p&gt;
+&lt;p&gt;14) 常用的进程调度算法：&lt;/p&gt;
+&lt;p&gt;a. 先来先服务调度算法&lt;/p&gt;
+&lt;p&gt;b. 时间片轮转调度算法：为就绪队列中的每一个进程分配一个称为 “时间片” 的时间段，它是允许该进程占用 CPU 的最长时间长度&lt;/p&gt;
+&lt;p&gt;c. 优先数调度算法：优先数高的先调度，若相同则先来先服务&lt;/p&gt;
+&lt;p&gt;d. 多级队列调度算法：时间片调度和优先数调度算法的结合&lt;/p&gt;
+&lt;p&gt;15) 进程调度程序的主要功能&lt;/p&gt;
+&lt;p&gt;a. 记录系统中所有进程的有关情况，比如进程的当前状态，优先数等&lt;/p&gt;
+&lt;p&gt;b. 确定分配处理机的算法&lt;/p&gt;
+&lt;p&gt;c. 完成处理机的分配&lt;/p&gt;
+&lt;p&gt;d. 完成处理机的回收&lt;/p&gt;
+&lt;p&gt;16) 把处理剂分配给进程后，还有一个允许它占用多长时间的问题，有两种处理方式，一种是不可剥夺方式，另一种是剥夺方式&lt;/p&gt;
+&lt;p&gt;17) 为了对进程进行有效的管理和控制，操作系统要提供若干基本的操作以便能创建进程、撤销进程、阻塞进程、唤醒进程，把具有这种特性的程序称为 “原语”，原语的不可分割性，通常利用屏蔽中断的方法&lt;/p&gt;
+&lt;p&gt;18) 程序接口：操作系统在程序一级给予用户的支持&lt;/p&gt;
+&lt;p&gt;命令接口：操作系统在控制一级给予用户的支持&lt;/p&gt;
+&lt;p&gt;19) CPU 指令系统中的指令分为两类&lt;/p&gt;
+&lt;p&gt;a. 操作系统和用户都能使用的指令，非特权指令&lt;/p&gt;
+&lt;p&gt;b. 只能由操作系统使用的指令，特权指令&lt;/p&gt;
+&lt;p&gt;20) CPU 的两种工作状态：管态、目态&lt;/p&gt;
+&lt;p&gt;a. 当 CPU 处于管态时，可以执行包括特权指令在内的一切机器指令&lt;/p&gt;
+&lt;p&gt;b. 当 CPU 处于目态时，禁止使用特权指令&lt;/p&gt;
+&lt;p&gt;21) 访管指令&lt;/p&gt;
+&lt;p&gt;系统调用命令的程序属于操作系统，它应该在管态下执行&lt;/p&gt;
+&lt;p&gt;用户程序只有通过计算机系统提供的访管指令才能实现由目态转为管态，进而调用这些功能程序的目的&lt;/p&gt;
+&lt;p&gt;访管指令属于非特权指令，功能是执行它就会产生一个软中断，促使中央处理机由目态转为管态，进入操作系统并处理该中断&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;22) 从功能上看，可以把系统调用命令分为五大类：&lt;/p&gt;
+&lt;p&gt;a. 一是关于进程管理和控制的&lt;/p&gt;
+&lt;p&gt;b. 二是关于外部设备输入 / 输出的&lt;/p&gt;
+&lt;p&gt;c. 三是关于磁盘文件管理的&lt;/p&gt;
+&lt;p&gt;d. 四是关于访问系统信息的&lt;/p&gt;
+&lt;p&gt;e. 五是关于存储申请与释放的&lt;/p&gt;
+&lt;p&gt;23) 从形式上看，操作系统提供的系统调用与一般的过程调用（子程序调用）相似，但它们有着明显 的区别&lt;/p&gt;
+&lt;p&gt;作业管理：&lt;/p&gt;
+&lt;p&gt;1) 把一个作业提交给系统时，系统要开辟一个作业控制块 JCB，以便随时记录作业的信息&lt;/p&gt;
+&lt;p&gt;2) 被系统接纳的作业，在没有投入运行之前，称为后备作业。这些作业存放在辅助存储器中，并由他们的 JCB 连接在一起，形成所谓的后备作业队列&lt;/p&gt;
+&lt;p&gt;3) 作业调度：按照某种规则，从后备作业队列中挑选作业进入内存，参与处理机的竞争，这个过程称为作业调度&lt;/p&gt;
+&lt;p&gt;4) 作业的状态：&lt;/p&gt;
+&lt;p&gt;a. 提交状态：进入辅助存储器，作业的信息还没有全部进入系统，系统也没有为它建立 JCB，感知不到它的存在&lt;/p&gt;
+&lt;p&gt;b. 后备状态：建立起了 JCB，并将 JCB 排到后备作业队列中&lt;/p&gt;
+&lt;p&gt;c. 运行状态：（阻塞、运行、就绪）都属于运行状态&lt;/p&gt;
+&lt;p&gt;d. 完成状态：也是一个暂时性的状态&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;5) 作业的调度算法：&lt;/p&gt;
+&lt;p&gt;a. 先来先服务：以作业进入后备作业队列的先后次序&lt;/p&gt;
+&lt;p&gt;周转时间 = 完成时间 - 到达时间&lt;/p&gt;
+&lt;p&gt;注：若分配一定的内存，且不允许作业在内存中移动时，要考虑所占内存大小&lt;/p&gt;
+&lt;p&gt;b. 短作业优先：从后备作业队列中挑选所需 CPU 时间最少且资源能够得到满足的作业&lt;/p&gt;
+&lt;p&gt;注：如果所有作业 “同时” 到达后备作业队列，那么采用短作业优先的作业调度算法总会获得最小的平均周转时间&lt;/p&gt;
+&lt;p&gt;c. 响应比高着优先：先调度响应比高着&lt;/p&gt;
+&lt;p&gt;响应比 = 已等待时间 / 所需 CPU 时间&lt;/p&gt;
+&lt;p&gt;6) 在确定作业调度算法时应注意的问题：&lt;/p&gt;
+&lt;p&gt;a. 公平对待后备作业队列中的每一个作业，避免无故或无限期的延迟一个作业的执行，使各类用户感到满意&lt;/p&gt;
+&lt;p&gt;b. 使进入内存的多个作业，能均衡地使用系统中的资源，避免出现有的资源没有作业使用，有的资源却被多个作业争抢的 “忙闲” 不均的情况&lt;/p&gt;
+&lt;p&gt;c. 力争在单位时间内为尽可能多的作业提供服务，提高整个系统的吞吐能力&lt;/p&gt;
+&lt;h1 id=&#34;第三章-存储管理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第三章-存储管理&#34;&gt;#&lt;/a&gt; 第三章 存储管理&lt;/h1&gt;
+&lt;p&gt;1)  计算机操作系统的存储器：CPU 寄存器，主存，辅存&lt;/p&gt;
+&lt;p&gt;2) 在考虑计算机存储器的设计时，必须顾及&lt;/p&gt;
+&lt;p&gt;a. 价格、容量、访问时间&lt;/p&gt;
+&lt;p&gt;b. 存取时间越快，价格越高，容量越小&lt;/p&gt;
+&lt;p&gt;3) 高速缓存：介于寄存器和存储器之间的存储器，主要用于备份主存中较常用的数据，以减少处理机对主存储器的访问次数，提高程序执行速度&lt;/p&gt;
+&lt;p&gt;高速缓存容量远大于寄存器，比内存约小两到三个数量级左右&lt;/p&gt;
+&lt;p&gt;为了缓和内存与处理机（CPU）速度的不匹配&lt;/p&gt;
+&lt;p&gt;4) 字（字长）：一次传送数据的长度 {16、32、64…} 依系统而定&lt;/p&gt;
+&lt;p&gt;（主）内存储器和高速缓存之间是以 “块” 为单位传递数据的&lt;/p&gt;
+&lt;p&gt;高速缓存与 CPU 之间则以 “字” 为单位传递数据&lt;/p&gt;
+&lt;p&gt;5) 存储器管理的功能：&lt;/p&gt;
+&lt;p&gt;a. 内存的分配与回收&lt;/p&gt;
+&lt;p&gt;b. 存储的保护和共享&lt;/p&gt;
+&lt;p&gt;c. 地址定位&lt;/p&gt;
+&lt;p&gt;d. 存储扩充&lt;/p&gt;
+&lt;p&gt;6) 内存储器由一个个存储单元组成，一个存储单元可存放若干个二进制的位（bit），8 个二进制位被称为一个字节（byte）&lt;/p&gt;
+&lt;p&gt;7) 在操作系统中，把用户程序指令中的相对地址变为所在绝对地址空间中的绝对地址的这个过程，称为地址重定位&lt;/p&gt;
+&lt;p&gt;8) 地址的定位方式：&lt;/p&gt;
+&lt;p&gt;a. 绝对定位方式：是在程序装入内存之前，程序指令中的地址就已经是绝对地址，已经正确地反映了它将要进入的存储区的位置，不适用于多道程序设计环境&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;b. 静态重定位（多道程序环境下）&lt;/p&gt;
+&lt;p&gt;根据内存的具体情况将装入模块装入到内存的适当位置，会使装入模块中的所有逻辑地址与实际装入内存后的物理地址不同。&lt;/p&gt;
+&lt;p&gt;这种地址重定位是在程序执行前完成的&lt;/p&gt;
+&lt;p&gt;c. 动态重定位&lt;/p&gt;
+&lt;p&gt;将地址重定位的时间推迟到程序执行时再进行&lt;/p&gt;
+&lt;p&gt;所以装入内存的所有地址都仍是逻辑地址&lt;/p&gt;
+&lt;p&gt;连续分配存储方式 ：&lt;/p&gt;
+&lt;p&gt;1) 单一连续分配（静态重定位）&lt;/p&gt;
+&lt;p&gt;a. 单道程序环境下，总体上把内存储器分为两个分区：系统区和用户区&lt;/p&gt;
+&lt;p&gt;b. 系统总是把整个用户区分配给一个用户使用，把分配给了用户但未被使用的区域称为 “内部碎片”&lt;/p&gt;
+&lt;p&gt;c. 单一连续分区存储管理的缺点：&lt;/p&gt;
+&lt;p&gt;a) 由于每次只能有一个进入内存，故它不适用于多道程序设计，工作效率不高，资源利用率低&lt;/p&gt;
+&lt;p&gt;b) 只要作业比用户区小，在用户区里就会形成碎片，造成资源浪费&lt;/p&gt;
+&lt;p&gt;c) 大作业无法在小内存中运行&lt;/p&gt;
+&lt;p&gt;d. 为缓解大作业小内存的情况提出覆盖技术和对换技术&lt;/p&gt;
+&lt;p&gt;a) 覆盖技术：允许一个作业的若干个程序段使用同一个存储区&lt;/p&gt;
+&lt;p&gt;b) 对换技术：以辅助存储器作为内存的后援（硬盘）&lt;/p&gt;
+&lt;p&gt;2) 固定分区存储管理（静态）：分区数目、大小固定&lt;/p&gt;
+&lt;p&gt;a. 预先把内存储器中可供分配的用户区划分成若干个连续分区，每个分区的尺寸可以相同，可以不同。每个分区中只允许装入一个作业运行，系统可以为每一个分区设置一个后备作业队列，一个作业到达时，总是进入到 “能容纳该作业的最小分区” 的那个后备队列中去排队&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;b. 分区的分配与释放方案：&lt;/p&gt;
+&lt;p&gt;a) 在队列中挑选出第一个可容纳的作业进入&lt;/p&gt;
+&lt;p&gt;i. 优点：选择效率高&lt;/p&gt;
+&lt;p&gt;ii. 缺点：小作业 -&amp;gt; 大内存&lt;/p&gt;
+&lt;p&gt;b) 在这个队列中进行搜索，找到这个分区能够容纳的最大的那个作业，让它进入运行&lt;/p&gt;
+&lt;p&gt;i. 优点：存储空间利用率高，产生内部碎片尽可能的小&lt;/p&gt;
+&lt;p&gt;ii. 缺点：选择效率低&lt;/p&gt;
+&lt;p&gt;c) 在系统中至少保留一个小的分区，以避免因为运行小作业而被迫分配打分去的发生&lt;/p&gt;
+&lt;p&gt;d) 为具体管理各个分区，并建立一个 “分区分配表”，其中包括每个分区的起始位置大小及状态&lt;/p&gt;
+&lt;p&gt;c. 特点&lt;/p&gt;
+&lt;p&gt;a) 它是最简单的，具有 “多道” 色彩的存储管理方案，提高资源利用率&lt;/p&gt;
+&lt;p&gt;b) 当把一个分区分配给某个作业时，该作业的程序将一次性的全部装入到分配给他的连续分区里&lt;/p&gt;
+&lt;p&gt;c) 静态重定位，在分区内的程序不能随意移动&lt;/p&gt;
+&lt;p&gt;d. 缺点&lt;/p&gt;
+&lt;p&gt;a) 进入分区的作业尺寸不见得与分区的长度相吻合，势必产生内部碎片，引起资源的浪费&lt;/p&gt;
+&lt;p&gt;b) 如果到达作业的尺寸比任何一个分区的长度都大，它就无法运行&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;3) 可变分区存储管理：&lt;/p&gt;
+&lt;p&gt;分区的边界划分随作业的需求可变，分区的数目随着进入作业的多少可变，消灭了内部碎片（可能会产生内部碎片）。&lt;/p&gt;
+&lt;p&gt;外部碎片是指无法分配给用户使用的存储区&lt;/p&gt;
+&lt;p&gt;a. 基本思想：在作业要求装入内存储器时，如果当时内存储器中有足够的存储空间满足该作业的需求，就划分出一个与作业相对地址空间同样大小的分区，并分配给它&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;b. 要解决的问题&lt;/p&gt;
+&lt;p&gt;a) 采用一种新的地址重定位技术，动态地址重定位，以便程序能够在内存储器中随意移动，为空闲区的合并提供保证&lt;/p&gt;
+&lt;p&gt;b) 记住系统中各个分区的使用情况&lt;/p&gt;
+&lt;p&gt;c) 给出分区分配算法&lt;/p&gt;
+&lt;p&gt;c. 地址动态重定位过程（在程序执行时动态完成）&lt;/p&gt;
+&lt;p&gt;a) 为实施地址动态重定位，硬件要增加一个地址转换机构，这个机构一般由地址转换线路和一个定位寄存器（基址寄存器）组成&lt;/p&gt;
+&lt;p&gt;b) 地址的静态重定位和动态重定位的比较&lt;/p&gt;
+&lt;p&gt;i. 地址转换时刻：静态重定位是在程序运行之前完成地址转换的，而动态重定位是在程序执行时完成&lt;/p&gt;
+&lt;p&gt;ii. 谁来完成任务：静态重定位是由软件完成地址转换工作的，而动态重定位则是由一套硬件提供的地址转换机构来完成&lt;/p&gt;
+&lt;p&gt;iii. 完成的形式：静态重定位是在装入时一次性集中地把程序指令中所有要转换的地址加以转换；而动态重定位则是每执行一条执行时，就对其地址加以转换&lt;/p&gt;
+&lt;p&gt;iv. 完成的结果：实施静态重定位，原来的指令地址部分被修改了，而动态重定位只是按照所形成的地址去执行这条指令，并不对指令本身做任何修改&lt;/p&gt;
+&lt;p&gt;d. 空闲区的合并&lt;/p&gt;
+&lt;p&gt;e. 分区的管理&lt;/p&gt;
+&lt;p&gt;a) 表格法：一张已分配表，一张空闲表（分区号，分区大小，分区起始地址、状态）&lt;/p&gt;
+&lt;p&gt;b) 单链表法：一个存放该分区的长度，另一个存放它下一个空闲分区的起始地址&lt;/p&gt;
+&lt;p&gt;c) 双链表法：还存放上一个空闲区起始地址&lt;/p&gt;
+&lt;p&gt;f. 空闲分区的分配算法&lt;/p&gt;
+&lt;p&gt;a) 最先适应算法：要求空闲分区链以地址递增的次序链接（对大作业不利）&lt;/p&gt;
+&lt;p&gt;b) 最佳适应算法：每次为作业分配内存时，总是把能满足要求，又是最小的空闲分区分配给作业，避免 “大材小用” 按其容量&lt;/p&gt;
+&lt;p&gt;c) 最坏适应算法：挑选一个最大的空闲区，从中分割一部分存储空间给作者使用，以至于存储器中缺乏大的空闲分区，照顾中小作业的需求&lt;/p&gt;
+&lt;p&gt;d) 循环首次适应算法：从上次分配的位置之后开始查找&lt;/p&gt;
+&lt;p&gt;g. 可变分区存储管理的特点&lt;/p&gt;
+&lt;p&gt;a) 作业一次性的全部装入到一个连续的存储分区中&lt;/p&gt;
+&lt;p&gt;b) 分区是按照作业对存储的需求划分的，所以不会出现内部碎片&lt;/p&gt;
+&lt;p&gt;c) 为了确保作业能够在内存中移动，要有硬件的支持，实行指令地址的动态重定位&lt;/p&gt;
+&lt;p&gt;h. 缺点：&lt;/p&gt;
+&lt;p&gt;a) 仍然没有解决小内存裕兴大作业的问题，只要作业的存储需求大于系统提供的整个用户区，该作业就无法投入运行&lt;/p&gt;
+&lt;p&gt;b) 虽然避免了内部碎片，但有可能出现极小的翻去暂时分配不出去的情形，引起了外部碎片，&lt;/p&gt;
+&lt;p&gt;c) 为了形成大的分区，可变分区存储管理通过移动程序来达到分区合并的目的，然而程序的移动是很花费时间的，增加了系统在这方面的投入与开销&lt;/p&gt;
+&lt;p&gt;4) 分页式存储管理：&lt;/p&gt;
+&lt;p&gt;需要两次访问内存，目的是提高内存利用率&lt;/p&gt;
+&lt;p&gt;a. 分页式储存管理是将固定分区方法与动态重定位技术结合在一起，需要硬件支持&lt;/p&gt;
+&lt;p&gt;基本思想：首先把整个内存储器划分成大小相等的许多分区，每个分区称为 “一块”&lt;/p&gt;
+&lt;p&gt;b. 在分页式存储管理中，块是存储分配的单位&lt;/p&gt;
+&lt;p&gt;a) 用户作业仍然是相对于 “0” 进行编址，形成一个连续的相对地址空间&lt;/p&gt;
+&lt;p&gt;b) 用户程序相对地址空间中的每一个分区被称为 “页”，用户相对地址空间中的每一个相对地址，都可以用（页号，页内位移）这样的数对来表示&lt;/p&gt;
+&lt;p&gt;i. 物理地址 = 页的大小 * 页号 + 页内位移&lt;/p&gt;
+&lt;p&gt;ii. 页号 = 相对地址 / 块尺寸&lt;/p&gt;
+&lt;p&gt;iii. 页内位移 = 相对地址 % 块尺寸&lt;/p&gt;
+&lt;p&gt;c. 页与块对应关系表称为 “页表”&lt;/p&gt;
+&lt;p&gt;a) 快速寄存器组单独起名为 “相联寄存器”，简称 “快表”&lt;/p&gt;
+&lt;p&gt;b) 快表与页表联合工作，先查找快表，若无再查找页表并把数据写入快表&lt;/p&gt;
+&lt;p&gt;c) （访问页表时间 + 访问一次内存时间）&lt;em&gt;命中率 + 访问快表时间&lt;/em&gt;命中率 = 平均内存存取时间&lt;/p&gt;
+&lt;p&gt;d) 页面尺寸大多选在 512byte 到 64kb 之间&lt;/p&gt;
+&lt;p&gt;d. 特点：&lt;/p&gt;
+&lt;p&gt;a) 内存储器实现被划分成相等尺寸的块，它是进行存储分配的单元&lt;/p&gt;
+&lt;p&gt;b) 用户作业的相对地址空间按照块的尺寸划分成页，这是在系统内部进行的，用户感觉不到&lt;/p&gt;
+&lt;p&gt;c) 相对地址空间中的页可以进入内存中的任何一个空闲块，并且分页式存储管理实行的是动态重定位，因此它打破了一个作业必须占据连续的存储空间的限制，作业在不连续的存储区里，也能够得到正确的运行&lt;/p&gt;
+&lt;p&gt;e. 缺点：&lt;/p&gt;
+&lt;p&gt;a) 平均每一个作业要浪费半页大小的存储块，会产生内部碎片&lt;/p&gt;
+&lt;p&gt;b) 作业虽然可以不占据连续的存储区，但是每次仍然要求一次全部进入内存。因此，如果作业很大，其存储需求大于内存，仍然存在小内存不能运行大作业的问题&lt;/p&gt;
+&lt;p&gt;5) 分段式存储管理：&lt;/p&gt;
+&lt;p&gt;a. 目的：方便用户使用编程，存储共享，存储保护，动态增长，动态链接&lt;/p&gt;
+&lt;p&gt;b. 要求用户将自己的整个作业程序以多个相互独立的称为 “段” 的地址空间提交给系统，每个段都是一个从 “0” 开始的一维地址空间，长度不一，操作系统按照段长为作业分配内存空间&lt;/p&gt;
+&lt;p 段号，段内位移=&#34;&#34;&gt;c. 段表：段号、段长、该段在内存的基址（起始地址）&lt;/p&gt;
+&lt;p&gt;a) 物理地址 = 段的起始地址 + 段内地址&lt;/p&gt;
+&lt;p&gt;b) 逻辑地址 = 段号 + 段内地址&lt;/p&gt;
+&lt;p&gt;d. 分段与分页的区别：&lt;/p&gt;
+&lt;p&gt;a) 页是信息的物理单位，段是信息的逻辑单位&lt;/p&gt;
+&lt;p&gt;i. 分页提高内存的利用率，仅仅是系统管理上的需要，用户不可见。段是信息的逻辑单位，它通常包括的是一组意义相对完整的信息，分段段的目的主要在于能更好地满足用户的需要&lt;/p&gt;
+&lt;p&gt;b) 页的尺寸由系统决定，段的尺寸因段而异&lt;/p&gt;
+&lt;p&gt;i. 段的长度取决于用户编写的程序，通常由编译程序在对源程序进行编译时根据信息的性质来划分&lt;/p&gt;
+&lt;p&gt;c) 页的地址空间是一维的，段的地址空间是二维的&lt;/p&gt;
+&lt;p&gt;i. 分页：用户必须通过链接编辑程序，把各程序段链接成一个相对于 0 编址的线性空间，程序中是通过地址编号来确定空间中的位置的。因此用户向系统提供的是一个一维的逻辑地址空间。&lt;/p&gt;
+&lt;p&gt;ii. 分段：用户不把各程序段链接成一个相对于 0 进行编制的一维线性空间，各程序段之间是通过 {段号，段内位移} 进行访问的。因此，用户向系统提供的是一个二维的逻辑地址空间&lt;/p&gt;
+&lt;p&gt;6) 段页式存储管理：（三次访问内存）&lt;/p&gt;
+&lt;p&gt;a. 基本原理：分段和分页原理的结合，即先将用户程序分成若干个段，再把每个段分成若干个页，并为每一个段赋予一个段名。&lt;/p&gt;
+&lt;p&gt;a) 作业地址空间结构：主程序段，子程序段，数据段&lt;/p&gt;
+&lt;p&gt;b) 地址结构：段号，段内页号，页内地址&lt;/p&gt;
+&lt;p&gt;b. 系统设置了位示图、段表和页表，记录主存的使用情况和作业分配情况&lt;/p&gt;
+&lt;p&gt;a) 逻辑地址 = 段号 + 页号 + 页内位置&lt;/p&gt;
+&lt;p&gt;b) 块号 * 块长 + 页内地址&lt;/p&gt;
+&lt;p&gt;c. 虚拟存储器：是具有请求调入功能和置换功能，能从逻辑上对内存容量加以扩充的一种存储器系统，其逻辑容量由内存容量和外存容量之和所决定，其运行速度接近于内存速度。&lt;/p&gt;
+&lt;p&gt;a) 特征：多次性、对换性、虚拟性、离散性&lt;/p&gt;
+&lt;p&gt;d. 请求分页式存储管理（需要硬件支持）&lt;/p&gt;
+&lt;p&gt;a) 是基于分页式存储管理的一种虚拟存储器&lt;/p&gt;
+&lt;p&gt;“请求分页式” 是指当程序运行中需要某一页时，再把它从辅助存储器里调入内存使用，解决了小内存与大作业的矛盾，但会产生内部碎片&lt;/p&gt;
+&lt;p&gt;b) 缺页中断是指在指令执行期间，若发现所要访问的指令或数据不在内存时，便立即产生和处理缺页中断信号，以便能及时将所缺之页面调入内存&lt;/p&gt;
+&lt;p 缺页中断率=&#34;缺页次数/页面总数&#34;&gt;e. 缺页中断与一般中断的区别&lt;/p&gt;
+&lt;p&gt;a) 缺页中断是在执行一条指令中间时产生的中断，并立即去处理，一般中断则是一条指令执行完毕后，当发现有中断请求时，才去响应和处理&lt;/p&gt;
+&lt;p&gt;b) 缺页中断处理完成后，仍返回到原指令去执行，因为那条指令并未执行；而一般中断则是到下一条指令去执行，因为上一条指令已经执行完毕了&lt;/p&gt;
+&lt;p&gt;f. 影响缺页中断次数的因素：&lt;/p&gt;
+&lt;p&gt;a) 分配给作业的内存块数&lt;/p&gt;
+&lt;p&gt;b) 页面尺寸&lt;/p&gt;
+&lt;p&gt;c) 程序的实现&lt;/p&gt;
+&lt;p&gt;7) 页面淘汰（置换）算法：&lt;/p&gt;
+&lt;p&gt;页面淘汰是由缺页中断引起的，但缺页中断不见得一定引起页面淘汰&lt;/p&gt;
+&lt;p&gt;a. 先进先出页面淘汰（置换）算法（FIFO）&lt;/p&gt;
+&lt;p&gt;淘汰最先进入内存的页面 （3 个内存块都为空，3 次缺页中断）&lt;/p&gt;
+&lt;p&gt;b. 最近最久未用页面淘汰（置换）算法（LRU）&lt;/p&gt;
+&lt;p&gt;总是把最长时间未被访问过的页面淘汰出去 （需要寄存器和栈）&lt;/p&gt;
+&lt;p&gt;c. 最近最少用页面淘汰（置换）算法（LFU）&lt;/p&gt;
+&lt;p&gt;总是把当前使用的最少的页面淘汰出去&lt;/p&gt;
+&lt;p&gt;为每个内存中的页面设置一个计数器（移位寄存器） 加 1&lt;/p&gt;
+&lt;p&gt;d. 最优（最佳）页面淘汰（置换）算法（OPT）&lt;/p&gt;
+&lt;p&gt;把以后不再使用的或最长时间内不会用到的页面淘汰出去（理论上，不会实现）&lt;/p&gt;
+&lt;p&gt;注：对于 FIFO 页面淘汰算法，有时增加分配给作业的可用内存块数，它的缺页次数反而上升，通常称为异常现象&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;第四章-设备管理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第四章-设备管理&#34;&gt;#&lt;/a&gt; 第四章 设备管理&lt;/h1&gt;
+&lt;p SPOOLing技术=&#34;&#34;&gt;1．“设备” 泛指计算机系统中的各种外部设备，外设（即主机以外的其他所有设备）在众多的 I/O 设备中，并不是所有的设备都是可以共享的，可以借助于磁盘，把只能独享的设备变为共享，这就是所谓的 “虚拟设备”&lt;/p&gt;
+&lt;p&gt;2．设备是指计算机中用以在机器之间进行传送和接收信息，完成用户输入 / 输出（I/O）操作的那些部件。比如磁盘、磁带、打印机、显示器、鼠标、键盘・・・・・・&lt;/p&gt;
+&lt;p&gt;3．计算机 I/O 系统的组织结构：&lt;/p&gt;
+&lt;p&gt;（1）底层是具体的设备和硬件接口&lt;/p&gt;
+&lt;p&gt;（2）中间是系统软件（与设备相关软件、与设备无关软件）&lt;/p&gt;
+&lt;p&gt;（3）用户程序&lt;/p&gt;
+&lt;p&gt;4．I/O 设备一般是由执行 I/O 操作的机械部分和执行控制 I/O 的电子部件组成&lt;/p&gt;
+&lt;p&gt;（1）执行 I/O 操作的机械部分就是一般的 I/O 设备&lt;/p&gt;
+&lt;p&gt;（2）执行控制 I/O 的电子部件称为设备控制器或适配器&lt;/p&gt;
+&lt;p&gt;① 为了能够使 CPU 设备控制器中的各个寄存器进行通信，通常采用 “单独的 I/O 空间” 和 “内存映射 I/O” 两种方法&lt;/p&gt;
+&lt;p&gt;② 设备控制器是 CPU 与外围设备之间的接口，是一个可编址设备，每一个地址对应一个设备&lt;/p&gt;
+&lt;p&gt;功能：&lt;/p&gt;
+&lt;p&gt;Ø 接收和识别命令&lt;/p&gt;
+&lt;p&gt;Ø 数据交换&lt;/p&gt;
+&lt;p&gt;Ø 标识和报告设备的状态&lt;/p&gt;
+&lt;p&gt;Ø 地址识别&lt;/p&gt;
+&lt;p&gt;Ø 数据缓冲区&lt;/p&gt;
+&lt;p&gt;Ø 差错控制&lt;/p&gt;
+&lt;p&gt;组成：&lt;/p&gt;
+&lt;p&gt;Ø 设备控制器与处理机（CPU）的接口&lt;/p&gt;
+&lt;p&gt;Ø 设备控制器与设备的接口&lt;/p&gt;
+&lt;p&gt;Ø I/O 逻辑：用于实现对设备的控制&lt;/p&gt;
+&lt;p&gt;5．设备驱动程序：&lt;/p&gt;
+&lt;p&gt;6．设备处理方式：&lt;/p&gt;
+&lt;p&gt;（1）为每一类设备设置一个进程，专门用于执行这类设备的 I/O 操作&lt;/p&gt;
+&lt;p&gt;（2）在整个系统中设置一个 I/O 进程，专门用于执行系统中所有各类设备的 I/O 操作&lt;/p&gt;
+&lt;p&gt;（3）不设置专门的设备处理进程，而只为各类设置相应的设备驱动程序，供用户或系统进程调用&lt;/p&gt;
+&lt;p&gt;7．设备驱动程序的处理过程&lt;/p&gt;
+&lt;p&gt;（1）将抽象要求转换为具体要求&lt;/p&gt;
+&lt;p&gt;（2）对服务请求进行校验，即检查 I/O 请求的合法性&lt;/p&gt;
+&lt;p&gt;（3）检查设备的状态&lt;/p&gt;
+&lt;p&gt;（4）传送必要的参数&lt;/p&gt;
+&lt;p&gt;（5）启动 I/O 设备&lt;/p&gt;
+&lt;p&gt;（6）工作方式的设置&lt;/p&gt;
+&lt;p&gt;I/O 接口程序：是操作系统中与设备无关的软件，它从上层接收用户对设备提出的 I/O 请求，然后负责吧 I/O 请求转变成所需要的 I/O 命令，调用具体的设备驱动程序去执行&lt;/p&gt;
+&lt;p&gt;系统都是用主设备号和次设备号组成 “逻辑设备名”&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;操作系统提供的设备无关性的优点：&lt;/p&gt;
+&lt;p&gt;ü 方便用户&lt;/p&gt;
+&lt;p&gt;ü 提高设备的利用率&lt;/p&gt;
+&lt;p&gt;8．计算机设备的分类&lt;/p&gt;
+&lt;p&gt;（1）基于设备的从属关系&lt;/p&gt;
+&lt;p&gt;a. 系统设备（键盘、显示器、打印机、磁盘驱动）&lt;/p&gt;
+&lt;p&gt;b. 用户设备&lt;/p&gt;
+&lt;p&gt;（2）基于设备的分配特性&lt;/p&gt;
+&lt;p&gt;a. 独享设备（打印机）&lt;/p&gt;
+&lt;p&gt;b. 共享设备&lt;/p&gt;
+&lt;p&gt;c. 虚拟设备（SPOOLing 技术）&lt;/p&gt;
+&lt;p&gt;（3）基于设备的工作特性&lt;/p&gt;
+&lt;p&gt;a. 输入 / 输出设备（字符设备）&lt;/p&gt;
+&lt;p&gt;b. 存储设备（块设备） 磁盘、磁带&lt;/p&gt;
+&lt;p&gt;（4）按信息交换的单位&lt;/p&gt;
+&lt;p&gt;a. 块设备：用于存储信息，属于结构设备。磁盘、磁带（以块为单位传送信息）&lt;/p&gt;
+&lt;p&gt;b. 字符设备：以单个字符为单位来传送信息。 键盘&lt;/p&gt;
+&lt;p&gt;9．设备管理的目标&lt;/p&gt;
+&lt;p&gt;a. 提高外部设备的利用率&lt;/p&gt;
+&lt;p&gt;b. 为用户提供便利、统一的使用界面&lt;/p&gt;
+&lt;p&gt;10．设备管理的功能&lt;/p&gt;
+&lt;p&gt;a. 提供一组 I/O 命令&lt;/p&gt;
+&lt;p&gt;b. 进行设备的分配和回收&lt;/p&gt;
+&lt;p&gt;c. 对缓冲区进行管理&lt;/p&gt;
+&lt;p&gt;d. 实现真正的 I/O 操作&lt;/p&gt;
+&lt;p&gt;11．输入输出管理步骤&lt;/p&gt;
+&lt;p&gt;（1）用户在程序中使用系统提供的输入 / 输出命令发出 I/O 请求&lt;/p&gt;
+&lt;p&gt;（2）输入输出管理程序接受这个请求&lt;/p&gt;
+&lt;p&gt;（3）“设备驱动程序” 来具体完成所要求的的 I/O 操作&lt;/p&gt;
+&lt;p&gt;（4）实现设备中断处理程序来处理这个请求&lt;/p&gt;
+&lt;p&gt;设备的输入输出管理程序由 3 块内容组成：接受用户的 I/O 请求，组织管理输入输出进行，输入输出的善后处理&lt;/p&gt;
+&lt;p&gt;设备控制：&lt;/p&gt;
+&lt;p&gt;1) 设备控制块 DCB 中存放的是一台具体设备的有关信息，找到一个设备的 DCB，就得到了该设备的特性，各种参数，使用情况等，所以 DCB 是设备管理中最重要的一条数据结构&lt;/p&gt;
+&lt;p&gt;2) 独享设备中具有排他性，只能采取 “静态分配” 的策略&lt;/p&gt;
+&lt;p&gt;a. 静态分配：用户作业开始之前，由系统一次分配给该作业所需的设备，控制器和通道，不会发生死锁&lt;/p&gt;
+&lt;p&gt;b. 动态分配：在进程执行过程中进行的设备分配，可能造成死锁&lt;/p&gt;
+&lt;p&gt;对独享设备采用的分配算法：&lt;/p&gt;
+&lt;p&gt;v 先来先服务&lt;/p&gt;
+&lt;p&gt;v 优先级高者先服务&lt;/p&gt;
+&lt;p&gt;3) 共享磁盘的调度&lt;/p&gt;
+&lt;p&gt;磁盘是一种典型的共享存储设备，允许多个作业进程同时使用，而不是让一个作业在整个运行期间独占。“同时使用” 是指当一个作业进程暂时不用时，其他作业进程就可以使用。每一个时刻只有一个作业用&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;4) 调度算法&lt;/p&gt;
+&lt;p&gt;a. “先来先服务” 调度算法（并不理想）（移臂调度，减少查找时间）&lt;/p&gt;
+&lt;p&gt;以 I/O 请求到达的先后次序作为磁盘调度的顺序&lt;/p&gt;
+&lt;p&gt;b. “最短查找时间” 调度算法&lt;/p&gt;
+&lt;p&gt;把距离磁头当前位置最近的 I/O 请求作为下一次调度的对象&lt;/p&gt;
+&lt;p&gt;c. “电梯” 调度算法（SCAN）&lt;/p&gt;
+&lt;p&gt;总是沿着此案移动臂的移动方向选择距离磁头当前位置最近的 I/O 请求，作为下一次调度的对象&lt;/p&gt;
+&lt;p&gt;d. “单向扫描” 调度算法（循环扫描 CSCAN）&lt;/p&gt;
+&lt;p&gt;总是从 0 号柱面开始往里移动移动臂，遇到有 I/O 请求就进行处理，直到到达最后一个请求柱面，然后移动臂立即带动磁头不做任何服务地快速返回到 0 号柱面，开始下一次扫描&lt;/p&gt;
+&lt;p&gt;对 I/O 设备的控制方式（数据传输方式）&lt;/p&gt;
+&lt;p&gt;1) 程序循环测试方式（程序查询式）&lt;/p&gt;
+&lt;p&gt;是指用户进程使用 start 指令启动设备后，不断地执行 test 指令，去测试所启动设备的状态寄存器。只有在状态寄存器出现了所需要的状态后，才停止测试工作，完成输入 / 输出。&lt;/p&gt;
+&lt;p&gt;数据寄存器：用来存放传输的数据&lt;/p&gt;
+&lt;p&gt;状态寄存器：用来记录设备当前所处状态&lt;/p&gt;
+&lt;p&gt;2) 中断方式&lt;/p&gt;
+&lt;p&gt;所谓 “中断” 是一种使 CPU 暂时中止正在执行的程序而转去处理特殊时间的操作。&lt;/p&gt;
+&lt;p&gt;引起中断的时间称为中断源。&lt;/p&gt;
+&lt;p&gt;程序中产生的中断，由 CPU 的某些错误结果（如，计算机溢出）产生的中断称为 “内中断”，由外部设备控制器引起的中断称为 “外中断”&lt;/p&gt;
+&lt;p&gt;3) 直接存储器存取方式（DMA 方式）&lt;/p&gt;
+&lt;p&gt;特点：能使 I/O 设备直接和内存储器进行成批数据的快速传输。（单位：块数据）&lt;/p&gt;
+&lt;p&gt;DMA 控制器包括四个寄存器：数据寄存器，状态寄存器，地址寄存器，字节计数器&lt;/p&gt;
+&lt;p&gt;DMA 控制器的组成：主机与 DMA 控制器的接口；DMA 控制器与块设备的接口；I/O 控制逻辑&lt;/p&gt;
+&lt;p&gt;4) 通道方式&lt;/p&gt;
+&lt;p&gt;通道方式能够使 CPU 彻底从 I/O 中解放出来。CPU 进行善后处理和启动。&lt;/p&gt;
+&lt;p&gt;通道是一个独立于 CPU 的，专门用来管理输入 / 输出操作的处理机。&lt;/p&gt;
+&lt;p&gt;通道是通过执行通道程序并与设备控制器共同实现对 I/O 设备的控制的。&lt;/p&gt;
+&lt;p&gt;它规定了设备应该执行的各种操作的顺序。由一系列通道指令所构成，CPU 对 I/O 请求只去做启动和善后处理工作，输入 / 输出的管理以及数据传输等事宜，全部由通道独立完成。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;缓冲：&lt;/p&gt;
+&lt;p&gt;1) 原因：&lt;/p&gt;
+&lt;p&gt;a. 缓和 CPU 与 I/O 设备间速度不匹配的矛盾&lt;/p&gt;
+&lt;p&gt;b. 减少对 CPU 的中断频率，放宽对 CPU 中断响应时间的限制&lt;/p&gt;
+&lt;p&gt;c. 解决数据粒度不匹配的问题&lt;/p&gt;
+&lt;p&gt;d. 提高 CPU 和 I/O 设备之间的并行性&lt;/p&gt;
+&lt;p&gt;2) 缓冲的实现&lt;/p&gt;
+&lt;p&gt;a. 采用专门的硬件寄存器，比如设备控制器里的数据寄存器，“硬件缓冲”&lt;/p&gt;
+&lt;p&gt;b. 在内存储器中开辟出 n 个单元，作为专用的 I/O 缓冲区，以便存放输入 / 输出的数据，这种缓冲区就是 “软件缓冲”&lt;/p&gt;
+&lt;p&gt;c. 根据缓冲区的个数：单缓冲区、双缓冲区、多缓冲区、缓冲池&lt;/p&gt;
+&lt;p&gt;3) 虚拟设备&lt;/p&gt;
+&lt;p&gt;a. 通过多道程序技术可将一台物理 CPU 虚拟为多台逻辑 CPU，需要硬件的支持。作为后援的硬盘（大容量），具有设备与 CPU 并行工作的能力&lt;/p&gt;
+&lt;p&gt;4) SPOOLing 技术&lt;/p&gt;
+&lt;p&gt;a. 在主机的直接控制下，实现以前的脱机输入 / 输出功能，此时的外围操作与 CPU 对数据的处理同时进行，我们把这种在联机情况下实现的同时外围操作的技术称为 SPOOLing 技术，或假脱机技术&lt;/p&gt;
+&lt;p&gt;b. SPOOLing 技术是对脱机输入 / 输出系统的模拟。SPOOLing 系统建立在通道技术和多道程序技术的基础上，以高速随机外存（通常为磁盘）为后援存储器&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;5) 设备无关性：&lt;/p&gt;
+&lt;p&gt;应用程序中所用的设备，不局限于使用某个具体的物理设备。为每个设备所配置的设备驱动程序是与硬件紧密相关的软件。为了实现设备独立性，必须再在设备驱动程序上设置一层软件，称为与设备无关的 I/O 软件或设备独立性软件&lt;/p&gt;
+&lt;p&gt;6) 操作系统中实现虚拟设备的软件功能模块由 3 部分组成&lt;/p&gt;
+&lt;p&gt;a. 预输入程序&lt;/p&gt;
+&lt;p&gt;b. 缓输出程序&lt;/p&gt;
+&lt;p&gt;c. 井管理程序&lt;/p&gt;
+&lt;p&gt;7) SPOOLing 系统由四部分组成&lt;/p&gt;
+&lt;p&gt;a. 输入井和输出井&lt;/p&gt;
+&lt;p&gt;在磁盘上开辟出来的两个存储区域，输入数据，输出数据&lt;/p&gt;
+&lt;p&gt;b. 输入缓冲区和输出缓冲区&lt;/p&gt;
+&lt;p&gt;在内存中开辟的两个缓冲区&lt;/p&gt;
+&lt;p&gt;c. 输入进程和输出进程&lt;/p&gt;
+&lt;p&gt;模拟外围控制机&lt;/p&gt;
+&lt;p&gt;d. 井管理程序&lt;/p&gt;
+&lt;p&gt;特点：&lt;/p&gt;
+&lt;p&gt;Ø 提高了 I/O 的速度&lt;/p&gt;
+&lt;p&gt;Ø 将独占设备改造为共享设备&lt;/p&gt;
+&lt;p&gt;Ø 实现了虚拟设备的功能&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;第五章-文件管理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第五章-文件管理&#34;&gt;#&lt;/a&gt; 第五章 文件管理&lt;/h1&gt;
+&lt;p&gt;1) 目标：提高外存储空间的利用率&lt;/p&gt;
+&lt;p&gt;主要任务：对用户文件和系统文件进行管理，方便用户使用，并保证文件的安全性&lt;/p&gt;
+&lt;p&gt;文件存储设备是以块为单位进行管理的&lt;/p&gt;
+&lt;p&gt;2) 所谓 “文件” 是指具有完整逻辑意义的一组相关信息的集合，它是在磁盘上保存信息，而且能方便以后读取的方法，文件用符号名加以标识，这个符号名就被称为 “文件名”&lt;/p&gt;
+&lt;p&gt;3) 文件是指由创建者所定义的，具有文件名的一组相关元素的集合，可分为有结构文件和无结构文件两种。在有结构的文件中，文件由若干个相关记录组成而无结构文件则被看成是一个字符流。文件在文件系统中是一个最大的数据单位，它描述了对象集&lt;/p&gt;
+&lt;p&gt;文件属性：文件类型、文件长度、文件的物理位置、文件的建立时间（最后一次的修改时间）&lt;/p&gt;
+&lt;p&gt;4) 文件名：在不同的系统之间，对文件名的规定是不同的。一个文件名是在创建该文件时由用户给出的，操作系统将向用户提供组成文件名的命名规则&lt;/p&gt;
+&lt;p&gt;5) 很多操作系统采用句点‘.’隔开成两部分的文件名形式，句点之前的部分称为文件名，句点后面的部分称为文件的 “扩展名”。又称后缀名，用于指示文件的类型&lt;/p&gt;
+&lt;p&gt;.bak 备份文件 .bas ABSIC 源程序 .bin 可执行的二进制文件&lt;/p&gt;
+&lt;p&gt;.c C 源程序 .dat 数据文件 .doc 文档文件&lt;/p&gt;
+&lt;p&gt;.hlp 帮助文件 .obj 目标文件 .pas Pascal 文件&lt;/p&gt;
+&lt;p&gt;.txt 一般文本文件 .tmp 临时文件&lt;/p&gt;
+&lt;p&gt;1) 文件被存在大容量的辅助存储器（外存）中，当用户需要使用时，就通过文件名把相应的文件读到内存&lt;/p&gt;
+&lt;p&gt;2) “文件系统” 是指操作系统中与文件管理有关的那部分软件，被管理的文件，以及管理文件所需要的数据结构（目录、索引表・・・・・・）的总体&lt;/p&gt;
+&lt;p&gt;3) 对文件的分类&lt;/p&gt;
+&lt;p&gt;a. 按文件的性质和用途：系统文件、用户文件、库文件&lt;/p&gt;
+&lt;p&gt;b. 按文件中数据的形式：源文件、目标文件、可执行文件&lt;/p&gt;
+&lt;p&gt;c. 按存取控制属性分类：只执行文件、只读文件、读写文件&lt;/p&gt;
+&lt;p&gt;d. 按文件的保护性质：只读文件、读写文件、可执行文件、不保护文件&lt;/p&gt;
+&lt;p&gt;e. 按文件的保护期限：临时文件、档案文件、永久文件&lt;/p&gt;
+&lt;p&gt;f. 按文件的存取方式：顺序存取文件、随机存取文件&lt;/p&gt;
+&lt;p&gt;g. 按设备的类型：磁盘文件、磁带文件、打印文件&lt;/p&gt;
+&lt;p&gt;h. 按文件的物理结构：连续文件、链接文件、索引文件&lt;/p&gt;
+&lt;p&gt;i. 按文件的内容（组织形式和处理方式）：普通文件、目录文件、特殊文件&lt;/p&gt;
+&lt;p&gt;j. 按文件的逻辑结构：流式文件、记录式文件&lt;/p&gt;
+&lt;p&gt;4) 文件的逻辑结构&lt;/p&gt;
+&lt;p&gt;a. 从用户使用的角度出发组织的文件，被称为是文件的逻辑结构，一类是有结构的文件，这是指由一个以上的记录构成的文件，故又称为记录式文件&lt;/p&gt;
+&lt;p&gt;b. 从文件的组织方式来分，可以分为顺序文件，索引文件，索引顺序文件&lt;/p&gt;
+&lt;p&gt;c. UNIX 操作系统总是以流失作为文件的逻辑结构&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;5) 文件的物理结构&lt;/p&gt;
+&lt;p&gt;a. 文件按不同的组织方式在辅存上存放，就会得到不同的物理结构，文件的物理结构有时也称为文件的 “存储结构”&lt;/p&gt;
+&lt;p&gt;b. 文件在辅存（外存）上可以有 3 种不同的存放方式：连续存放、链接块存放以及索引表存放&lt;/p&gt;
+&lt;p&gt;c. 对应地文件就有 3 种物理结构，分别叫做顺序结构，链接结构和索引结构，也叫作连续文件，串联文件，索引文件&lt;/p&gt;
+&lt;p&gt;6) 存放方式&lt;/p&gt;
+&lt;p&gt;a. 连续存放 — 连续文件&lt;/p&gt;
+&lt;p&gt;不足之处：&lt;/p&gt;
+&lt;p&gt;v 必须预先知道文件的最大长度&lt;/p&gt;
+&lt;p&gt;v 会造成磁盘碎片&lt;/p&gt;
+&lt;p&gt;b. 链接块存放 — 串联文件&lt;/p&gt;
+&lt;p&gt;不会因为磁盘碎片而浪费存储空间，但使用的指针要占去一些字节，每个磁盘块存储数据的字节数不再是 2 的幂，从而降低了系统的运行效率&lt;/p&gt;
+&lt;p&gt;c. 索引表存放 — 索引文件&lt;/p&gt;
+&lt;p&gt;7) 文件的存取&lt;/p&gt;
+&lt;p&gt;a. 顺序存取&lt;/p&gt;
+&lt;p&gt;b. 随机存取&lt;/p&gt;
+&lt;p&gt;8) 磁盘空间的管理&lt;/p&gt;
+&lt;p&gt;a. 磁盘是以块为单位进行分配的&lt;/p&gt;
+&lt;p&gt;b. 磁盘与内存之间是以磁盘块为信息传输的单位&lt;/p&gt;
+&lt;p&gt;c. 选定了块的大小，还要对它们进行管理，即要记住哪些已经分配，哪些仍然空闲。&lt;/p&gt;
+&lt;p&gt;d. 常采用的磁盘存储空间管理方案有：位示图，空闲块表，空闲块链&lt;/p&gt;
+&lt;p&gt;9) 文件的操作：&lt;/p&gt;
+&lt;p&gt;创建文件、删除文件、打开文件、关闭文件、读文件、写文件&lt;/p&gt;
+&lt;p&gt;10) 系统是通过文件的目录来管理文件的&lt;/p&gt;
+&lt;p&gt;文件目录也是一种数据结构，用于标识系统中的文件及其物理地址&lt;/p&gt;
+&lt;p&gt;11) 为每一个文件开辟一个存储区，在它的里面记录着该文件的有关信息。&lt;/p&gt;
+&lt;p&gt;我们把该存储区称为 “文件控制块”（FCB） 也是一个目录项&lt;/p&gt;
+&lt;p&gt;随系统的不同，一个文件的 FCB 中所包含的内容及大小也不尽相同&lt;/p&gt;
+&lt;p&gt;包含内容：&lt;/p&gt;
+&lt;p&gt;Ø 文件名称&lt;/p&gt;
+&lt;p&gt;Ø 文件在辅存中存放的物理位置&lt;/p&gt;
+&lt;p&gt;Ø 文件的逻辑结构&lt;/p&gt;
+&lt;p&gt;Ø 文件的物理结构&lt;/p&gt;
+&lt;p&gt;Ø 文件的存取控制信息&lt;/p&gt;
+&lt;p&gt;Ø 文件管理信息&lt;/p&gt;
+&lt;p&gt;12) 目录的层次结构&lt;/p&gt;
+&lt;p&gt;如果把所有文件的 FCB 都登记在一个文件目录中，这样由文件名查文件目录项，直接就能够找到所需要的文件，那么就成这种文件目录为一级目录结构&lt;/p&gt;
+&lt;p&gt;a) 优点：&lt;/p&gt;
+&lt;p&gt;i. 简单，能实现目录管理中最基本的功能 — 按名存取&lt;/p&gt;
+&lt;p&gt;b) 缺点：&lt;/p&gt;
+&lt;p&gt;i. 查找速度慢，不允许重名，不便于实现文件共享&lt;/p&gt;
+&lt;p&gt;二级目录结构：&lt;/p&gt;
+&lt;p&gt;由 “主目录” 与 “用户目录” 二级构成，在主目录（根目录）中，每个目录项的内容只是给出文件主名以及它的目录所在的磁盘地址。在一个个用户目录中，才是由问价的呢 FCB 组成的目录，用户目录，实际上就是一级目录&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;1) 两级目录结构的优点：&lt;/p&gt;
+&lt;p&gt;a. 提高了检索目录的速度&lt;/p&gt;
+&lt;p&gt;b. 在不同的文件目录中，可以使用相同的文件名&lt;/p&gt;
+&lt;p&gt;c. 不同用户还可使用不同的文件名访问系统中的同一个共享文件&lt;/p&gt;
+&lt;p&gt;2) 缺点：&lt;/p&gt;
+&lt;p&gt;a. 若一个用户可以拥有很多文件，则查找时间仍然很长&lt;/p&gt;
+&lt;p&gt;b. 用户无法对自己的文件进行再分类安排&lt;/p&gt;
+&lt;p&gt;3) 树型目录结构&lt;/p&gt;
+&lt;p&gt;允许每个用户可以拥有多个目录，即在用户目录的下面可以再分子目录，子目录的下面还可以再有子目录。但每个文件目录中，只能有一个根目录，每个文件和每个目录都只能有一个父目录&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;4) 从根目录出发到具体文件所经过的各层名字，就构成了文件的 “路径名”，从根目录出发的这个路径名，也称为文件的 “绝对路径名”。&lt;/p&gt;
+&lt;p&gt;文件的绝对路径名必须从根目录出发，且是唯一的，从分隔符开头&lt;/p&gt;
+&lt;p&gt;在 UNIX 系统中，路径名各部分之间是用 “/” 分隔&lt;/p&gt;
+&lt;p&gt;在 MS-DOS 系统中，路径各部分是用 “\” 分隔&lt;/p&gt;
+&lt;p&gt;在 MVLTICS 系统中，路径各部分之间是用 “&amp;gt;” 分隔&lt;/p&gt;
+&lt;p&gt;在当前目录下的文件的路径名，称为文件的相对路径名&lt;/p&gt;
+&lt;p&gt;5) 文件的 “共享” 是指一个文件可以被多个授权用户共同使用&lt;/p&gt;
+&lt;p&gt;分两种：&lt;/p&gt;
+&lt;p&gt;Ø 任何时刻只允许一个用户使用共享文件&lt;/p&gt;
+&lt;p&gt;Ø 允许多个用户同时使用同一个共享文件，只进行读操作&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;h1 id=&#34;第六章-进程间的制约关系&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第六章-进程间的制约关系&#34;&gt;#&lt;/a&gt; 第六章 进程间的制约关系&lt;/h1&gt;
+&lt;p&gt;1) 在多道程序设计环境下，进程程序的执行具有并发性，在相同的前提条件下，两次执行的结果有可能不相同，使得一个进程对另一个进程的影响无法预测，在操作系统里把这种由于时间因素的影响而产生的错误称为：“与时间有关的错误”&lt;/p&gt;
+&lt;p&gt;2) 进程间具有两种制约关系：互斥和同步&lt;/p&gt;
+&lt;p&gt;a. 由于对共享资源的争夺，导致进程之间出现互斥关系&lt;/p&gt;
+&lt;p&gt;b. 由于对任务的协调工作，导致进城之间出现同步关系&lt;/p&gt;
+&lt;p&gt;3) 把那些可以共享的资源（文件、队列、缓冲区、表格、变量・・・・・・）统称为共享变量或临界资源&lt;/p&gt;
+&lt;p&gt;与一个共享变量（或共享资源）交往的多个进程，为了保证它们各自运行结果的正确性，当其中的一个进程正在对该变量（临界资源）进行操作时，就不允许其他进程同时对它操作。进程的这种制约关系被称为 “互斥”&lt;/p&gt;
+&lt;p&gt;4) 注意（互斥进程）&lt;/p&gt;
+&lt;p&gt;a. 作为具有互斥关系的进程，它的一部分程序可能用于内部的计算以及内部的数据处理等，那么只有设计共享变量的那一部分程序，才真正需要保证互斥地执行，把进程程序中 “真正需要保证互斥执行” 的那一段程序（或在每个进程中访问临界资源的那段代码）称为该进程的临界区（临界段）&lt;/p&gt;
+&lt;p&gt;b. 具有互斥关系的进程，并不关心对方的存在，即使对方不存在，自己也能够正确地运行&lt;/p&gt;
+&lt;p&gt;c. 具有互斥关系的那些进程程序中的临界区，虽然都是针对同一个共享变量的程序，但在其上执行的操作可以相同也可以不同&lt;/p&gt;
+&lt;p&gt;d. 进程的临界区是相对于某个共享变量而言的，不同共享变量的临界区之间，不存在互斥关系&lt;/p&gt;
+&lt;p&gt;信号量及其定义在信号量上的 P、V 操作：&lt;/p&gt;
+&lt;p&gt;1) 如何来保证进程在临界区执行的互斥性，由信号量及其定义在信号量上的 P、V 操作具体完成，但遵循如下规则&lt;/p&gt;
+&lt;p&gt;a. 如果有若干个进程希望进入临界区时，至少应该允许一个进入，而不能谁也进不去&lt;/p&gt;
+&lt;p&gt;b. 每次只允许一个进程进入临界区&lt;/p&gt;
+&lt;p&gt;c. 进入临界区的进程不能无限期地把持临界区&lt;/p&gt;
+&lt;p&gt;2) 同步&lt;/p&gt;
+&lt;p&gt;a. 需要在某些点上协调相互的动作，谁先到达谁后到达是有顺序要求的&lt;/p&gt;
+&lt;p&gt;b. 这些进程都应该了解对方的工作，对方如果不存在，或任何一方单独运行，就会出现差错&lt;/p&gt;
+&lt;p&gt;c. 一方或双方的运行会直接地依赖于对方所产生的的信息，或发出的消息&lt;/p&gt;
+&lt;p&gt;3) 一个进程运行到某一点时，除非合作进程已经完成了某种操作或发来了信息，否则就必须暂时等待那些操作的完成或信息的到来。&lt;/p&gt;
+&lt;p&gt;进程间的这种关系被称为 “同步”，暂停以取得同步的那一点称为 “同步点”，需要等待一个进程完成的操作或发送的信息，称为 “同步条件”&lt;/p&gt;
+&lt;p&gt;4) 一个信号量的建立必须经过说明，即应该准确说明 S 的意义和初值（不能为负）&lt;/p&gt;
+&lt;p&gt;每个信号量都有相应的队列，在建立信号量时，队列为空&lt;/p&gt;
+&lt;p&gt;可进行原子操作 P (wait)、V (signal) 操作&lt;/p&gt;
+&lt;p&gt;5) 信号量 S 上的 P 操作&lt;/p&gt;
+&lt;p&gt;①　Vs = Vs-1，把当前信号量 S 的取值减 1&lt;/p&gt;
+&lt;p&gt;②　若 Vs &amp;gt;= 0，则调用进程继续运行，若 Vs &amp;lt; 0，则调用进程由运行状态变为阻塞状态，到与该信号量有关的队列 Vq 上排队等待，直到其他进程在 S 上执行 V 操作将其释放为止&lt;/p&gt;
+&lt;p&gt;6) 信号量 S 上的 V 操作&lt;/p&gt;
+&lt;p&gt;①　Vs = Vs + 1，把当前信号量 S 的取值加 1&lt;/p&gt;
+&lt;p&gt;②　若 Vs &amp;gt; 0，则调用进程继续执行，若 Vs &amp;lt;= 0，则先从与该信号量有关的队列 Vq 上摘下一个等待进程，让它从阻塞状态变为就绪状态，到就绪队列里排队，然后调用进程继续执行&lt;/p&gt;
+&lt;p&gt;注意：&lt;/p&gt;
+&lt;p&gt;a. 设置的信号量初值一定是一个非负的整数。而运行过程中，信号量的取值就不再受 “非负” 所限了&lt;/p&gt;
+&lt;p&gt;b. 只要进入了 P (S) 或 V (S)，这两个动作就必须顺序地做完，中间不能被打断，为保证执行时的不可分割性，常采用关、开中断的方法来具体实现信号量上的 P、V 操作&lt;/p&gt;
+&lt;p&gt;c. 如果一个进程在做 P 操作后被阻塞，到关于信号量的队列上去排队等待，其含义是让进程的 PCB 到此队列上排队&lt;/p&gt;
+&lt;p&gt;7) 用 P、V 操作实现资源分配&lt;/p&gt;
+&lt;p&gt;做 P 操作即是申请一个资源，做 V 操作即是释放一个用完的资源&lt;/p&gt;
+&lt;p&gt;P 操作后，若 Vs &amp;gt; 0 时，Vs 的值就是这种资源的剩余数&lt;/p&gt;
+&lt;p&gt;若 Vs &amp;lt; 0 时，表示现在已经没有资源可以分配，申请资源的进程只能被阻塞到申请队列 Vq 上去排队等待，Vs 的绝对值表示提出资源请求，但没有分配到资源的进程个数&lt;/p&gt;
+&lt;p&gt;V 操作后，若 Vs &amp;lt;= 0，表示申请资源的等待队列上有进程在等待该资源（表示 V 操作之前 Vs &amp;lt;= -1，即至少有一个进程在队列上等待使用该资源），所以将该队列上的一个进程摘下，让它到就绪队列中排队&lt;/p&gt;
+&lt;p&gt;若 Vs &amp;gt; 0，表示 V 操作之前 Vs &amp;gt;= 0，即资源等待队列上没有进程在等待，只是收回了一个资源&lt;/p&gt;
+&lt;p&gt;1) 死锁：多个进程因竞争资源而造成的一种僵局，若无外力作用，这些进程将无法向前推进&lt;/p&gt;
+&lt;p&gt;2) 定义：即指系统中若存在一组（至少两个或以上）进程，它们中的每一个都占用了某种资源而又都在等待其中另一个所占用的资源，这种等待永远不会结束，这就是死锁&lt;/p&gt;
+&lt;p&gt;3) 产生死锁的 4 个必要条件&lt;/p&gt;
+&lt;p&gt;a. 互斥条件：进程对所分配的资源进行排它性使用，即在一段时间内，某资源只能被一个进程占用&lt;/p&gt;
+&lt;p&gt;b. 部分分配条件（占用并等待）：进程由于申请不到所需要的资源而等待时，仍然占据着已经分配到的资源&lt;/p&gt;
+&lt;p&gt;c. 非剥夺条件：已经分配给进程的资源，别的进程不能强行夺取资源，只能被占用它的进程自己释放&lt;/p&gt;
+&lt;p&gt;d. 循环等待条件：在多个进程之间，由于资源的占有和请求关系，从而形成了一个循环等待的态势&lt;/p&gt;
+&lt;p&gt;4) 处理死锁的方法：&lt;/p&gt;
+&lt;p&gt;a. 预防死锁：破坏产生死锁的 4 个必要条件之一，使系统不具备产生思索的条件&lt;/p&gt;
+&lt;p&gt;b. 忽略死锁：任凭死锁出现，当系统中出现死锁时，就将系统重新启动&lt;/p&gt;
+&lt;p&gt;c. 避免死锁：在资源的动态分配过程中，用某种方法防止系统进入不安全状态，从而可以避免死锁&lt;/p&gt;
+&lt;p&gt;d. 检测死锁并恢复：在死锁发生后，采取相应措施加以恢复。如：撤销一些进程，回收它们的资源，将它们分配给已处于阻塞状态的进程，使其继续执行&lt;/p&gt;
+&lt;p&gt;5) 预防死锁：&lt;/p&gt;
+&lt;p&gt;a. 互斥条件是非共享设备所必须的，不仅不能改变，还应加以保证&lt;/p&gt;
+&lt;p&gt;b. 破坏占用并等待条件：所有进程在开始运行之前，必须一次性地申请其在整个过程中所需要的全部资源，一次性分配&lt;/p&gt;
+&lt;p&gt;c. 破坏 “分剥夺条件”：当进程提出新的资源请求得不到满足时，它必须释放已经保持的所有资源，待以后需要时再重新申请&lt;/p&gt;
+&lt;p&gt;d. 破坏循环等待条件：将系统中的所有资源进行统一编号，进程按编号的顺序，由小到大提出对资源使用的申请&lt;/p&gt;
+&lt;p&gt;6) 在信号量上的 P、V 操作，可以看作是进程间的一种通信方式，这种通信并不在进程间真正交换信息，而只是双方事先的一种约定。因此，用 P、V 操作实现的通信，称为进程间的一种低级通信&lt;/p&gt;
+&lt;p&gt;为了使进程间能够真正交换数据，操作系统备有高级通信命令，提供给用户在程序一级使用&lt;/p&gt;
+&lt;p&gt;高级进程通信分为直接通信和间接通信两种方式&lt;/p&gt;
+&lt;p&gt;间接通信是指通过信箱来传递消息&lt;/p&gt;
+&lt;p&gt;原文链接：&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NvZGVyX2hhY2hlci9hcnRpY2xlL2RldGFpbHMvNzg5MDczMzU=&#34;&gt;https://blog.csdn.net/coder_hacher/article/details/78907335&lt;/span&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://example.com/%E6%94%AF%E4%BB%98%E5%AE%9D%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</guid>
+            <title>支付宝小程序问题记录</title>
+            <link>http://example.com/%E6%94%AF%E4%BB%98%E5%AE%9D%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</link>
+            <pubDate>Mon, 25 Jan 2021 23:31:30 +0800</pubDate>
+            <description><![CDATA[ &lt;ol&gt;
+&lt;li&gt;支付宝小程序 api 获取图片旋转信息错误&lt;/li&gt;
+&lt;li&gt;节点查询不支持在当前组件内查询，所以支付宝小程序也不支持 ref。&lt;/li&gt;
+&lt;li&gt;请求只支持 get，post&lt;/li&gt;
+&lt;li&gt;content-type 改成 json 后，传参记得包裹 JSON.stringify (); 不然无法发出数据。&lt;/li&gt;
+&lt;li&gt;canvas 不支持颜色混合，无法结合 mask 生成图片。&lt;/li&gt;
+&lt;li&gt;webview input file 上传问题，部分安卓机（oppo，vivo，小米等）h5 input file 无法获取有效 file 值，导致上传失败。方案：&lt;br /&gt;
+a. 使用 jssdk 提供的选图方法，拿到一个本地路径&lt;br /&gt;
+ ⅰ. 通过模拟 ajax 请求，xhr.responseType = &#39;blob&#39; 的方法，直接拿到 Blob 对象（可以解决图片太大不能用 canvas 处理的问题）&lt;br /&gt;
+ⅱ. 定义 image，通过 canvas 生成 base64，上传到自己服务器。&lt;br /&gt;
+b. 必须在一个 js 执行周期内拿到 file，并使用 FileReader 转成 base64 再处理。否则取到的 file 没有实际数据且 size 为 0。（尝试过把 File 复制一份保存，但在 filereader 的时候都失败了，原因未知）&lt;/li&gt;
+&lt;li&gt;安卓端小程序 webview 中的 history.back () 无效 bug。（没有异步任务，全局路由守卫都正常执行没有 abort，history 已经正常后退但页面无反应，beforeEnter 的钩子也不执行。）但 photo_edit -&amp;gt; single_edit 却可以正常回退。&lt;/li&gt;
+&lt;li&gt;跳转的 tabBar 页面的路径（需在 app.json 的 tabBar 字段定义的页面）。注意：路径后不能带参数&lt;/li&gt;
+&lt;li&gt;跳转到下级页面，生命周期 &lt;code&gt; componentWillUnmount&lt;/code&gt;  不会触发&lt;/li&gt;
+&lt;li&gt;支付宝的 &lt;code&gt;webview&lt;/code&gt;  里面的动画 &lt;code&gt;transform: scale&lt;/code&gt;  从 0 开始则缩放动画无效，目前采用 0.01 开始&lt;/li&gt;
+&lt;li&gt;组件样式之间互相影响&lt;/li&gt;
+&lt;/ol&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://example.com/%E6%94%AF%E4%BB%98%E5%AE%9D%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%BB%8B%E7%BB%8D/</guid>
             <title>支付宝小程序介绍</title>
@@ -587,7 +3182,7 @@ c-16-25.333-24-45-24-59z&#39;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;&lt;/spa
 &lt;h1 id=&#34;mermaid流程图&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#mermaid流程图&#34;&gt;#&lt;/a&gt;  &lt;code&gt;mermaid&lt;/code&gt;  流程图&lt;/h1&gt;
 &lt;p&gt;本功能基于 &lt;code&gt;markdown-it-mermaid&lt;/code&gt; &lt;br /&gt;
  在 Front Matter 中添加 &lt;code&gt;mermaid: true&lt;/code&gt;  以支持&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9tZXJtYWlkLWpzLmdpdGh1Yi5pby9tZXJtYWlkLyMv&#34;&gt; Mermaid&lt;/span&gt;&lt;/p&gt;
-&lt;figure class=&#34;highlight raw&#34;&gt;&lt;figcaption data-lang=&#34;&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;---&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;title: 流程图显示&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;mermaid: true&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;---&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&amp;#96;&amp;#96;&amp;#96;mermaid&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;graph LR&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    A [Square Rect] -- Link text --&amp;gt; B ((Circle))&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    A --&amp;gt; C (Round Rect)&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    B --&amp;gt; D &amp;#123;Rhombus&amp;#125;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    C --&amp;gt; D&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&amp;#96;&amp;#96;&amp;#96;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;14&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&amp;#96;&amp;#96;&amp;#96;mermaid&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;15&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;sequenceDiagram&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;16&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    loop Daily query&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;17&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        Alice-&amp;gt;&amp;gt;Bob: Hello Bob, how are you?&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;18&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        alt is sick&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;19&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;            Bob-&amp;gt;&amp;gt;Alice: Not so good :(&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;20&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        else is well&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;21&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;            Bob-&amp;gt;&amp;gt;Alice: Feeling fresh like a daisy&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;22&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        end&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;23&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;24&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        opt Extra response&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;25&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;            Bob-&amp;gt;&amp;gt;Alice: Thanks for asking&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;26&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        end&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;27&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    end&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;28&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&amp;#96;&amp;#96;&amp;#96;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;pre class=&#34;mermaid graph&#34;&gt;&lt;svg id=&#34;mermaid-1618716611731&#34; width=&#34;100%&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; height=&#34;167&#34; style=&#34;max-width: 497.7718811035156px;&#34; viewBox=&#34;0 0 497.7718811035156 167&#34;&gt;&lt;g&gt;&lt;g class=&#34;output&#34;&gt;&lt;g class=&#34;clusters&#34;&gt;&lt;/g&gt;&lt;g class=&#34;edgePaths&#34;&gt;&lt;g class=&#34;edgePath LS-A LE-B&#34; id=&#34;L-A-B&#34; style=&#34;opacity: 1;&#34;&gt;&lt;path class=&#34;path&#34; d=&#34;M103.65391791044776,69.75L171.0390625,39L247.625,39&#34; marker-end=&#34;url(#arrowhead15)&#34; style=&#34;fill:none&#34;&gt;&lt;/path&gt;&lt;defs&gt;&lt;marker id=&#34;arrowhead15&#34; viewBox=&#34;0 0 10 10&#34; refX=&#34;9&#34; refY=&#34;5&#34; markerUnits=&#34;strokeWidth&#34; markerWidth=&#34;8&#34; markerHeight=&#34;6&#34; orient=&#34;auto&#34;&gt;&lt;path d=&#34;M 0 0 L 10 5 L 0 10 z&#34; class=&#34;arrowheadPath&#34; style=&#34;stroke-width: 1; stroke-dasharray: 1, 0;&#34;&gt;&lt;/path&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;/g&gt;&lt;g class=&#34;edgePath LS-A LE-C&#34; id=&#34;L-A-C&#34; style=&#34;opacity: 1;&#34;&gt;&lt;path class=&#34;path&#34; d=&#34;M103.65391791044776,108.75L171.0390625,139.5L228.234375,139.5&#34; marker-end=&#34;url(#arrowhead16)&#34; style=&#34;fill:none&#34;&gt;&lt;/path&gt;&lt;defs&gt;&lt;marker id=&#34;arrowhead16&#34; viewBox=&#34;0 0 10 10&#34; refX=&#34;9&#34; refY=&#34;5&#34; markerUnits=&#34;strokeWidth&#34; markerWidth=&#34;8&#34; markerHeight=&#34;6&#34; orient=&#34;auto&#34;&gt;&lt;path d=&#34;M 0 0 L 10 5 L 0 10 z&#34; class=&#34;arrowheadPath&#34; style=&#34;stroke-width: 1; stroke-dasharray: 1, 0;&#34;&gt;&lt;/path&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;/g&gt;&lt;g class=&#34;edgePath LS-B LE-D&#34; id=&#34;L-B-D&#34; style=&#34;opacity: 1;&#34;&gt;&lt;path class=&#34;path&#34; d=&#34;M309.625,39L354.015625,39L400.8184709260876,68.44715483685182&#34; marker-end=&#34;url(#arrowhead17)&#34; style=&#34;fill:none&#34;&gt;&lt;/path&gt;&lt;defs&gt;&lt;marker id=&#34;arrowhead17&#34; viewBox=&#34;0 0 10 10&#34; refX=&#34;9&#34; refY=&#34;5&#34; markerUnits=&#34;strokeWidth&#34; markerWidth=&#34;8&#34; markerHeight=&#34;6&#34; orient=&#34;auto&#34;&gt;&lt;path d=&#34;M 0 0 L 10 5 L 0 10 z&#34; class=&#34;arrowheadPath&#34; style=&#34;stroke-width: 1; stroke-dasharray: 1, 0;&#34;&gt;&lt;/path&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;/g&gt;&lt;g class=&#34;edgePath LS-C LE-D&#34; id=&#34;L-C-D&#34; style=&#34;opacity: 1;&#34;&gt;&lt;path class=&#34;path&#34; d=&#34;M329.015625,139.5L354.015625,139.5L400.81846998718345,111.05284575012297&#34; marker-end=&#34;url(#arrowhead18)&#34; style=&#34;fill:none&#34;&gt;&lt;/path&gt;&lt;defs&gt;&lt;marker id=&#34;arrowhead18&#34; viewBox=&#34;0 0 10 10&#34; refX=&#34;9&#34; refY=&#34;5&#34; markerUnits=&#34;strokeWidth&#34; markerWidth=&#34;8&#34; markerHeight=&#34;6&#34; orient=&#34;auto&#34;&gt;&lt;path d=&#34;M 0 0 L 10 5 L 0 10 z&#34; class=&#34;arrowheadPath&#34; style=&#34;stroke-width: 1; stroke-dasharray: 1, 0;&#34;&gt;&lt;/path&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;edgeLabels&#34;&gt;&lt;g class=&#34;edgeLabel&#34; transform=&#34;translate(171.0390625,39)&#34; style=&#34;opacity: 1;&#34;&gt;&lt;g transform=&#34;translate(-32.1953125,-9.5)&#34; class=&#34;label&#34;&gt;&lt;rect rx=&#34;0&#34; ry=&#34;0&#34; width=&#34;64.359375&#34; height=&#34;19.03125&#34;&gt;&lt;/rect&gt;&lt;text&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;Link text&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;edgeLabel&#34; transform=&#34;&#34; style=&#34;opacity: 1;&#34;&gt;&lt;g transform=&#34;translate(0,0)&#34; class=&#34;label&#34;&gt;&lt;rect rx=&#34;0&#34; ry=&#34;0&#34; width=&#34;0&#34; height=&#34;0&#34;&gt;&lt;/rect&gt;&lt;text&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;edgeLabel&#34; transform=&#34;&#34; style=&#34;opacity: 1;&#34;&gt;&lt;g transform=&#34;translate(0,0)&#34; class=&#34;label&#34;&gt;&lt;rect rx=&#34;0&#34; ry=&#34;0&#34; width=&#34;0&#34; height=&#34;0&#34;&gt;&lt;/rect&gt;&lt;text&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;edgeLabel&#34; transform=&#34;&#34; style=&#34;opacity: 1;&#34;&gt;&lt;g transform=&#34;translate(0,0)&#34; class=&#34;label&#34;&gt;&lt;rect rx=&#34;0&#34; ry=&#34;0&#34; width=&#34;0&#34; height=&#34;0&#34;&gt;&lt;/rect&gt;&lt;text&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;nodes&#34;&gt;&lt;g class=&#34;node default&#34; id=&#34;flowchart-A-8&#34; transform=&#34;translate(60.921875,89.25)&#34; style=&#34;opacity: 1;&#34;&gt;&lt;rect rx=&#34;0&#34; ry=&#34;0&#34; x=&#34;-52.921875&#34; y=&#34;-19.5&#34; width=&#34;105.84375&#34; height=&#34;39&#34; class=&#34;label-container&#34;&gt;&lt;/rect&gt;&lt;g class=&#34;label&#34; transform=&#34;translate(0,0)&#34;&gt;&lt;g transform=&#34;translate(-42.921875,-9.5)&#34;&gt;&lt;text style=&#34;&#34;&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;Square Rect&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;node default&#34; id=&#34;flowchart-B-9&#34; transform=&#34;translate(278.625,39)&#34; style=&#34;opacity: 1;&#34;&gt;&lt;circle x=&#34;-31&#34; y=&#34;-19.5&#34; r=&#34;31&#34; class=&#34;label-container&#34;&gt;&lt;/circle&gt;&lt;g class=&#34;label&#34; transform=&#34;translate(0,0)&#34;&gt;&lt;g transform=&#34;translate(-21,-9.5)&#34;&gt;&lt;text style=&#34;&#34;&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;Circle&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;node default&#34; id=&#34;flowchart-C-11&#34; transform=&#34;translate(278.625,139.5)&#34; style=&#34;opacity: 1;&#34;&gt;&lt;rect rx=&#34;5&#34; ry=&#34;5&#34; x=&#34;-50.390625&#34; y=&#34;-19.5&#34; width=&#34;100.78125&#34; height=&#34;39&#34; class=&#34;label-container&#34;&gt;&lt;/rect&gt;&lt;g class=&#34;label&#34; transform=&#34;translate(0,0)&#34;&gt;&lt;g transform=&#34;translate(-40.390625,-9.5)&#34;&gt;&lt;text style=&#34;&#34;&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;Round Rect&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;node default&#34; id=&#34;flowchart-D-13&#34; transform=&#34;translate(434.39374923706055,89.25)&#34; style=&#34;opacity: 1;&#34;&gt;&lt;polygon points=&#34;55.378125000000004,0 110.75625000000001,-55.378125000000004 55.378125000000004,-110.75625000000001 0,-55.378125000000004&#34; transform=&#34;translate(-55.378125000000004,55.378125000000004)&#34; class=&#34;label-container&#34;&gt;&lt;/polygon&gt;&lt;g class=&#34;label&#34; transform=&#34;translate(0,0)&#34;&gt;&lt;g transform=&#34;translate(-32.03125,-9.5)&#34;&gt;&lt;text style=&#34;&#34;&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;Rhombus&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/pre&gt;&lt;pre class=&#34;mermaid&#34;&gt;&lt;svg id=&#34;mermaid-1618716612269&#34; width=&#34;100%&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; height=&#34;563&#34; style=&#34;max-width: 498px;&#34; viewBox=&#34;-50 -10 498 563&#34;&gt;&lt;g&gt;&lt;/g&gt;&lt;g&gt;&lt;line id=&#34;actor0&#34; x1=&#34;75&#34; y1=&#34;5&#34; x2=&#34;75&#34; y2=&#34;552&#34; class=&#34;actor-line&#34; stroke-width=&#34;0.5px&#34; stroke=&#34;#999&#34;&gt;&lt;/line&gt;&lt;rect x=&#34;0&#34; y=&#34;0&#34; fill=&#34;#eaeaea&#34; stroke=&#34;#666&#34; width=&#34;150&#34; height=&#34;65&#34; rx=&#34;3&#34; ry=&#34;3&#34; class=&#34;actor&#34;&gt;&lt;/rect&gt;&lt;text x=&#34;75&#34; y=&#34;32.5&#34; dominant-baseline=&#34;central&#34; alignment-baseline=&#34;central&#34; class=&#34;actor&#34; style=&#34;text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;&#34;&gt;&lt;tspan x=&#34;75&#34; dy=&#34;0&#34;&gt;Alice&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;g&gt;&lt;line id=&#34;actor1&#34; x1=&#34;323&#34; y1=&#34;5&#34; x2=&#34;323&#34; y2=&#34;552&#34; class=&#34;actor-line&#34; stroke-width=&#34;0.5px&#34; stroke=&#34;#999&#34;&gt;&lt;/line&gt;&lt;rect x=&#34;248&#34; y=&#34;0&#34; fill=&#34;#eaeaea&#34; stroke=&#34;#666&#34; width=&#34;150&#34; height=&#34;65&#34; rx=&#34;3&#34; ry=&#34;3&#34; class=&#34;actor&#34;&gt;&lt;/rect&gt;&lt;text x=&#34;323&#34; y=&#34;32.5&#34; dominant-baseline=&#34;central&#34; alignment-baseline=&#34;central&#34; class=&#34;actor&#34; style=&#34;text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;&#34;&gt;&lt;tspan x=&#34;323&#34; dy=&#34;0&#34;&gt;Bob&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;defs&gt;&lt;marker id=&#34;arrowhead&#34; refX=&#34;5&#34; refY=&#34;2&#34; markerWidth=&#34;6&#34; markerHeight=&#34;4&#34; orient=&#34;auto&#34;&gt;&lt;path d=&#34;M 0,0 V 4 L6,2 Z&#34;&gt;&lt;/path&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;defs&gt;&lt;marker id=&#34;crosshead&#34; markerWidth=&#34;15&#34; markerHeight=&#34;8&#34; orient=&#34;auto&#34; refX=&#34;16&#34; refY=&#34;4&#34;&gt;&lt;path fill=&#34;black&#34; stroke=&#34;#000000&#34; stroke-width=&#34;1px&#34; d=&#34;M 9,2 V 6 L16,4 Z&#34; style=&#34;stroke-dasharray: 0, 0;&#34;&gt;&lt;/path&gt;&lt;path fill=&#34;none&#34; stroke=&#34;#000000&#34; stroke-width=&#34;1px&#34; d=&#34;M 0,1 L 6,7 M 6,1 L 0,7&#34; style=&#34;stroke-dasharray: 0, 0;&#34;&gt;&lt;/path&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;defs&gt;&lt;marker id=&#34;sequencenumber&#34; refX=&#34;15&#34; refY=&#34;15&#34; markerWidth=&#34;60&#34; markerHeight=&#34;40&#34; orient=&#34;auto&#34;&gt;&lt;circle cx=&#34;15&#34; cy=&#34;15&#34; r=&#34;6&#34;&gt;&lt;/circle&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;text x=&#34;199&#34; y=&#34;125&#34; text-anchor=&#34;middle&#34; dominant-baseline=&#34;middle&#34; alignment-baseline=&#34;middle&#34; class=&#34;messageText&#34; dy=&#34;1em&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;Hello Bob, how are you?&lt;/text&gt;&lt;line x1=&#34;75&#34; y1=&#34;158&#34; x2=&#34;323&#34; y2=&#34;158&#34; class=&#34;messageLine0&#34; stroke-width=&#34;2&#34; stroke=&#34;none&#34; marker-end=&#34;url(#arrowhead)&#34; style=&#34;fill: none;&#34;&gt;&lt;/line&gt;&lt;text x=&#34;199&#34; y=&#34;218&#34; text-anchor=&#34;middle&#34; dominant-baseline=&#34;middle&#34; alignment-baseline=&#34;middle&#34; class=&#34;messageText&#34; dy=&#34;1em&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;Not so good :(&lt;/text&gt;&lt;line x1=&#34;323&#34; y1=&#34;251&#34; x2=&#34;75&#34; y2=&#34;251&#34; class=&#34;messageLine0&#34; stroke-width=&#34;2&#34; stroke=&#34;none&#34; marker-end=&#34;url(#arrowhead)&#34; style=&#34;fill: none;&#34;&gt;&lt;/line&gt;&lt;text x=&#34;199&#34; y=&#34;311&#34; text-anchor=&#34;middle&#34; dominant-baseline=&#34;middle&#34; alignment-baseline=&#34;middle&#34; class=&#34;messageText&#34; dy=&#34;1em&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;Feeling fresh like a daisy&lt;/text&gt;&lt;line x1=&#34;323&#34; y1=&#34;344&#34; x2=&#34;75&#34; y2=&#34;344&#34; class=&#34;messageLine0&#34; stroke-width=&#34;2&#34; stroke=&#34;none&#34; marker-end=&#34;url(#arrowhead)&#34; style=&#34;fill: none;&#34;&gt;&lt;/line&gt;&lt;g&gt;&lt;line x1=&#34;65&#34; y1=&#34;168&#34; x2=&#34;333&#34; y2=&#34;168&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;333&#34; y1=&#34;168&#34; x2=&#34;333&#34; y2=&#34;354&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;65&#34; y1=&#34;354&#34; x2=&#34;333&#34; y2=&#34;354&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;65&#34; y1=&#34;168&#34; x2=&#34;65&#34; y2=&#34;354&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;65&#34; y1=&#34;266&#34; x2=&#34;333&#34; y2=&#34;266&#34; class=&#34;loopLine&#34; style=&#34;stroke-dasharray: 3, 3;&#34;&gt;&lt;/line&gt;&lt;polygon points=&#34;65,168 115,168 115,181 106.6,188 65,188&#34; class=&#34;labelBox&#34;&gt;&lt;/polygon&gt;&lt;text x=&#34;90&#34; y=&#34;181&#34; text-anchor=&#34;middle&#34; dominant-baseline=&#34;middle&#34; alignment-baseline=&#34;middle&#34; class=&#34;labelText&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;alt&lt;/text&gt;&lt;text x=&#34;224&#34; y=&#34;186&#34; text-anchor=&#34;middle&#34; class=&#34;loopText&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;&lt;tspan x=&#34;224&#34;&gt;[is sick]&lt;/tspan&gt;&lt;/text&gt;&lt;text x=&#34;199&#34; y=&#34;284&#34; text-anchor=&#34;middle&#34; class=&#34;loopText&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;[is well]&lt;/text&gt;&lt;/g&gt;&lt;text x=&#34;199&#34; y=&#34;414&#34; text-anchor=&#34;middle&#34; dominant-baseline=&#34;middle&#34; alignment-baseline=&#34;middle&#34; class=&#34;messageText&#34; dy=&#34;1em&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;Thanks for asking&lt;/text&gt;&lt;line x1=&#34;323&#34; y1=&#34;447&#34; x2=&#34;75&#34; y2=&#34;447&#34; class=&#34;messageLine0&#34; stroke-width=&#34;2&#34; stroke=&#34;none&#34; marker-end=&#34;url(#arrowhead)&#34; style=&#34;fill: none;&#34;&gt;&lt;/line&gt;&lt;g&gt;&lt;line x1=&#34;65&#34; y1=&#34;364&#34; x2=&#34;333&#34; y2=&#34;364&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;333&#34; y1=&#34;364&#34; x2=&#34;333&#34; y2=&#34;457&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;65&#34; y1=&#34;457&#34; x2=&#34;333&#34; y2=&#34;457&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;65&#34; y1=&#34;364&#34; x2=&#34;65&#34; y2=&#34;457&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;polygon points=&#34;65,364 115,364 115,377 106.6,384 65,384&#34; class=&#34;labelBox&#34;&gt;&lt;/polygon&gt;&lt;text x=&#34;90&#34; y=&#34;377&#34; text-anchor=&#34;middle&#34; dominant-baseline=&#34;middle&#34; alignment-baseline=&#34;middle&#34; class=&#34;labelText&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;opt&lt;/text&gt;&lt;text x=&#34;224&#34; y=&#34;382&#34; text-anchor=&#34;middle&#34; class=&#34;loopText&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;&lt;tspan x=&#34;224&#34;&gt;[Extra response]&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;g&gt;&lt;line x1=&#34;55&#34; y1=&#34;75&#34; x2=&#34;343&#34; y2=&#34;75&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;343&#34; y1=&#34;75&#34; x2=&#34;343&#34; y2=&#34;467&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;55&#34; y1=&#34;467&#34; x2=&#34;343&#34; y2=&#34;467&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;55&#34; y1=&#34;75&#34; x2=&#34;55&#34; y2=&#34;467&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;polygon points=&#34;55,75 105,75 105,88 96.6,95 55,95&#34; class=&#34;labelBox&#34;&gt;&lt;/polygon&gt;&lt;text x=&#34;80&#34; y=&#34;88&#34; text-anchor=&#34;middle&#34; dominant-baseline=&#34;middle&#34; alignment-baseline=&#34;middle&#34; class=&#34;labelText&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;loop&lt;/text&gt;&lt;text x=&#34;224&#34; y=&#34;93&#34; text-anchor=&#34;middle&#34; class=&#34;loopText&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;&lt;tspan x=&#34;224&#34;&gt;[Daily query]&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;g&gt;&lt;rect x=&#34;0&#34; y=&#34;487&#34; fill=&#34;#eaeaea&#34; stroke=&#34;#666&#34; width=&#34;150&#34; height=&#34;65&#34; rx=&#34;3&#34; ry=&#34;3&#34; class=&#34;actor&#34;&gt;&lt;/rect&gt;&lt;text x=&#34;75&#34; y=&#34;519.5&#34; dominant-baseline=&#34;central&#34; alignment-baseline=&#34;central&#34; class=&#34;actor&#34; style=&#34;text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;&#34;&gt;&lt;tspan x=&#34;75&#34; dy=&#34;0&#34;&gt;Alice&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;g&gt;&lt;rect x=&#34;248&#34; y=&#34;487&#34; fill=&#34;#eaeaea&#34; stroke=&#34;#666&#34; width=&#34;150&#34; height=&#34;65&#34; rx=&#34;3&#34; ry=&#34;3&#34; class=&#34;actor&#34;&gt;&lt;/rect&gt;&lt;text x=&#34;323&#34; y=&#34;519.5&#34; dominant-baseline=&#34;central&#34; alignment-baseline=&#34;central&#34; class=&#34;actor&#34; style=&#34;text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;&#34;&gt;&lt;tspan x=&#34;323&#34; dy=&#34;0&#34;&gt;Bob&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/pre&gt; ]]></description>
+&lt;figure class=&#34;highlight raw&#34;&gt;&lt;figcaption data-lang=&#34;&#34;&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td data-num=&#34;1&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;---&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;2&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;title: 流程图显示&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;3&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;mermaid: true&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;4&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;---&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;5&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;6&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&amp;#96;&amp;#96;&amp;#96;mermaid&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;7&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;graph LR&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;8&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    A [Square Rect] -- Link text --&amp;gt; B ((Circle))&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;9&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    A --&amp;gt; C (Round Rect)&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;10&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    B --&amp;gt; D &amp;#123;Rhombus&amp;#125;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;11&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    C --&amp;gt; D&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;12&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&amp;#96;&amp;#96;&amp;#96;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;13&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;14&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&amp;#96;&amp;#96;&amp;#96;mermaid&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;15&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;sequenceDiagram&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;16&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    loop Daily query&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;17&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        Alice-&amp;gt;&amp;gt;Bob: Hello Bob, how are you?&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;18&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        alt is sick&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;19&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;            Bob-&amp;gt;&amp;gt;Alice: Not so good :(&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;20&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        else is well&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;21&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;            Bob-&amp;gt;&amp;gt;Alice: Feeling fresh like a daisy&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;22&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        end&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;23&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;24&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        opt Extra response&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;25&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;            Bob-&amp;gt;&amp;gt;Alice: Thanks for asking&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;26&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;        end&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;27&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;    end&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td data-num=&#34;28&#34;&gt;&lt;/td&gt;&lt;td&gt;&lt;pre&gt;&amp;#96;&amp;#96;&amp;#96;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;pre class=&#34;mermaid graph&#34;&gt;&lt;svg id=&#34;mermaid-1618717843623&#34; width=&#34;100%&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; height=&#34;167&#34; style=&#34;max-width: 497.7718811035156px;&#34; viewBox=&#34;0 0 497.7718811035156 167&#34;&gt;&lt;g&gt;&lt;g class=&#34;output&#34;&gt;&lt;g class=&#34;clusters&#34;&gt;&lt;/g&gt;&lt;g class=&#34;edgePaths&#34;&gt;&lt;g class=&#34;edgePath LS-A LE-B&#34; id=&#34;L-A-B&#34; style=&#34;opacity: 1;&#34;&gt;&lt;path class=&#34;path&#34; d=&#34;M103.65391791044776,69.75L171.0390625,39L247.625,39&#34; marker-end=&#34;url(#arrowhead15)&#34; style=&#34;fill:none&#34;&gt;&lt;/path&gt;&lt;defs&gt;&lt;marker id=&#34;arrowhead15&#34; viewBox=&#34;0 0 10 10&#34; refX=&#34;9&#34; refY=&#34;5&#34; markerUnits=&#34;strokeWidth&#34; markerWidth=&#34;8&#34; markerHeight=&#34;6&#34; orient=&#34;auto&#34;&gt;&lt;path d=&#34;M 0 0 L 10 5 L 0 10 z&#34; class=&#34;arrowheadPath&#34; style=&#34;stroke-width: 1; stroke-dasharray: 1, 0;&#34;&gt;&lt;/path&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;/g&gt;&lt;g class=&#34;edgePath LS-A LE-C&#34; id=&#34;L-A-C&#34; style=&#34;opacity: 1;&#34;&gt;&lt;path class=&#34;path&#34; d=&#34;M103.65391791044776,108.75L171.0390625,139.5L228.234375,139.5&#34; marker-end=&#34;url(#arrowhead16)&#34; style=&#34;fill:none&#34;&gt;&lt;/path&gt;&lt;defs&gt;&lt;marker id=&#34;arrowhead16&#34; viewBox=&#34;0 0 10 10&#34; refX=&#34;9&#34; refY=&#34;5&#34; markerUnits=&#34;strokeWidth&#34; markerWidth=&#34;8&#34; markerHeight=&#34;6&#34; orient=&#34;auto&#34;&gt;&lt;path d=&#34;M 0 0 L 10 5 L 0 10 z&#34; class=&#34;arrowheadPath&#34; style=&#34;stroke-width: 1; stroke-dasharray: 1, 0;&#34;&gt;&lt;/path&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;/g&gt;&lt;g class=&#34;edgePath LS-B LE-D&#34; id=&#34;L-B-D&#34; style=&#34;opacity: 1;&#34;&gt;&lt;path class=&#34;path&#34; d=&#34;M309.625,39L354.015625,39L400.8184709260876,68.44715483685182&#34; marker-end=&#34;url(#arrowhead17)&#34; style=&#34;fill:none&#34;&gt;&lt;/path&gt;&lt;defs&gt;&lt;marker id=&#34;arrowhead17&#34; viewBox=&#34;0 0 10 10&#34; refX=&#34;9&#34; refY=&#34;5&#34; markerUnits=&#34;strokeWidth&#34; markerWidth=&#34;8&#34; markerHeight=&#34;6&#34; orient=&#34;auto&#34;&gt;&lt;path d=&#34;M 0 0 L 10 5 L 0 10 z&#34; class=&#34;arrowheadPath&#34; style=&#34;stroke-width: 1; stroke-dasharray: 1, 0;&#34;&gt;&lt;/path&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;/g&gt;&lt;g class=&#34;edgePath LS-C LE-D&#34; id=&#34;L-C-D&#34; style=&#34;opacity: 1;&#34;&gt;&lt;path class=&#34;path&#34; d=&#34;M329.015625,139.5L354.015625,139.5L400.81846998718345,111.05284575012297&#34; marker-end=&#34;url(#arrowhead18)&#34; style=&#34;fill:none&#34;&gt;&lt;/path&gt;&lt;defs&gt;&lt;marker id=&#34;arrowhead18&#34; viewBox=&#34;0 0 10 10&#34; refX=&#34;9&#34; refY=&#34;5&#34; markerUnits=&#34;strokeWidth&#34; markerWidth=&#34;8&#34; markerHeight=&#34;6&#34; orient=&#34;auto&#34;&gt;&lt;path d=&#34;M 0 0 L 10 5 L 0 10 z&#34; class=&#34;arrowheadPath&#34; style=&#34;stroke-width: 1; stroke-dasharray: 1, 0;&#34;&gt;&lt;/path&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;edgeLabels&#34;&gt;&lt;g class=&#34;edgeLabel&#34; transform=&#34;translate(171.0390625,39)&#34; style=&#34;opacity: 1;&#34;&gt;&lt;g transform=&#34;translate(-32.1953125,-9.5)&#34; class=&#34;label&#34;&gt;&lt;rect rx=&#34;0&#34; ry=&#34;0&#34; width=&#34;64.359375&#34; height=&#34;19.03125&#34;&gt;&lt;/rect&gt;&lt;text&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;Link text&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;edgeLabel&#34; transform=&#34;&#34; style=&#34;opacity: 1;&#34;&gt;&lt;g transform=&#34;translate(0,0)&#34; class=&#34;label&#34;&gt;&lt;rect rx=&#34;0&#34; ry=&#34;0&#34; width=&#34;0&#34; height=&#34;0&#34;&gt;&lt;/rect&gt;&lt;text&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;edgeLabel&#34; transform=&#34;&#34; style=&#34;opacity: 1;&#34;&gt;&lt;g transform=&#34;translate(0,0)&#34; class=&#34;label&#34;&gt;&lt;rect rx=&#34;0&#34; ry=&#34;0&#34; width=&#34;0&#34; height=&#34;0&#34;&gt;&lt;/rect&gt;&lt;text&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;edgeLabel&#34; transform=&#34;&#34; style=&#34;opacity: 1;&#34;&gt;&lt;g transform=&#34;translate(0,0)&#34; class=&#34;label&#34;&gt;&lt;rect rx=&#34;0&#34; ry=&#34;0&#34; width=&#34;0&#34; height=&#34;0&#34;&gt;&lt;/rect&gt;&lt;text&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;nodes&#34;&gt;&lt;g class=&#34;node default&#34; id=&#34;flowchart-A-8&#34; transform=&#34;translate(60.921875,89.25)&#34; style=&#34;opacity: 1;&#34;&gt;&lt;rect rx=&#34;0&#34; ry=&#34;0&#34; x=&#34;-52.921875&#34; y=&#34;-19.5&#34; width=&#34;105.84375&#34; height=&#34;39&#34; class=&#34;label-container&#34;&gt;&lt;/rect&gt;&lt;g class=&#34;label&#34; transform=&#34;translate(0,0)&#34;&gt;&lt;g transform=&#34;translate(-42.921875,-9.5)&#34;&gt;&lt;text style=&#34;&#34;&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;Square Rect&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;node default&#34; id=&#34;flowchart-B-9&#34; transform=&#34;translate(278.625,39)&#34; style=&#34;opacity: 1;&#34;&gt;&lt;circle x=&#34;-31&#34; y=&#34;-19.5&#34; r=&#34;31&#34; class=&#34;label-container&#34;&gt;&lt;/circle&gt;&lt;g class=&#34;label&#34; transform=&#34;translate(0,0)&#34;&gt;&lt;g transform=&#34;translate(-21,-9.5)&#34;&gt;&lt;text style=&#34;&#34;&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;Circle&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;node default&#34; id=&#34;flowchart-C-11&#34; transform=&#34;translate(278.625,139.5)&#34; style=&#34;opacity: 1;&#34;&gt;&lt;rect rx=&#34;5&#34; ry=&#34;5&#34; x=&#34;-50.390625&#34; y=&#34;-19.5&#34; width=&#34;100.78125&#34; height=&#34;39&#34; class=&#34;label-container&#34;&gt;&lt;/rect&gt;&lt;g class=&#34;label&#34; transform=&#34;translate(0,0)&#34;&gt;&lt;g transform=&#34;translate(-40.390625,-9.5)&#34;&gt;&lt;text style=&#34;&#34;&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;Round Rect&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;g class=&#34;node default&#34; id=&#34;flowchart-D-13&#34; transform=&#34;translate(434.39374923706055,89.25)&#34; style=&#34;opacity: 1;&#34;&gt;&lt;polygon points=&#34;55.378125000000004,0 110.75625000000001,-55.378125000000004 55.378125000000004,-110.75625000000001 0,-55.378125000000004&#34; transform=&#34;translate(-55.378125000000004,55.378125000000004)&#34; class=&#34;label-container&#34;&gt;&lt;/polygon&gt;&lt;g class=&#34;label&#34; transform=&#34;translate(0,0)&#34;&gt;&lt;g transform=&#34;translate(-32.03125,-9.5)&#34;&gt;&lt;text style=&#34;&#34;&gt;&lt;tspan xml:space=&#34;preserve&#34; dy=&#34;1em&#34; x=&#34;1&#34;&gt;Rhombus&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/pre&gt;&lt;pre class=&#34;mermaid&#34;&gt;&lt;svg id=&#34;mermaid-1618717844523&#34; width=&#34;100%&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; height=&#34;563&#34; style=&#34;max-width: 498px;&#34; viewBox=&#34;-50 -10 498 563&#34;&gt;&lt;g&gt;&lt;/g&gt;&lt;g&gt;&lt;line id=&#34;actor0&#34; x1=&#34;75&#34; y1=&#34;5&#34; x2=&#34;75&#34; y2=&#34;552&#34; class=&#34;actor-line&#34; stroke-width=&#34;0.5px&#34; stroke=&#34;#999&#34;&gt;&lt;/line&gt;&lt;rect x=&#34;0&#34; y=&#34;0&#34; fill=&#34;#eaeaea&#34; stroke=&#34;#666&#34; width=&#34;150&#34; height=&#34;65&#34; rx=&#34;3&#34; ry=&#34;3&#34; class=&#34;actor&#34;&gt;&lt;/rect&gt;&lt;text x=&#34;75&#34; y=&#34;32.5&#34; dominant-baseline=&#34;central&#34; alignment-baseline=&#34;central&#34; class=&#34;actor&#34; style=&#34;text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;&#34;&gt;&lt;tspan x=&#34;75&#34; dy=&#34;0&#34;&gt;Alice&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;g&gt;&lt;line id=&#34;actor1&#34; x1=&#34;323&#34; y1=&#34;5&#34; x2=&#34;323&#34; y2=&#34;552&#34; class=&#34;actor-line&#34; stroke-width=&#34;0.5px&#34; stroke=&#34;#999&#34;&gt;&lt;/line&gt;&lt;rect x=&#34;248&#34; y=&#34;0&#34; fill=&#34;#eaeaea&#34; stroke=&#34;#666&#34; width=&#34;150&#34; height=&#34;65&#34; rx=&#34;3&#34; ry=&#34;3&#34; class=&#34;actor&#34;&gt;&lt;/rect&gt;&lt;text x=&#34;323&#34; y=&#34;32.5&#34; dominant-baseline=&#34;central&#34; alignment-baseline=&#34;central&#34; class=&#34;actor&#34; style=&#34;text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;&#34;&gt;&lt;tspan x=&#34;323&#34; dy=&#34;0&#34;&gt;Bob&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;defs&gt;&lt;marker id=&#34;arrowhead&#34; refX=&#34;5&#34; refY=&#34;2&#34; markerWidth=&#34;6&#34; markerHeight=&#34;4&#34; orient=&#34;auto&#34;&gt;&lt;path d=&#34;M 0,0 V 4 L6,2 Z&#34;&gt;&lt;/path&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;defs&gt;&lt;marker id=&#34;crosshead&#34; markerWidth=&#34;15&#34; markerHeight=&#34;8&#34; orient=&#34;auto&#34; refX=&#34;16&#34; refY=&#34;4&#34;&gt;&lt;path fill=&#34;black&#34; stroke=&#34;#000000&#34; stroke-width=&#34;1px&#34; d=&#34;M 9,2 V 6 L16,4 Z&#34; style=&#34;stroke-dasharray: 0, 0;&#34;&gt;&lt;/path&gt;&lt;path fill=&#34;none&#34; stroke=&#34;#000000&#34; stroke-width=&#34;1px&#34; d=&#34;M 0,1 L 6,7 M 6,1 L 0,7&#34; style=&#34;stroke-dasharray: 0, 0;&#34;&gt;&lt;/path&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;defs&gt;&lt;marker id=&#34;sequencenumber&#34; refX=&#34;15&#34; refY=&#34;15&#34; markerWidth=&#34;60&#34; markerHeight=&#34;40&#34; orient=&#34;auto&#34;&gt;&lt;circle cx=&#34;15&#34; cy=&#34;15&#34; r=&#34;6&#34;&gt;&lt;/circle&gt;&lt;/marker&gt;&lt;/defs&gt;&lt;text x=&#34;199&#34; y=&#34;125&#34; text-anchor=&#34;middle&#34; dominant-baseline=&#34;middle&#34; alignment-baseline=&#34;middle&#34; class=&#34;messageText&#34; dy=&#34;1em&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;Hello Bob, how are you?&lt;/text&gt;&lt;line x1=&#34;75&#34; y1=&#34;158&#34; x2=&#34;323&#34; y2=&#34;158&#34; class=&#34;messageLine0&#34; stroke-width=&#34;2&#34; stroke=&#34;none&#34; marker-end=&#34;url(#arrowhead)&#34; style=&#34;fill: none;&#34;&gt;&lt;/line&gt;&lt;text x=&#34;199&#34; y=&#34;218&#34; text-anchor=&#34;middle&#34; dominant-baseline=&#34;middle&#34; alignment-baseline=&#34;middle&#34; class=&#34;messageText&#34; dy=&#34;1em&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;Not so good :(&lt;/text&gt;&lt;line x1=&#34;323&#34; y1=&#34;251&#34; x2=&#34;75&#34; y2=&#34;251&#34; class=&#34;messageLine0&#34; stroke-width=&#34;2&#34; stroke=&#34;none&#34; marker-end=&#34;url(#arrowhead)&#34; style=&#34;fill: none;&#34;&gt;&lt;/line&gt;&lt;text x=&#34;199&#34; y=&#34;311&#34; text-anchor=&#34;middle&#34; dominant-baseline=&#34;middle&#34; alignment-baseline=&#34;middle&#34; class=&#34;messageText&#34; dy=&#34;1em&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;Feeling fresh like a daisy&lt;/text&gt;&lt;line x1=&#34;323&#34; y1=&#34;344&#34; x2=&#34;75&#34; y2=&#34;344&#34; class=&#34;messageLine0&#34; stroke-width=&#34;2&#34; stroke=&#34;none&#34; marker-end=&#34;url(#arrowhead)&#34; style=&#34;fill: none;&#34;&gt;&lt;/line&gt;&lt;g&gt;&lt;line x1=&#34;65&#34; y1=&#34;168&#34; x2=&#34;333&#34; y2=&#34;168&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;333&#34; y1=&#34;168&#34; x2=&#34;333&#34; y2=&#34;354&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;65&#34; y1=&#34;354&#34; x2=&#34;333&#34; y2=&#34;354&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;65&#34; y1=&#34;168&#34; x2=&#34;65&#34; y2=&#34;354&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;65&#34; y1=&#34;266&#34; x2=&#34;333&#34; y2=&#34;266&#34; class=&#34;loopLine&#34; style=&#34;stroke-dasharray: 3, 3;&#34;&gt;&lt;/line&gt;&lt;polygon points=&#34;65,168 115,168 115,181 106.6,188 65,188&#34; class=&#34;labelBox&#34;&gt;&lt;/polygon&gt;&lt;text x=&#34;90&#34; y=&#34;181&#34; text-anchor=&#34;middle&#34; dominant-baseline=&#34;middle&#34; alignment-baseline=&#34;middle&#34; class=&#34;labelText&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;alt&lt;/text&gt;&lt;text x=&#34;224&#34; y=&#34;186&#34; text-anchor=&#34;middle&#34; class=&#34;loopText&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;&lt;tspan x=&#34;224&#34;&gt;[is sick]&lt;/tspan&gt;&lt;/text&gt;&lt;text x=&#34;199&#34; y=&#34;284&#34; text-anchor=&#34;middle&#34; class=&#34;loopText&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;[is well]&lt;/text&gt;&lt;/g&gt;&lt;text x=&#34;199&#34; y=&#34;414&#34; text-anchor=&#34;middle&#34; dominant-baseline=&#34;middle&#34; alignment-baseline=&#34;middle&#34; class=&#34;messageText&#34; dy=&#34;1em&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;Thanks for asking&lt;/text&gt;&lt;line x1=&#34;323&#34; y1=&#34;447&#34; x2=&#34;75&#34; y2=&#34;447&#34; class=&#34;messageLine0&#34; stroke-width=&#34;2&#34; stroke=&#34;none&#34; marker-end=&#34;url(#arrowhead)&#34; style=&#34;fill: none;&#34;&gt;&lt;/line&gt;&lt;g&gt;&lt;line x1=&#34;65&#34; y1=&#34;364&#34; x2=&#34;333&#34; y2=&#34;364&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;333&#34; y1=&#34;364&#34; x2=&#34;333&#34; y2=&#34;457&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;65&#34; y1=&#34;457&#34; x2=&#34;333&#34; y2=&#34;457&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;65&#34; y1=&#34;364&#34; x2=&#34;65&#34; y2=&#34;457&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;polygon points=&#34;65,364 115,364 115,377 106.6,384 65,384&#34; class=&#34;labelBox&#34;&gt;&lt;/polygon&gt;&lt;text x=&#34;90&#34; y=&#34;377&#34; text-anchor=&#34;middle&#34; dominant-baseline=&#34;middle&#34; alignment-baseline=&#34;middle&#34; class=&#34;labelText&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;opt&lt;/text&gt;&lt;text x=&#34;224&#34; y=&#34;382&#34; text-anchor=&#34;middle&#34; class=&#34;loopText&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;&lt;tspan x=&#34;224&#34;&gt;[Extra response]&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;g&gt;&lt;line x1=&#34;55&#34; y1=&#34;75&#34; x2=&#34;343&#34; y2=&#34;75&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;343&#34; y1=&#34;75&#34; x2=&#34;343&#34; y2=&#34;467&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;55&#34; y1=&#34;467&#34; x2=&#34;343&#34; y2=&#34;467&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;line x1=&#34;55&#34; y1=&#34;75&#34; x2=&#34;55&#34; y2=&#34;467&#34; class=&#34;loopLine&#34;&gt;&lt;/line&gt;&lt;polygon points=&#34;55,75 105,75 105,88 96.6,95 55,95&#34; class=&#34;labelBox&#34;&gt;&lt;/polygon&gt;&lt;text x=&#34;80&#34; y=&#34;88&#34; text-anchor=&#34;middle&#34; dominant-baseline=&#34;middle&#34; alignment-baseline=&#34;middle&#34; class=&#34;labelText&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;loop&lt;/text&gt;&lt;text x=&#34;224&#34; y=&#34;93&#34; text-anchor=&#34;middle&#34; class=&#34;loopText&#34; style=&#34;font-family: &amp;quot;trebuchet ms&amp;quot;, verdana, arial; font-size: 16px; font-weight: 400;&#34;&gt;&lt;tspan x=&#34;224&#34;&gt;[Daily query]&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;g&gt;&lt;rect x=&#34;0&#34; y=&#34;487&#34; fill=&#34;#eaeaea&#34; stroke=&#34;#666&#34; width=&#34;150&#34; height=&#34;65&#34; rx=&#34;3&#34; ry=&#34;3&#34; class=&#34;actor&#34;&gt;&lt;/rect&gt;&lt;text x=&#34;75&#34; y=&#34;519.5&#34; dominant-baseline=&#34;central&#34; alignment-baseline=&#34;central&#34; class=&#34;actor&#34; style=&#34;text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;&#34;&gt;&lt;tspan x=&#34;75&#34; dy=&#34;0&#34;&gt;Alice&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;g&gt;&lt;rect x=&#34;248&#34; y=&#34;487&#34; fill=&#34;#eaeaea&#34; stroke=&#34;#666&#34; width=&#34;150&#34; height=&#34;65&#34; rx=&#34;3&#34; ry=&#34;3&#34; class=&#34;actor&#34;&gt;&lt;/rect&gt;&lt;text x=&#34;323&#34; y=&#34;519.5&#34; dominant-baseline=&#34;central&#34; alignment-baseline=&#34;central&#34; class=&#34;actor&#34; style=&#34;text-anchor: middle; font-size: 14px; font-weight: 400; font-family: Open-Sans, sans-serif;&#34;&gt;&lt;tspan x=&#34;323&#34; dy=&#34;0&#34;&gt;Bob&lt;/tspan&gt;&lt;/text&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/pre&gt; ]]></description>
         </item>
         <item>
             <guid isPermalink="true">http://example.com/computer-science/note/theme-shoka-doc/display/</guid>
@@ -1828,47 +4423,6 @@ http.createServer((req, res) &amp;#x3D;&amp;gt; {
             <link>http://example.com/link-post-without-title/</link>
             <pubDate>Tue, 24 Dec 2013 23:44:13 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;This is a link post without a title. The title should be the link with or without protocol. Clicking on the link should open &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3d3dy5nb29nbGUuY29tLw==&#34;&gt;Google&lt;/span&gt; in a new tab or window.&lt;/p&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">http://example.com/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%86%E3%82%B9%E3%83%88/</guid>
-            <title>日本語テスト</title>
-            <link>http://example.com/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%86%E3%82%B9%E3%83%88/</link>
-            <pubDate>Tue, 24 Dec 2013 23:33:26 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;This is a Japanese test post.&lt;/p&gt;
-&lt;p&gt;私は昨日ついにその助力家というのの上よりするたなけれ。&lt;/p&gt;
-&lt;p&gt;最も今をお話団はちょうどこの前後なかろでくらいに困りがいるたをは帰着考えたなかって、そうにもするでうたらない。&lt;/p&gt;
-&lt;p&gt;がたを知っないはずも同時に九月をいよいよたありた。&lt;/p&gt;
-&lt;p&gt;もっと槙さんにぼんやり金少し説明にえた自分大した人私か影響にというお関係たうませないが、この次第も私か兄具合に使うて、槙さんののに当人のあなたにさぞご意味と行くて私個人が小尊敬を聴いように同時に同反抗に集っだうて、いよいよまず相当へあっうからいだ事をしでなけれ。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;それでそれでもご時日をしはずはたったいやと突き抜けるますて、その元がは行ったてという獄を尽すていけですた。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;この中道具の日その学校はあなたごろがすまなりかとネルソンさんの考えるですん、辺の事実ないというご盲従ありたですと、爺さんのためが薬缶が結果までの箸の当時してならて、多少の十月にためからそういう上からとにかくしましないと触れべきものたで、ないうですと多少お人達したのでたた。&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;From &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL2xpcHN1bS5zdWd1dHN1a2FlcnUuanAvaW5kZXguY2dp&#34;&gt;すぐ使えるダミーテキスト - 日本語 Lorem ipsum&lt;/span&gt;&lt;/em&gt;&lt;/p&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">http://example.com/%E4%B8%AD%E6%96%87%E6%B8%AC%E8%A9%A6/</guid>
-            <title>中文測試</title>
-            <link>http://example.com/%E4%B8%AD%E6%96%87%E6%B8%AC%E8%A9%A6/</link>
-            <pubDate>Tue, 24 Dec 2013 23:31:30 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;This is a Chinese test post.&lt;/p&gt;
-&lt;p&gt;善我王上魚、產生資西員合兒臉趣論。畫衣生這著爸毛親可時，安程幾？合學作。觀經而作建。都非子作這！法如言子你關！手師也。&lt;/p&gt;
-&lt;p&gt;以也座論頭室業放。要車時地變此親不老高小是統習直麼調未，行年香一？&lt;/p&gt;
-&lt;p&gt;就竟在，是我童示讓利分和異種百路關母信過明驗有個歷洋中前合著區亮風值新底車有正結，進快保的行戰從：弟除文辦條國備當來際年每小腳識世可的的外的廣下歌洲保輪市果底天影；全氣具些回童但倒影發狀在示，數上學大法很，如要我…… 月品大供這起服滿老？應學傳者國：山式排只不之然清同關；細車是！停屋常間又，資畫領生，相們制在？公別的人寫教資夠。資再我我！只臉夫藝量不路政吃息緊回力之；兒足灣電空時局我怎初安。意今一子區首者微陸現際安除發連由子由而走學體區園我車當會，經時取頭，嚴了新科同？很夫營動通打，出和導一樂，查旅他。坐是收外子發物北看蘭戰坐車身做可來。道就學務。&lt;/p&gt;
-&lt;p&gt;國新故。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;工步他始能詩的，裝進分星海演意學值例道…… 於財型目古香亮自和這乎？化經溫詩。只賽嚴大一主價世哥受的沒有中年即病行金拉麼河。主小路了種就小為廣不？&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;em&gt;From &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3d3dy5yaWNoeWxpLmNvbS90b29sL2xvcmVtaXBzdW0v&#34;&gt;亂數假文產生器 - Chinese Lorem Ipsum&lt;/span&gt;&lt;/em&gt;&lt;/p&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">http://example.com/long-title/</guid>
-            <title>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam justo turpis, tincidunt ac convallis id.</title>
-            <link>http://example.com/long-title/</link>
-            <pubDate>Tue, 24 Dec 2013 23:31:06 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;This post has a long title. Make sure the title displayed right.&lt;/p&gt;
  ]]></description>
         </item>
     </channel>
